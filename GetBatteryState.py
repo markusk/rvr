@@ -42,12 +42,15 @@ async def main():
     #)
 
 
+    # battery in %
     battery_percentage = await rvr.get_battery_percentage()
-    print('Battery percentage: ', battery_percentage)
+    print("Battery percentage: ", battery_percentage['percentage'], "%")
 
+    # battery in Volt
     battery_voltage_state = await rvr.get_battery_voltage_state()
-    print('Voltage state: ', battery_voltage_state)
+    print('Voltage state: ', battery_voltage_state['state'])
 
+    # battery state
     state_info = '[{}, {}, {}, {}]'.format(
         '{}: {}'.format(VoltageStates.unknown.name, VoltageStates.unknown.value),
         '{}: {}'.format(VoltageStates.ok.name, VoltageStates.ok.value),
