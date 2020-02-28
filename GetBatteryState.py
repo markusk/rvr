@@ -65,11 +65,30 @@ async def main():
 
     # set LEDs depending on the battery state
     if battery_voltage_state['state'] == 1:
-    	# All LEDs to green
+    	# All LEDs to green [okay]
     	await rvr.set_all_leds(
         	led_group=RvrLedGroups.all_lights.value,
         	led_brightness_values=[color for x in range(10) for color in [0, 255, 0]]
     	)
+    elif battery_voltage_state['state'] == 2:
+    	# All LEDs to orange [low]
+    	await rvr.set_all_leds(
+        	led_group=RvrLedGroups.all_lights.value,
+        	led_brightness_values=[color for x in range(10) for color in [255, 165, 0]]
+    	)
+    elif battery_voltage_state['state'] == 3:
+    	# All LEDs to red [critical]
+    	await rvr.set_all_leds(
+        	led_group=RvrLedGroups.all_lights.value,
+        	led_brightness_values=[color for x in range(10) for color in [255, 0, 0]]
+    	)
+    elif battery_voltage_state['state'] == 0:
+    	# All LEDs to blue [unknown]
+    	await rvr.set_all_leds(
+        	led_group=RvrLedGroups.all_lights.value,
+        	led_brightness_values=[color for x in range(10) for color in [0, 0, 255]]
+    	)
+
 
     await rvr.close()
 
