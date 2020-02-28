@@ -10,6 +10,12 @@ from sphero_sdk import SpheroRvrAsync
 from sphero_sdk import SerialAsyncDal
 from sphero_sdk import BatteryVoltageStatesEnum as VoltageStates
 
+# for LEDs:
+from sphero_sdk import Colors
+from sphero_sdk import RvrLedGroups
+
+
+
 
 loop = asyncio.get_event_loop()
 
@@ -29,6 +35,13 @@ async def main():
     # Give RVR time to wake up
     await asyncio.sleep(2)
 
+    # turn all LEDs OFF
+    #await rvr.set_all_leds(
+    #    led_group=RvrLedGroups.all_lights.value,
+    #    led_brightness_values=[color for _ in range(10) for color in Colors.off.value]
+    #)
+
+
     battery_percentage = await rvr.get_battery_percentage()
     print('Battery percentage: ', battery_percentage)
 
@@ -42,6 +55,16 @@ async def main():
         '{}: {}'.format(VoltageStates.critical.name, VoltageStates.critical.value)
     )
     print('Voltage states: ', state_info)
+
+
+    # Delay to show LEDs change
+    # await asyncio.sleep(1)
+
+    # All LEDs to green
+    await rvr.set_all_leds(
+        led_group=RvrLedGroups.all_lights.value,
+        led_brightness_values=[color for x in range(10) for color in [0, 255, 0]]
+    )
 
     await rvr.close()
 
