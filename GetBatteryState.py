@@ -46,7 +46,7 @@ async def main():
     battery_percentage = await rvr.get_battery_percentage()
     print("Battery percentage: ", battery_percentage['percentage'], "%")
 
-    # battery in Volt
+    # battery state
     battery_voltage_state = await rvr.get_battery_voltage_state()
     print('Voltage state: ', battery_voltage_state['state'])
 
@@ -63,11 +63,13 @@ async def main():
     # Delay to show LEDs change
     # await asyncio.sleep(1)
 
-    # All LEDs to green
-    await rvr.set_all_leds(
-        led_group=RvrLedGroups.all_lights.value,
-        led_brightness_values=[color for x in range(10) for color in [0, 255, 0]]
-    )
+    # set LEDs depending on the battery state
+    if battery_voltage_state['state'] == 1:
+    	# All LEDs to green
+    	await rvr.set_all_leds(
+        	led_group=RvrLedGroups.all_lights.value,
+        	led_brightness_values=[color for x in range(10) for color in [0, 255, 0]]
+    	)
 
     await rvr.close()
 
