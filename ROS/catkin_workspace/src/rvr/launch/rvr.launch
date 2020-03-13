@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Controls the whole robot and has to run on the "rvr" (Raspberry Pi).
+-->
+<launch>
+  <!--
+  Setting the diffent speeds for the robot.
+  -->
+  <param name="rvr/drivingSpeed" type="int" value="75" />
+  <param name="rvr/turnSpeed"    type="int" value="90" />
+  
+  <!--
+    For the Adafruit motor hat the motor speed is 0-255.
+    s.a. https://learn.adafruit.com/adafruit-motor-shield-v2-for-arduino/library-reference
+  -->
+  <param name="rvr/minMotorSpeed" type="int" value="0"   />
+  <param name="rvr/maxMotorSpeed" type="int" value="255" />
+
+  <!-- Publishing "/tf" tf/tfMessages for the transformation tree. -->
+  <node name="tf_broadcaster" pkg="rvr" type="tf_broadcaster.py" output="screen"/>
+
+  <!-- Publishing the battery voltage as Float32. -->
+  <!-- <node name="battery_publisher" pkg="rvr" type="battery_publisher.py" output="screen"/> -->
+
+  <!-- Publishing "odom" nav_msgs/Odometry for the local planner (navigation stack). -->
+  <node name="odom_publisher" pkg="rvr" type="odom_publisher.py" output="screen"/>
+
+  <!-- Controlling the motor on a hardware level (I2C) -->
+  <!-- <node name="motor_server" pkg="rvr" type="motor_server.py" output="screen"/> -->
+
+  <!-- Base controller listens to "cmd_vel" geometry_msgs/Twist messages and publishes motor control messages (for the I2C control node). -->
+  <!-- <node name="base_controller" pkg="rvr" type="base_controller.py" output="screen"/> -->
+
+  <!-- Camera support -->
+  <!-- <node pkg="rvr" type="camera" name="rvr_camera" output="screen"/> -->
+
+  <!-- This is for the laser Hokuyo URG04lx laser rangefinder. -->
+  <!-- <node name="laser" pkg="urg_node" type="urg_node" args="/dev/ttyLaser" output="screen"/> -->
+
+  <!-- Joystick/gamepad support -->
+  <arg name="joy_config" default="xbox" />
+  <!-- Device path for the joystick -->
+  <arg name="joy_dev" default="/dev/input/js0" />
+  <arg name="config_filepath" default="$(find teleop_twist_joy)/config/$(arg joy_config).config.yaml" />
+
+  <node pkg="joy" type="joy_node" name="joy_node">
+    <param name="dev" value="$(arg joy_dev)" />
+    <param name="deadzone" value="0.3" />
+    <param name="autorepeat_rate" value="4" />
+    <param name="coalesce_interval" value="0.5" />
+  </node>
+
+  <!--
+    This node takes the joystick input, and converts it to Twist message cmd_vel.
+    The cmd_vel will be used by node base_controller which communicates with the motor node.
+  -->
+  <node pkg="teleop_twist_joy" name="teleop_twist_joy" type="teleop_node">
+    <rosparam command="load" file="$(arg config_filepath)" />
+    <param name="scale_linear"  value="0.8" />
+    <param name="scale_angular" value="0.8" />
+  </node>
+</launch>
