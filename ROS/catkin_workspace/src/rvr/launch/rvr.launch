@@ -18,7 +18,7 @@ Controls the whole robot and has to run on the "rvr" (Raspberry Pi).
   <param name="rvr/maxMotorSpeed" type="int" value="255" />
 
   <!-- Publishing "/tf" tf/tfMessages for the transformation tree. -->
-  <node name="tf_broadcaster" pkg="rvr" type="tf_broadcaster.py" output="screen"/>
+  <!-- <node name="tf_broadcaster" pkg="rvr" type="tf_broadcaster.py" output="screen"/> -->
 
   <!-- Publishing the battery voltage as Float32. -->
   <!-- <node name="battery_publisher" pkg="rvr" type="battery_publisher.py" output="screen"/> -->
