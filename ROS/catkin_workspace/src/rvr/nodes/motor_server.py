@@ -69,6 +69,15 @@ rospy.on_shutdown(my_exit)
 
 
 async def main():
+    # This declares a new service named 'motor with the Motor service type.
+    # All requests are passed to the 'handle_motor' function.
+    # 'handle_motor' is called with instances of MotorRequest and returns instances of MotorResponse
+    s = rospy.Service('motor', Motor, handle_motor)
+    rospy.loginfo("Ready to switch motors.")
+
+    # Keep our code from exiting until this service node is shutdown
+    rospy.spin()
+
     await rvr.wake()
 
     # Give RVR time to wake up
