@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-""" This is a service node (server) to control motors on the rvr.
+""" This is a service node (server) to control motors on the RVR.
 It controls the motors via [... tbd ...] on a Raspberry Pi.
 I expects the messsages "FORWARD, BACKWARD, LEFT, RIGHT, STOP".
 

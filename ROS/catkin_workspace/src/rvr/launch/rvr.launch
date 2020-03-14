@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-Controls the whole robot and has to run on the "rvr" (Raspberry Pi).
+Controls the whole robot and has to run on the "RVR" (Raspberry Pi).
 -->
 <launch>
   <!--

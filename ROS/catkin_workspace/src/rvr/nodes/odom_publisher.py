@@ -2,7 +2,7 @@
 # coding=utf-8
 
 """
-This node generates odometrie from the rvr.
+This node generates odometrie from the RVR.
 
 It publishes odometrie messages into ROS for use in the navigation stack.
 Author:  Markus Knapp, 2020
