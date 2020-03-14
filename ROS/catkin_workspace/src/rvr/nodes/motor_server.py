@@ -81,43 +81,6 @@ async def main():
         heading=0,  # Valid heading values are 0-359
         flags=DriveFlagsBitmask.none.value
     )
-
-    # Delay to allow RVR to drive
-    await asyncio.sleep(1)
-
-    await rvr.drive_with_heading(
-        speed=128,  # Valid speed values are 0-255
-        heading=0,  # Valid heading values are 0-359
-        flags=DriveFlagsBitmask.drive_reverse.value
-    )
-
-    # Delay to allow RVR to drive
-    await asyncio.sleep(1)
-
-    await rvr.drive_with_heading(
-        speed=128,   # Valid speed values are 0-255
-        heading=90,  # Valid heading values are 0-359
-        flags=DriveFlagsBitmask.none.value
-    )
-
-    # Delay to allow RVR to drive
-    await asyncio.sleep(1)
-
-    await rvr.drive_with_heading(
-        speed=128,    # Valid speed values are 0-255
-        heading=270,  # Valid heading values are 0-359
-        flags=DriveFlagsBitmask.none.value
-    )
-
-    # Delay to allow RVR to drive
-    await asyncio.sleep(1)
-
-    await rvr.drive_with_heading(
-        speed=0,    # Valid heading values are 0-359
-        heading=0,  # Valid heading values are 0-359
-        flags=DriveFlagsBitmask.none.value
-    )
-
     # Delay to allow RVR to drive
     await asyncio.sleep(1)
 
