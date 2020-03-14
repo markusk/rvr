@@ -68,6 +68,39 @@ def my_exit():
 rospy.on_shutdown(my_exit)
 
 
+# handle_motor is called with instances of MotorRequest and returns instances of MotorResponse
+# The ROS request name comes directly from the .srv filename
+def handle_motor(req):
+    """ In this function all the work is done :) """
+    if hostname == 'rvr':
+        # start RVR comms
+        await rvr.wake()
+        # Give RVR time to wake up
+        await asyncio.sleep(2)
+        await rvr.reset_yaw()
+
+    # switch motors
+    if (req.direction == "FORWARD"): # and speed. returns result.
+        # drive
+        rospy.loginfo("Driving %s @ speed %s.", req.direction, req.speed)
+        if hostname == 'rvr':
+            # set speed for RVR
+            speed=req.speed
+            # translate direction to heading for RVR
+            # @to do!
+            await rvr.drive_with_heading(
+                speed=128,  # Valid speed values are 0-255
+                heading=0,  # Valid heading values are 0-359
+                flags=DriveFlagsBitmask.none.value
+            )
+            # Delay to allow RVR to drive
+            await asyncio.sleep(1)
+
+    if hostname == 'rvr':
+        # stop RVR comms
+        await rvr.close()
+
+
 async def main():
     # This declares a new service named 'motor with the Motor service type.
     # All requests are passed to the 'handle_motor' function.
@@ -77,23 +110,6 @@ async def main():
 
     # Keep our code from exiting until this service node is shutdown
     rospy.spin()
-
-    await rvr.wake()
-
-    # Give RVR time to wake up
-    await asyncio.sleep(2)
-
-    await rvr.reset_yaw()
-
-    await rvr.drive_with_heading(
-        speed=128,  # Valid speed values are 0-255
-        heading=0,  # Valid heading values are 0-359
-        flags=DriveFlagsBitmask.none.value
-    )
-    # Delay to allow RVR to drive
-    await asyncio.sleep(1)
-
-    await rvr.close()
 
 
 if __name__ == '__main__':
