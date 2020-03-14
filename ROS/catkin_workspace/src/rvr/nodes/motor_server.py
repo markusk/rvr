@@ -55,12 +55,12 @@ else:
     rospy.logwarn("Skipping RVR setup. This is not the robot.")
 
 
-# define a clean node exit
+# define a clean ROS node exit
 def my_exit():
     rospy.loginfo("Shutting down motor service...")
     # run some parts only on the real robot
-    if hostname == 'rvr'
-        turnOffMotors();
+    if hostname == 'rvr':
+        # turn Off Motors()
     rospy.loginfo("...shutting down motor service complete.")
 
 
