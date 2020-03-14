@@ -169,9 +169,8 @@ async def main():
 
     await rvr.sensor_control.start(interval=250)
 
-    # The asyncio loop will run forever to allow infinite streaming.
 
-
+# The asyncio loop will run forever to allow infinite streaming.
 if __name__ == '__main__':
     try:
         asyncio.ensure_future(
