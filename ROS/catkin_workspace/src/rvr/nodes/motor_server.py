@@ -72,12 +72,6 @@ rospy.on_shutdown(my_exit)
 # The ROS request name comes directly from the .srv filename
 async def handle_motor(req):
     """ In this function all the work is done :) """
-    if hostname == 'rvr':
-        # start RVR comms
-        await rvr.wake()
-        # Give RVR time to wake up
-        await asyncio.sleep(2)
-        await rvr.reset_yaw()
 
     # switch motors
     if (req.direction == "FORWARD"): # and speed. returns result.
@@ -96,10 +90,6 @@ async def handle_motor(req):
             # Delay to allow RVR to drive
             await asyncio.sleep(1)
 
-    if hostname == 'rvr':
-        # stop RVR comms
-        await rvr.close()
-
 
 async def main():
     # This declares a new service named 'motor with the Motor service type.
@@ -107,6 +97,16 @@ async def main():
     # 'handle_motor' is called with instances of MotorRequest and returns instances of MotorResponse
     s = rospy.Service('motor', Motor, handle_motor)
     rospy.loginfo("Ready to switch motors.")
+
+    # start RVR comms
+    if hostname == 'rvr':
+        rospy.loginfo("Waking up RVR...")
+        await rvr.wake()
+        # Give RVR time to wake up (2 seconds)
+        await asyncio.sleep(2)
+        # reset YAW
+        await rvr.reset_yaw()
+        rospy.loginfo("...done.")
 
     # Keep our code from exiting until this service node is shutdown
     rospy.spin()
@@ -121,10 +121,15 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print('\nProgram terminated with keyboard interrupt.')
 
-        loop.run_until_complete(
-            rvr.close()
-        )
+
+        if hostname == 'rvr':
+            loop.run_until_complete(
+                # stop RVR comms
+                rvr.close()
+            )
 
     finally:
-        if loop.is_running():
-            loop.close()
+        if hostname == 'rvr':
+            if loop.is_running():
+                # stop RVR comms
+                loop.close()
