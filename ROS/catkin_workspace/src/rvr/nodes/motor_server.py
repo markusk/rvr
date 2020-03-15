@@ -98,6 +98,10 @@ async def handle_motor(req):
     else:
       rospy.logerr("Direction '%s' not implemented.", req.direction)
 
+    # The name of the 'xyzResponse' comes directly from the Xyz.srv filename!
+    # We return the speed as "okay"
+    """ @todo is this still needed?: return MotorResponse(req.speed) """
+
 
 async def main():
     # This declares a new service named 'motor with the Motor service type.
