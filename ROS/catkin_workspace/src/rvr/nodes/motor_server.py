@@ -70,7 +70,7 @@ rospy.on_shutdown(my_exit)
 
 # handle_motor is called with instances of MotorRequest and returns instances of MotorResponse
 # The ROS request name comes directly from the .srv filename
-def handle_motor(req):
+async def handle_motor(req):
     """ In this function all the work is done :) """
     if hostname == 'rvr':
         # start RVR comms
@@ -90,7 +90,7 @@ def handle_motor(req):
             # @to do!
             await rvr.drive_with_heading(
                 speed=128,  # Valid speed values are 0-255
-                heading=0,  # Valid heading values are 0-359
+                heading=90,  # Valid heading values are 0-359
                 flags=DriveFlagsBitmask.none.value
             )
             # Delay to allow RVR to drive
