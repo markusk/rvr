@@ -85,6 +85,12 @@ async def handle_motor(req):
             )
             # Delay to allow RVR to drive
             await asyncio.sleep(1)
+    elif (req.direction == "STOP"):
+        rospy.loginfo("Stopping.")
+        if hostname == 'rvr':
+            await rvr.drive_with_heading(
+                speed  =         0,  # Valid speed values are 0-255
+                heading=         0,  # Valid heading values are 0-359
                 flags=DriveFlagsBitmask.none.value
             )
             # Delay to allow RVR to drive
