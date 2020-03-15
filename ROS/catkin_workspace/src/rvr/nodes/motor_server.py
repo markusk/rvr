@@ -61,7 +61,7 @@ def my_exit():
     # run some parts only on the real robot
     if hostname == 'rvr':
         # turn Off Motors()
-    rospy.loginfo("...shutting down motor service complete.")
+        rospy.loginfo("...shutting down motor service complete.")
 
 
 # call this method on ROS node exit
@@ -84,13 +84,13 @@ async def handle_motor(req):
         # drive
         rospy.loginfo("Driving %s @ speed %s.", req.direction, req.speed)
         if hostname == 'rvr':
-            # set speed for RVR
+            # set RVR speed
             speed=req.speed
             # translate direction to heading for RVR
             # @to do!
             await rvr.drive_with_heading(
-                speed=128,  # Valid speed values are 0-255
-                heading=90,  # Valid heading values are 0-359
+                speed  = 128,  # Valid speed values are 0-255
+                heading=  90,  # Valid heading values are 0-359
                 flags=DriveFlagsBitmask.none.value
             )
             # Delay to allow RVR to drive
