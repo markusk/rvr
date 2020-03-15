@@ -95,6 +95,8 @@ async def handle_motor(req):
             )
             # Delay to allow RVR to drive
             await asyncio.sleep(1)
+    else:
+      rospy.logerr("Direction '%s' not implemented.", req.direction)
 
 
 async def main():
