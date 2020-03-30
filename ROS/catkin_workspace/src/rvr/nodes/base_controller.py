@@ -66,7 +66,7 @@ def drive(direction, speed):
         # show result
         rospy.loginfo(rospy.get_caller_id() + ' says result is %s.', response.result)
 
-    except rospy.ServiceException, e:
+    except rospy.ServiceException as e:
         rospy.logerr("Service call for 'motor' failed: %s", e)
 
 
