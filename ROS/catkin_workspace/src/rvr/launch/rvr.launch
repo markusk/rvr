@@ -30,7 +30,7 @@ Controls the whole robot and has to run on the "RVR" (Raspberry Pi).
   <node name="motor_server" pkg="rvr" type="motor_server.py" output="screen"/>
 
   <!-- Base controller listens to "cmd_vel" geometry_msgs/Twist messages and publishes motor control messages (for the motor_server node). -->
-  <!-- <node name="base_controller" pkg="rvr" type="base_controller.py" output="screen"/> -->
+  <node name="base_controller" pkg="rvr" type="base_controller.py" output="screen"/>
 
   <!-- Camera support -->
   <!-- <node pkg="rvr" type="camera" name="rvr_camera" output="screen"/> -->
