@@ -27,7 +27,7 @@ import rospy
 from geometry_msgs.msg import Twist
 
 # The rvr package has the motor server, which listens to messages from here
-from rvr.srv import *
+# from rvr.srv import *
 
 
 # Getting robot parameters

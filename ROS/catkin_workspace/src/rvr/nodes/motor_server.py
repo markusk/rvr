@@ -12,7 +12,7 @@ Website: https://direcs.de
 
 
 # name of the package.srv
-from rvr.srv import *
+# from rvr.srv import *
 import rospy
 
 # Service nodes have to be initialised
