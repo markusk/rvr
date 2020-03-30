@@ -58,7 +58,7 @@ catkin_make
 
 ---
 
-## 3. Run ROS
+## 4. Run ROS
 ### The main launch file
 On the robot (Raspberry Pi):
 ```
@@ -103,10 +103,11 @@ Controls the motors on the robot. Uses:
 ### R
 #### rvr
 Controls the whole robot. To be started on the robot. Uses:
-_**to do:**_ _tf_broadcaster.py_
-_**to do:**_  _battery_publisher.py_
-_**to do:**_  _imu_bno055.py_
 - _motor_server.py_
-_**to do:**_  _base_controller.py_
-_**to do:**_  _minibot_camera_
-_**to do:**_  _urg_node_
+_**to do:**_
+- _tf_broadcaster.py_
+- _battery_publisher.py_
+- _imu_bno055.py_
+- _base_controller.py_
+- _minibot_camera_
+- _urg_node_
