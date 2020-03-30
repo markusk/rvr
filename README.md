@@ -36,8 +36,13 @@ sudo apt-get install joystick
 Supported by the Kernel - if used with the USB connector.
 
 
+## 3. ROS Python support
 
-## 3. ROS Setup
+```bash
+sudo apt install python-rosinstall python-rosinstall-generator python-wstool build-essential
+```
+
+## 4. ROS Setup
 - Install ROS
 
 ```bash
