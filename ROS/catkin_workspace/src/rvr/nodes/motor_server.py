@@ -18,6 +18,11 @@ import rospy
 # Service nodes have to be initialised
 rospy.init_node('motor_server', anonymous=False)
 
+# Getting robot parameters
+rospy.loginfo('Getting hostname for robot from config.')
+configHostname = rospy.get_param('/rvr/hostname')
+rospy.loginfo("Awaiting hostname %s.", configHostname)
+
 # for coroutines
 import asyncio
 
@@ -25,10 +30,10 @@ import asyncio
 import socket
 # showing hostname
 hostname = socket.gethostname()
-if hostname == 'rvrmate':
+if hostname == configHostname:
     rospy.loginfo("Running on host %s.", hostname)
 else:
-    rospy.logwarn("Running on host %s!", hostname)
+    rospy.logwarn("Running on host %s, and not %s as set in main launchfile!" % (hostname, configHostname))
 
 
 # RVR stuff
