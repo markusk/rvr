@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding=utf-8
 
 """
@@ -18,6 +18,8 @@ import rospy
 # Service nodes have to be initialised
 rospy.init_node('motor_server', anonymous=False)
 
+# for coroutines
+import asyncio
 
 # getting the hostname of the underlying operating system
 import socket
