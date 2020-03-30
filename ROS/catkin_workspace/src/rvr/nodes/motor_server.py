@@ -37,7 +37,7 @@ else:
 
 
 # RVR stuff
-if hostname == 'rvrmate':
+if hostname == configHostname:
     rospy.loginfo("Setting up RVR...")
     
     import os
@@ -66,7 +66,7 @@ else:
 def my_exit():
     rospy.loginfo("Shutting down motor service...")
     # run some parts only on the real robot
-    if hostname == 'rvrmate':
+    if hostname == configHostname:
         # turn Off Motors()
         rospy.loginfo("...shutting down motor service complete.")
 
@@ -84,7 +84,7 @@ async def handle_motor(req):
     if (req.direction == "FORWARD"): # and speed. returns result.
         # drive
         rospy.loginfo("Driving %s @ speed %s.", req.direction, req.speed)
-        if hostname == 'rvrmate':
+        if hostname == configHostname:
             await rvr.drive_with_heading(
                 speed  = req.speed,  # Valid speed values are 0-255
                 heading=        90,  # Valid heading values are 0-359
@@ -94,7 +94,7 @@ async def handle_motor(req):
             await asyncio.sleep(1)
     elif (req.direction == "STOP"):
         rospy.loginfo("Stopping.")
-        if hostname == 'rvrmate':
+        if hostname == configHostname:
             await rvr.drive_with_heading(
                 speed  =         0,  # Valid speed values are 0-255
                 heading=         0,  # Valid heading values are 0-359
@@ -118,7 +118,7 @@ async def main():
     rospy.loginfo("Ready to switch motors.")
 
     # start RVR comms
-    if hostname == 'rvrmate':
+    if hostname == configHostname:
         rospy.loginfo("Waking up RVR...")
         await rvr.wake()
         # Give RVR time to wake up (2 seconds)
@@ -140,15 +140,14 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print('\nProgram terminated with keyboard interrupt.')
 
-
-        if hostname == 'rvrmate':
+        if hostname == configHostname:
             loop.run_until_complete(
                 # stop RVR comms
                 rvr.close()
             )
 
     finally:
-        if hostname == 'rvrmate':
+        if hostname == configHostname:
             if loop.is_running():
                 # stop RVR comms
                 loop.close()
