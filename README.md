@@ -35,14 +35,7 @@ sudo apt-get install joystick
 ### Microsoft XBOX Wireless Controller
 Supported by the Kernel - if used with the USB connector.
 
-
-## 3. ROS Python support
-
-```bash
-sudo apt install python-rosinstall python-rosinstall-generator python-wstool build-essential
-```
-
-## 4. ROS Setup
+## 3. ROS Setup
 - Install ROS
 
 ```bash
@@ -69,9 +62,15 @@ ln -s /home/$USERNAME/rvr/ROS/catkin_workspace/src/ src
 catkin_make
 ```
 
+## 4. ROS Python support
+
+```bash
+sudo apt install python-rosinstall python-rosinstall-generator python-wstool build-essential
+```
+
 ---
 
-## 4. Run ROS
+## 5. Run ROS
 ### The main launch file
 On the robot (Raspberry Pi):
 
