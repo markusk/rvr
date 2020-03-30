@@ -19,12 +19,12 @@ _**This code is still in the middle of the development process!!**_
 sudo ssh-keygen -A
 ```
 
-- start ssh
+- Start ssh
 ```
 sudo systemctl restart ssh.service
 ```
 
-## 2. Joystick/Gamepad O support
+## 2. Joystick/Gamepad OS support
 ```
 sudo apt-get install joystick
 ```
@@ -34,23 +34,23 @@ Supported by the Kernel - if used with the USB connector.
 
 
 ## 3. ROS Setup
-- install ROS
+- Install ROS
 ```
 sudo apt-get install ros-melodic-ros-base
 ```
 
-- install ROS packages
+- Install ROS packages
 ```
 sudo apt-get install ros-melodic-urg-node ros-melodic-teleop-twist-keyboard joystick ros-melodic-joystick-drivers ros-melodic-teleop-twist-joy
 ```
 
-- create a catkin workspace without 'src' folder:
+- Create a catkin workspace without 'src' folder:
 ```
 mkdir catkin_ws
 cd ~/catkin_ws
 ```
 
-- create symbolic link with the name 'src', pointing to the 'src' folder in the ROS directory from this repository:
+- Create symbolic link with the name 'src', pointing to the 'src' folder in the ROS directory from this repository:
 ```
 ln -s /home/$USERNAME/rvr/ROS/catkin_workspace/src/ src
 catkin_make
