@@ -2,22 +2,18 @@
 
 A ROS Python package for the Sphero RVR.
 
+_Please note: this code is still in the middle of the development process!_
+
 [![GitHub issues](https://img.shields.io/github/issues/markusk/rvr)](https://github.com/markusk/rvr/issues) [![GitHub stars](https://img.shields.io/github/stars/markusk/rvr)](https://github.com/markusk/rvr/stargazers) [![GitHub license](https://img.shields.io/github/license/markusk/rvr)](https://github.com/markusk/rvr/blob/master/LICENSE)
-
----
-
-## +++ Important notice +++
-
-_**This code is still in the middle of the development process!**_
 
 ---
 
 ## Step 1: OS Setup
 
-- Install [Ubuntu Mate](https://ubuntu-mate.org/download/) on your Raspberry Pi
-- Install [ROS](http://wiki.ros.org/melodic/Installation/Ubuntu/) on your Ubuntu Mate
+- Install Ubuntu Mate on your Raspberry Pi ([Instruction](https://ubuntu-mate.org/download/))
+- Install ROS on your Ubuntu Mate ([Instruction](http://wiki.ros.org/melodic/Installation/Ubuntu/))
 
-- [Enable SSH](https://askubuntu.com/questions/626372/could-not-load-host-key-etc-ssh-ssh-host-ed25519-key-in-var-log-auth-log/649782):
+- Enable SSH (explanation see [here](https://askubuntu.com/questions/626372/could-not-load-host-key-etc-ssh-ssh-host-ed25519-key-in-var-log-auth-log/649782)):
 
 ```bash
 sudo ssh-keygen -A
