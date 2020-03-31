@@ -2,18 +2,17 @@
 
 A ROS Python package for the Sphero RVR.
 
-[![GitHub issues](https://img.shields.io/github/issues/markusk/rvr)](https://github.com/markusk/rvr/issues)
-[![GitHub stars](https://img.shields.io/github/stars/markusk/rvr)](https://github.com/markusk/rvr/stargazers)
-[![GitHub license](https://img.shields.io/github/license/markusk/rvr)](https://github.com/markusk/rvr/blob/master/LICENSE)
----
-
-## 0. Important notice
-
-_**This code is still in the middle of the development process!!**_
+[![GitHub issues](https://img.shields.io/github/issues/markusk/rvr)](https://github.com/markusk/rvr/issues) [![GitHub stars](https://img.shields.io/github/stars/markusk/rvr)](https://github.com/markusk/rvr/stargazers) [![GitHub license](https://img.shields.io/github/license/markusk/rvr)](https://github.com/markusk/rvr/blob/master/LICENSE)
 
 ---
 
-## 1. OS Setup
+## +++ Important notice +++
+
+_**This code is still in the middle of the development process!**_
+
+---
+
+## Step 1: OS Setup
 
 - Install [Ubuntu Mate](https://ubuntu-mate.org/download/) on your Raspberry Pi
 - Install [ROS](http://wiki.ros.org/melodic/Installation/Ubuntu/) on your Ubuntu Mate
@@ -30,7 +29,7 @@ sudo ssh-keygen -A
 sudo systemctl restart ssh.service
 ```
 
-## 2. Joystick/Gamepad OS support
+## Step 2: Joystick/Gamepad OS support
 
 ```bash
 sudo apt-get install joystick
@@ -46,7 +45,7 @@ Supported by the Kernel - if used with the USB connector.
 jstest --normal /dev/input/js0
 ```
 
-## 3. ROS Setup
+## Step 3: ROS Setup
 
 - Install ROS
 
@@ -74,15 +73,13 @@ ln -s /home/$USERNAME/rvr/ROS/catkin_workspace/src/ src
 catkin_make
 ```
 
-## 4. ROS Python support
+## Step 4: ROS Python support
 
 ```bash
 sudo apt install python-rosinstall python-rosinstall-generator python-wstool build-essential
 ```
 
----
-
-## 5. Run ROS
+## Step 5: Run ROS
 
 ### The main launch file
 
@@ -100,9 +97,7 @@ rosparam set joy_node/dev "/dev/input/js1"
 roslaunch rvr ground_control_center.launch
 ```
 
----
-
-## _**to do:**_ 4. Setting up ROS for autostart
+## _**to do:**_ Step 6: Setting up ROS for autostart
 
 ### systemd under Ubuntu
 
