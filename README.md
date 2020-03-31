@@ -90,7 +90,7 @@ cd ~/catkin_ws
 - Create symbolic link with the name 'src', pointing to the 'src' folder in the ROS directory from this repository:
 
 ```bash
-ln -s /home/$USERNAME/develop/rvr/ROS/catkin_workspace/src/ src
+ln -s ~/$USERNAME/develop/rvr/ROS/catkin_workspace/src/ src
 catkin_make
 ```
 
@@ -103,10 +103,13 @@ sudo apt install python-rosinstall python-rosinstall-generator python-wstool bui
 ## Step 5: Setup Sphero Public SDK
 
 #### Long version
+
 - Setup SDK with method 2: [Instructions](https://sdk.sphero.com/docs/getting_started/raspberry_pi/raspberry_pi_setup/#using-git)
 
 #### Short version
+
 - _Without_ [pipenv](https://github.com/pypa/pipenv):
+
 ```bash
 pip3 install aiohttp pyserial_asyncio
 cd ~/develop
@@ -115,14 +118,21 @@ git clone https://github.com/sphero-inc/sphero-sdk-raspberrypi-python
 
 #### ~~"Fix" the serial port path and~~ Give yourself permission for the serial port
 
-- Test SDK / Connection to RVR
+#### Test SDK / Connection to RVR
 
-Turn on the RVR and run on of the provided examples:
+- Link your first RVR test code directory into the SDK (that it finds the Sphero lib)
 
 ```bash
-cd ~/develop/sphero-sdk-raspberrypi-python/getting_started/asyncio/leds/
+ln -s ~/$USERNAME/develop/rvr/test/ ~/$USERNAME/develop/sphero-sdk-raspberrypi-python/projects/test/
+```
+
+#### Turn on the RVR and run the test code
+
+```bash
+cd ~/develop/sphero-sdk-raspberrypi-python/projects/test
 python3 set_single_led.py
 ```
+
 All RVR LEDs should glow now!
 
 
