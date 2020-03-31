@@ -58,7 +58,7 @@ sudo apt-get install ros-melodic-urg-node ros-melodic-teleop-twist-keyboard joys
 - Create a catkin workspace without 'src' folder:
 
 ```bash
-mkdir catkin_ws
+mkdir ~/catkin_ws
 cd ~/catkin_ws
 ```
 
