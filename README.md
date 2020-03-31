@@ -123,14 +123,14 @@ git clone https://github.com/sphero-inc/sphero-sdk-raspberrypi-python
 - Link your first RVR test code directory into the SDK (that it finds the Sphero lib)
 
 ```bash
-ln -s ~/$USERNAME/develop/rvr/test/ ~/$USERNAME/develop/sphero-sdk-raspberrypi-python/projects/test/
+ln -s ~/$USERNAME/develop/rvr/test/ ~/$USERNAME/develop/sphero-sdk-raspberrypi-python/projects/
 ```
 
 #### Turn on the RVR and run the test code
 
 ```bash
 cd ~/develop/sphero-sdk-raspberrypi-python/projects/test
-python3 set_single_led.py
+python3 GetBatteryState.py
 ```
 
 All RVR LEDs should glow now!
