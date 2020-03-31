@@ -55,6 +55,19 @@ sudo apt-get install ros-melodic-ros-base
 sudo apt-get install ros-melodic-urg-node ros-melodic-teleop-twist-keyboard joystick ros-melodic-joystick-drivers ros-melodic-teleop-twist-joy
 ```
 
+- create your own development directory "develop"
+
+```bash
+mkdir ~/develop
+cd ~/develop
+```
+
+- clone this repository
+
+```bash
+git clone https://github.com/markusk/rvr.git
+```
+
 - Create a catkin workspace without 'src' folder:
 
 ```bash
@@ -65,7 +78,7 @@ cd ~/catkin_ws
 - Create symbolic link with the name 'src', pointing to the 'src' folder in the ROS directory from this repository:
 
 ```bash
-ln -s /home/$USERNAME/rvr/ROS/catkin_workspace/src/ src
+ln -s /home/$USERNAME/develop/rvr/ROS/catkin_workspace/src/ src
 catkin_make
 ```
 
