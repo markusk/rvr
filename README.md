@@ -25,6 +25,18 @@ sudo ssh-keygen -A
 sudo systemctl restart ssh.service
 ```
 
+#### Setup Raspbery Pi
+
+sudo raspi-config
+
+Choose:
+- Interfacing Options
+- P5 Serial
+- No (No Login shell over serial port)
+- Yes (Enable serial port hardware)
+Reboot your Raspberry Pi
+
+
 ## Step 2: Joystick/Gamepad OS support
 
 ```bash
@@ -88,7 +100,33 @@ catkin_make
 sudo apt install python-rosinstall python-rosinstall-generator python-wstool build-essential
 ```
 
-## Step 5: Run ROS
+## Step 5: Setup Sphero Public SDK
+
+#### Long version
+- Setup SDK with method 2: [Instructions](https://sdk.sphero.com/docs/getting_started/raspberry_pi/raspberry_pi_setup/#using-git)
+
+#### Short version
+- _Without_ [pipenv](https://github.com/pypa/pipenv):
+```bash
+pip3 install aiohttp pyserial_asyncio
+cd ~/develop
+git clone https://github.com/sphero-inc/sphero-sdk-raspberrypi-python
+```
+
+#### ~~"Fix" the serial port path and~~ Give yourself permission for the serial port
+
+- Test SDK / Connection to RVR
+
+Turn on the RVR and run on of the provided examples:
+
+```bash
+cd ~/develop/sphero-sdk-raspberrypi-python/getting_started/asyncio/leds/
+python3 set_single_led.py
+```
+All RVR LEDs should glow now!
+
+
+## Step 6: Run ROS
 
 ### The main launch file
 
