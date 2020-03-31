@@ -25,17 +25,36 @@ sudo ssh-keygen -A
 sudo systemctl restart ssh.service
 ```
 
-#### Setup Raspbery Pi
+#### Setup the Raspbery Pi serial port
 
+```bash
 sudo raspi-config
+```
 
 Choose:
+
 - Interfacing Options
 - P5 Serial
 - No (No Login shell over serial port)
 - Yes (Enable serial port hardware)
-Reboot your Raspberry Pi
 
+Do _not_ reboot now!
+
+- Change /boot/cmdline.txt file regarding tty-entries to this:
+
+[...] console=tty1 [...]
+
+```bash
+sudo nano /boot/cmdline.txt
+```
+
+- Add your user to the dialout group:
+
+```bash
+sudo gpasswd --add ${USER} dialout
+```
+
+- Now reboot the Raspberry Pi!
 
 ## Step 2: Joystick/Gamepad OS support
 
@@ -116,14 +135,15 @@ cd ~/develop
 git clone https://github.com/sphero-inc/sphero-sdk-raspberrypi-python
 ```
 
-#### ~~"Fix" the serial port path and~~ Give yourself permission for the serial port
-
 #### Test SDK / Connection to RVR
 
-- Link your first RVR test code directory into the SDK (that it finds the Sphero lib)
+- ~~Link~~ Copy(?!!) your first RVR test code directory into the SDK (that it finds the Sphero lib)
+
+~~ln -s ~/$USERNAME/develop/rvr/test/ ~/$USERNAME/develop/sphero-sdk-raspberrypi-python/projects/~~
+
 
 ```bash
-ln -s ~/$USERNAME/develop/rvr/test/ ~/$USERNAME/develop/sphero-sdk-raspberrypi-python/projects/
+cp -r ~/$USERNAME/develop/rvr/test/ ~/$USERNAME/develop/sphero-sdk-raspberrypi-python/projects/
 ```
 
 #### Turn on the RVR and run the test code
