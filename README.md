@@ -40,7 +40,7 @@ Choose:
 
 Do _not_ reboot now!
 
-- Change /boot/cmdline.txt file regarding tty-entries to this:
+- Change /boot/cmdline.txt file regarding tty-entries to this (credits to [richard_mark](https://ubuntu-mate.community/t/writing-to-the-serial-port-gpio-tx-rx/4632/3)):
 
 [...] console=tty1 [...]
 
