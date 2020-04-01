@@ -39,11 +39,11 @@ else:
 # RVR stuff
 if hostname == configHostname:
     rospy.loginfo("Setting up RVR...")
-    
+
     import os
     import sys
-    # path to find the RVR lib from the SDK
-    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), './lib/')))
+    # path to find the RVR lib from the public SDK
+    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../lib/')))
 
     import asyncio
     from sphero_sdk import SpheroRvrAsync
