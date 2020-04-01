@@ -126,3 +126,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Markus individual staff
+ROS/catkin_workspace/src/CMakeLists.txt
+ROS/catkin_workspace/src/rvr/lib/.fw
+ROS/catkin_workspace/src/rvr/lib/sphero_sdk
