@@ -153,9 +153,20 @@ python3 GetBatteryState.py
 The output should look something like this:
 
 ```bash
+Checking RVR firmware versions...
+Checking CMS firmware versions...
+Firmware check complete.
 Battery percentage:  90 %
 Voltage state:  1
 Voltage states:  [unknown: 0, ok: 1, low: 2, critical: 3]
+```
+
+_Note: The firmware check seems to pop up from time to time._
+
+#### If the last step was successfull, make the SDK accessible for our RVR ROS package.
+
+```bash
+ln -s ~/develop/sphero-sdk-raspberrypi-python/sphero_sdk/ ~/develop/rvr/ROS/catkin_workspace/src/rvr/lib/
 ```
 
 ## Step 6: Run ROS
