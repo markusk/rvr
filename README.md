@@ -135,19 +135,19 @@ cd ~/develop
 git clone https://github.com/sphero-inc/sphero-sdk-raspberrypi-python
 ```
 
-### Test the SDK / Connection to RVR
+### Make the Sphero Public SDK accessible
 
-- Copy(!) your first RVR test code directory into the SDK (that it finds the Sphero lib). _Note: At the time being I don't know why we have to _copy_ the file instead of symlinking it... When linking it, the sphero_sdk will not be found._
+- Create symbolic link, pointing to the 'sphero_sdk' folder:
 
 ```bash
-cp -r ~/develop/rvr/test/ ~/develop/sphero-sdk-raspberrypi-python/projects/
+ln -s ~/develop/sphero-sdk-raspberrypi-python/sphero_sdk/ ~/develop/rvr/ROS/catkin_workspace/src/rvr/lib/
 ```
 
-#### Turn on the RVR and run the test code
+#### Turn on the RVR and test the SDK
 
 ```bash
-cd ~/develop/sphero-sdk-raspberrypi-python/projects/test
-python3 GetBatteryState.py
+cd ~/catkin_ws/src/rvr/nodes
+python3 test.py
 ```
 
 The output should look something like this:
@@ -163,12 +163,6 @@ Voltage states:  [unknown: 0, ok: 1, low: 2, critical: 3]
 
 _Note: The firmware check seems to pop up from time to time._
 
-#### If the last step was successfull, make the SDK accessible for our RVR ROS package.
-
-```bash
-ln -s ~/develop/sphero-sdk-raspberrypi-python/sphero_sdk/ ~/develop/rvr/ROS/catkin_workspace/src/rvr/lib/
-```
-
 ## Step 6: Run ROS
 
 ### The main launch file
@@ -176,6 +170,7 @@ ln -s ~/develop/sphero-sdk-raspberrypi-python/sphero_sdk/ ~/develop/rvr/ROS/catk
 On the robot (Raspberry Pi):
 
 ```bash
+cd ~/catkin_ws
 roslaunch rvr rvr.launch
 ```
 
