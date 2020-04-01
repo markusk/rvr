@@ -133,12 +133,12 @@ cd ~/develop
 git clone https://github.com/sphero-inc/sphero-sdk-raspberrypi-python
 ```
 
-#### Test SDK / Connection to RVR
+### Test the SDK / Connection to RVR
 
 - Copy(!) your first RVR test code directory into the SDK (that it finds the Sphero lib). _Note: At the time being I don't know why we have to _copy_ the file instead of symlinking it... When linking it, the sphero_sdk will not be found._
 
 ```bash
-cp -r ~/${USER}/develop/rvr/test/ ~/${USER}/develop/sphero-sdk-raspberrypi-python/projects/
+cp -r ~/develop/rvr/test/ ~/develop/sphero-sdk-raspberrypi-python/projects/
 ```
 
 #### Turn on the RVR and run the test code
