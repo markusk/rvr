@@ -11,8 +11,6 @@ _Please note: this code is still in the middle of the development process!_
 ## Step 1: OS Setup
 
 - Install Ubuntu Mate on your Raspberry Pi ([Instruction](https://ubuntu-mate.org/download/))
-- Install ROS on your Ubuntu Mate ([Instruction](http://wiki.ros.org/melodic/Installation/Ubuntu/))
-
 - Enable SSH (explanation see [here](https://askubuntu.com/questions/626372/could-not-load-host-key-etc-ssh-ssh-host-ed25519-key-in-var-log-auth-log/649782)):
 
 ```bash
@@ -74,7 +72,7 @@ jstest --normal /dev/input/js0
 
 ## Step 3: ROS Setup
 
-- Install ROS
+- Install ROS on your Ubuntu Mate ([Instruction](http://wiki.ros.org/melodic/Installation/Ubuntu/))
 
 ```bash
 sudo apt-get install ros-melodic-ros-base
@@ -109,7 +107,7 @@ cd ~/catkin_ws
 - Create symbolic link with the name 'src', pointing to the 'src' folder in the ROS directory from this repository:
 
 ```bash
-ln -s ~/$USERNAME/develop/rvr/ROS/catkin_workspace/src/ src
+ln -s ~/${USER}/develop/rvr/ROS/catkin_workspace/src/ src
 catkin_make
 ```
 
@@ -137,10 +135,10 @@ git clone https://github.com/sphero-inc/sphero-sdk-raspberrypi-python
 
 #### Test SDK / Connection to RVR
 
-- Copy(!) your first RVR test code directory into the SDK (that it finds the Sphero lib). _Note: At the time being I don't know why I have to _copy_ the file instead of symlinking it... When linking it, the sphero_sdk will not be found._
+- Copy(!) your first RVR test code directory into the SDK (that it finds the Sphero lib). _Note: At the time being I don't know why we have to _copy_ the file instead of symlinking it... When linking it, the sphero_sdk will not be found._
 
 ```bash
-cp -r ~/$USERNAME/develop/rvr/test/ ~/$USERNAME/develop/sphero-sdk-raspberrypi-python/projects/
+cp -r ~/${USER}/develop/rvr/test/ ~/${USER}/develop/sphero-sdk-raspberrypi-python/projects/
 ```
 
 #### Turn on the RVR and run the test code
@@ -210,6 +208,7 @@ Controls the motors on the robot. Uses:
 Controls the whole robot. To be started on the robot. Uses:
 
 - _motor_server.py_
+
 _**to do:**_
 - _tf_broadcaster.py_
 - _battery_publisher.py_
