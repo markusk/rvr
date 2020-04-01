@@ -143,11 +143,11 @@ git clone https://github.com/sphero-inc/sphero-sdk-raspberrypi-python
 ln -s ~/develop/sphero-sdk-raspberrypi-python/sphero_sdk/ ~/develop/rvr/ROS/catkin_workspace/src/rvr/lib/
 ```
 
-#### Turn on the RVR and test the SDK
+### Turn on the RVR and test the SDK
 
 ```bash
 cd ~/catkin_ws/src/rvr/nodes
-python3 test.py
+./test.py
 ```
 
 The output should look something like this:
