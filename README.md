@@ -84,14 +84,22 @@ sudo apt-get install ros-melodic-ros-base
 sudo apt-get install ros-melodic-urg-node ros-melodic-teleop-twist-keyboard joystick ros-melodic-joystick-drivers ros-melodic-teleop-twist-joy
 ```
 
-- create your own development directory "develop"
+- Install ROS Python support
+
+```bash
+sudo apt install python-rosinstall python-rosinstall-generator python-wstool build-essential
+```
+
+## Step 4: Create a central place for this repository
+
+- Create your own development directory "develop"
 
 ```bash
 mkdir ~/develop
 cd ~/develop
 ```
 
-- clone this repository
+- Clone this repository
 
 ```bash
 git clone https://github.com/markusk/rvr.git
@@ -111,12 +119,6 @@ ln -s ~/${USER}/develop/rvr/ROS/catkin_workspace/src/ src
 catkin_make
 ```
 
-## Step 4: ROS Python support
-
-```bash
-sudo apt install python-rosinstall python-rosinstall-generator python-wstool build-essential
-```
-
 ## Step 5: Setup Sphero Public SDK
 
 #### Long version
@@ -133,12 +135,12 @@ cd ~/develop
 git clone https://github.com/sphero-inc/sphero-sdk-raspberrypi-python
 ```
 
-#### Test SDK / Connection to RVR
+### Test the SDK / Connection to RVR
 
 - Copy(!) your first RVR test code directory into the SDK (that it finds the Sphero lib). _Note: At the time being I don't know why we have to _copy_ the file instead of symlinking it... When linking it, the sphero_sdk will not be found._
 
 ```bash
-cp -r ~/${USER}/develop/rvr/test/ ~/${USER}/develop/sphero-sdk-raspberrypi-python/projects/
+cp -r ~/develop/rvr/test/ ~/develop/sphero-sdk-raspberrypi-python/projects/
 ```
 
 #### Turn on the RVR and run the test code
@@ -148,8 +150,24 @@ cd ~/develop/sphero-sdk-raspberrypi-python/projects/test
 python3 GetBatteryState.py
 ```
 
-All RVR LEDs should glow now!
+The output should look something like this:
 
+```bash
+Checking RVR firmware versions...
+Checking CMS firmware versions...
+Firmware check complete.
+Battery percentage:  90 %
+Voltage state:  1
+Voltage states:  [unknown: 0, ok: 1, low: 2, critical: 3]
+```
+
+_Note: The firmware check seems to pop up from time to time._
+
+#### If the last step was successfull, make the SDK accessible for our RVR ROS package.
+
+```bash
+ln -s ~/develop/sphero-sdk-raspberrypi-python/sphero_sdk/ ~/develop/rvr/ROS/catkin_workspace/src/rvr/lib/
+```
 
 ## Step 6: Run ROS
 
