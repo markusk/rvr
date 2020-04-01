@@ -150,8 +150,13 @@ cd ~/develop/sphero-sdk-raspberrypi-python/projects/test
 python3 GetBatteryState.py
 ```
 
-All RVR LEDs should glow now!
+The output should look something like this:
 
+```bash
+Battery percentage:  90 %
+Voltage state:  1
+Voltage states:  [unknown: 0, ok: 1, low: 2, critical: 3]
+```
 
 ## Step 6: Run ROS
 
