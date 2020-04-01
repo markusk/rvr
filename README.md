@@ -84,14 +84,22 @@ sudo apt-get install ros-melodic-ros-base
 sudo apt-get install ros-melodic-urg-node ros-melodic-teleop-twist-keyboard joystick ros-melodic-joystick-drivers ros-melodic-teleop-twist-joy
 ```
 
-- create your own development directory "develop"
+- Install ROS Python support
+
+```bash
+sudo apt install python-rosinstall python-rosinstall-generator python-wstool build-essential
+```
+
+## Step 4: Create a central place for this repository
+
+- Create your own development directory "develop"
 
 ```bash
 mkdir ~/develop
 cd ~/develop
 ```
 
-- clone this repository
+- Clone this repository
 
 ```bash
 git clone https://github.com/markusk/rvr.git
@@ -109,12 +117,6 @@ cd ~/catkin_ws
 ```bash
 ln -s ~/${USER}/develop/rvr/ROS/catkin_workspace/src/ src
 catkin_make
-```
-
-## Step 4: ROS Python support
-
-```bash
-sudo apt install python-rosinstall python-rosinstall-generator python-wstool build-essential
 ```
 
 ## Step 5: Setup Sphero Public SDK
