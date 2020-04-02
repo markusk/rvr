@@ -107,7 +107,7 @@ async def handle_motor(req):
 
     # The name of the 'xyzResponse' comes directly from the Xyz.srv filename!
     # We return the speed as "okay"
-    """ @todo is this still needed?: return MotorResponse(req.speed) """
+    return MotorResponse(req.speed)
 
 
 async def main():
