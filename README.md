@@ -10,14 +10,14 @@ _Please note: this code is still in the middle of the development process!_
 
 ## Step 1: OS Setup
 
-- Install Ubuntu Mate on your Raspberry Pi ([Instruction](https://ubuntu-mate.org/download/))
+- Install Ubuntu Mate on your Raspberry Pi ([Instruction](https://ubuntu-mate.org/download/)).
 - Enable SSH (explanation see [here](https://askubuntu.com/questions/626372/could-not-load-host-key-etc-ssh-ssh-host-ed25519-key-in-var-log-auth-log/649782)):
 
 ```bash
 sudo ssh-keygen -A
 ```
 
-- Start ssh
+- Start ssh:
 
 ```bash
 sudo systemctl restart ssh.service
@@ -62,11 +62,11 @@ sudo apt-get install joystick
 
 ### Microsoft XBOX Wireless Controller
 
-Supported by the Kernel - if used with the USB connector.
+- Supported by the Kernel - if used with the USB connector.
 
 ### Gamepad/Joystick test
 
-Connect a Gamepad to the Pi, start the following command and press any buttons or move some axes:
+- Connect a Gamepad to the Pi, start the following command and press any buttons or move some axes:
 
 ```bash
 jstest --normal /dev/input/js0
