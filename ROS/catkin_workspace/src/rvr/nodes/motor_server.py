@@ -110,7 +110,7 @@ async def handle_motor(req):
     return MotorResponse(req.speed)
 
 
-async def main():
+async def motor_server():
     # This declares a new service named 'motor with the Motor service type.
     # All requests are passed to the 'handle_motor' function.
     # 'handle_motor' is called with instances of MotorRequest and returns instances of MotorResponse
@@ -134,7 +134,7 @@ async def main():
 if __name__ == '__main__':
     try:
         loop.run_until_complete(
-            main()
+            motor_server()
         )
 
     except KeyboardInterrupt:
