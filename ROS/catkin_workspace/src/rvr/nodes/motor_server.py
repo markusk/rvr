@@ -131,7 +131,7 @@ async def motor_server():
     rospy.spin()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     try:
         loop.run_until_complete(
             motor_server()
