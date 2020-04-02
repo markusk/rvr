@@ -60,28 +60,14 @@ def handle_motor(req):
     if (req.direction == "FORWARD"): # and speed. returns result.
         # drive
         rospy.loginfo("Driving %s @ speed %s.", req.direction, req.speed)
-        if hostname == 'rvrmate':
-            # setting speed
-            # @todo: increase speed?
     elif (req.direction == "BACKWARD"):
         rospy.loginfo("Driving %s @ speed %s.", req.direction, req.speed)
-        if hostname == 'rvrmate':
-            # setting speed
-            # @todo: increase speed?
     elif (req.direction == "LEFT"):
         rospy.loginfo("Turning %s @ speed %s.", req.direction, req.speed)
-        if hostname == 'rvrmate':
-            # setting speed
-            # @todo: increase speed?
     elif (req.direction == "RIGHT"):
         rospy.loginfo("Turning %s @ speed %s.", req.direction, req.speed)
-        if hostname == 'rvrmate':
-            # setting speed
-            # @todo: increase speed?
     elif (req.direction == "STOP"):
         rospy.loginfo("Stopping.")
-        if hostname == 'rvrmate':
-        # @todo: also slow down?
     else:
       rospy.logerr("Direction '%s' not implemented.", req.direction)
 
