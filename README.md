@@ -66,19 +66,21 @@ Supported by the Kernel - if used with the USB connector.
 
 ### Gamepad/Joystick test
 
+Connect a Gamepad to the Pi, start the following command and press any buttons or move some axes:
+
 ```bash
 jstest --normal /dev/input/js0
 ```
 
 ## Step 3: ROS Setup
 
-- Install ROS on your Ubuntu Mate ([Instruction](http://wiki.ros.org/melodic/Installation/Ubuntu/))
+- Install ROS on your Ubuntu Mate ([Instruction](http://wiki.ros.org/melodic/Installation/Ubuntu/)):
 
 ```bash
 sudo apt-get install ros-melodic-ros-base
 ```
 
-- Install ROS packages
+- Install ROS packages:
 
 ```bash
 sudo apt-get install ros-melodic-urg-node ros-melodic-teleop-twist-keyboard joystick ros-melodic-joystick-drivers ros-melodic-teleop-twist-joy
@@ -121,11 +123,11 @@ catkin_make
 
 ## Step 5: Setup Sphero Public SDK
 
-#### Long version
+### Long version
 
 - Setup SDK with method 2: [Instructions](https://sdk.sphero.com/docs/getting_started/raspberry_pi/raspberry_pi_setup/#using-git)
 
-#### Short version
+### Short version
 
 - _Without_ [pipenv](https://github.com/pypa/pipenv):
 
@@ -143,14 +145,16 @@ git clone https://github.com/sphero-inc/sphero-sdk-raspberrypi-python
 ln -s ~/develop/sphero-sdk-raspberrypi-python/sphero_sdk/ ~/develop/rvr/ROS/catkin_workspace/src/rvr/lib/
 ```
 
-### Turn on the RVR and test the SDK
+#### Turn on the RVR and test the SDK
+
+- Start the test program:
 
 ```bash
 cd ~/catkin_ws/src/rvr/nodes
 ./test.py
 ```
 
-The output should look something like this:
+- The output should look something like this:
 
 ```bash
 Checking RVR firmware versions...
@@ -167,14 +171,14 @@ _Note: The firmware check seems to pop up from time to time._
 
 ### The main launch file
 
-On the robot (Raspberry Pi):
+- Run the main launch file on the robot (Raspberry Pi):
 
 ```bash
 cd ~/catkin_ws
 roslaunch rvr rvr.launch
 ```
 
-On another computer (the ground control center):
+_**to do:**_ On another computer (the ground control center):
 
 ```bash
 export ROS_MASTER_URI=http://<hostname>:11311
