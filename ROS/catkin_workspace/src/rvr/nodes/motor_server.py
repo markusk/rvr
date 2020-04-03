@@ -86,24 +86,24 @@ def handle_motor(req):
     if (req.direction == "FORWARD"): # and speed. returns result.
         # drive
         rospy.loginfo("Driving %s @ speed %s.", req.direction, req.speed)
-        if hostname == configHostname:
-            await rvr.drive_with_heading(
-                speed  = req.speed,  # Valid speed values are 0-255
-                heading=        90,  # Valid heading values are 0-359
-                flags=DriveFlagsBitmask.none.value
-            )
-            # Delay to allow RVR to drive
-            await asyncio.sleep(1)
+#        if hostname == configHostname:
+#            await rvr.drive_with_heading(
+#                speed  = req.speed,  # Valid speed values are 0-255
+#                heading=        90,  # Valid heading values are 0-359
+#                flags=DriveFlagsBitmask.none.value
+#            )
+#            # Delay to allow RVR to drive
+#            await asyncio.sleep(1)
     elif (req.direction == "STOP"):
         rospy.loginfo("Stopping.")
-        if hostname == configHostname:
-            await rvr.drive_with_heading(
-                speed  =         0,  # Valid speed values are 0-255
-                heading=         0,  # Valid heading values are 0-359
-                flags=DriveFlagsBitmask.none.value
-            )
-            # Delay to allow RVR to drive
-            await asyncio.sleep(1)
+#        if hostname == configHostname:
+#            await rvr.drive_with_heading(
+#                speed  =         0,  # Valid speed values are 0-255
+#                heading=         0,  # Valid heading values are 0-359
+#                flags=DriveFlagsBitmask.none.value
+#            )
+#            # Delay to allow RVR to drive
+#            await asyncio.sleep(1)
     else:
       rospy.logerr("Direction '%s' not implemented.", req.direction)
 
@@ -123,11 +123,11 @@ def motor_server():
     # start RVR comms
     if hostname == configHostname:
         rospy.loginfo("Waking up RVR...")
-        await rvr.wake()
+#        await rvr.wake()
         # Give RVR time to wake up (2 seconds)
-        await asyncio.sleep(2)
+#        await asyncio.sleep(2)
         # reset YAW
-        await rvr.reset_yaw()
+#        await rvr.reset_yaw()
         rospy.loginfo("...done.")
 
     # Keep our code from exiting until this service node is shutdown
