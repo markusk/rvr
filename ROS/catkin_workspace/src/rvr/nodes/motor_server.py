@@ -58,6 +58,7 @@ if hostname == configHostname:
             loop
         )
     )
+    rospy.loginfo("...completed.")
 else:
     rospy.logwarn("Skipping RVR setup. This is not the robot.")
 
