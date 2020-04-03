@@ -37,30 +37,30 @@ else:
 
 
 # RVR stuff
-if hostname == configHostname:
-    rospy.loginfo("Setting up RVR...")
-
-    import os
-    import sys
-    # path to find the RVR lib from the public SDK
-    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../lib/')))
-
-    import asyncio
-    from sphero_sdk import SpheroRvrAsync
-    from sphero_sdk import SerialAsyncDal
-    from sphero_sdk import DriveFlagsBitmask
-
-
-    loop = asyncio.get_event_loop()
-
-    rvr = SpheroRvrAsync(
-        dal=SerialAsyncDal(
-            loop
-        )
-    )
-    rospy.loginfo("...done.")
-else:
-    rospy.logwarn("Skipping RVR setup. This is not the robot.")
+#if hostname == configHostname:
+#    rospy.loginfo("Setting up RVR...")
+#
+#    import os
+#    import sys
+#    # path to find the RVR lib from the public SDK
+#    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../lib/')))
+#
+#    import asyncio
+#    from sphero_sdk import SpheroRvrAsync
+#    from sphero_sdk import SerialAsyncDal
+#    from sphero_sdk import DriveFlagsBitmask
+#
+#
+#    loop = asyncio.get_event_loop()
+#
+#    rvr = SpheroRvrAsync(
+#        dal=SerialAsyncDal(
+#            loop
+#        )
+#    )
+#    rospy.loginfo("...done.")
+#else:
+#    rospy.logwarn("Skipping RVR setup. This is not the robot.")
 
 
 # define a clean ROS node exit
