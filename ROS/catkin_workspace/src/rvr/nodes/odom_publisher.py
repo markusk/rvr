@@ -12,6 +12,12 @@ This file is based on https://github.com/EvanKrall/rvr_ros/blob/master/bin/rvr_r
 which was published under Apache License 2.0.
 """
 
+
+# RVR stuff
+# path to find the RVR lib from the public SDK
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../lib/')))
+
+
 from math import pi
 import os
 import sys
