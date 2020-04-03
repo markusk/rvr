@@ -132,10 +132,10 @@ async def motor_server():
 
 
 if __name__ == "__main__":
-    try:
-        loop.run_until_complete(
+"""    try:
+        loop.run_until_complete( """
             motor_server()
-        )
+"""        )
 
     except KeyboardInterrupt:
         print('\nProgram terminated with keyboard interrupt.')
@@ -151,3 +151,4 @@ if __name__ == "__main__":
             if loop.is_running():
                 # stop RVR comms
                 loop.close()
+"""
