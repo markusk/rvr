@@ -58,7 +58,7 @@ if hostname == configHostname:
             loop
         )
     )
-    rospy.loginfo("...completed.")
+    rospy.loginfo("...done.")
 else:
     rospy.logwarn("Skipping RVR setup. This is not the robot.")
 
@@ -78,7 +78,8 @@ rospy.on_shutdown(my_exit)
 
 # handle_motor is called with instances of MotorRequest and returns instances of MotorResponse
 # The ROS request name comes directly from the .srv filename
-async def handle_motor(req):
+#async def handle_motor(req):
+def handle_motor(req):
     """ In this function all the work is done :) """
 
     # switch motors
@@ -111,7 +112,8 @@ async def handle_motor(req):
     return MotorResponse(req.speed)
 
 
-async def motor_server():
+# async def motor_server():
+def motor_server():
     # This declares a new service named 'motor with the Motor service type.
     # All requests are passed to the 'handle_motor' function.
     # 'handle_motor' is called with instances of MotorRequest and returns instances of MotorResponse
