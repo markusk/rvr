@@ -92,7 +92,29 @@ sudo apt-get install ros-melodic-urg-node ros-melodic-teleop-twist-keyboard joys
 sudo apt install python-rosinstall python-rosinstall-generator python-wstool build-essential
 ```
 
-## Step 4: Create a central place for this repository
+## Step 4: Enable Python3 together with ROS
+
+- Install these packages ([Credits](https://medium.com/@beta_b0t/how-to-setup-ros-with-python-3-44a69ca36674)):
+
+```bash
+sudo apt-get install python3-pip python3-yaml python-catkin-tools
+sudo pip3 install rospkg catkin_pkg
+```
+
+- Enable catkin to work with Python3:
+
+```bash
+catkin config -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so
+```
+
+- Optional: If you see missing directories, you can create them. For example:
+
+```bash
+mkdir ~/${USER}/catkin_ws/logs
+```
+
+
+## Step 5: Create a central place for this repository
 
 - Create your own development directory "develop"
 
@@ -121,7 +143,7 @@ ln -s ~/${USER}/develop/rvr/ROS/catkin_workspace/src/ src
 catkin_make
 ```
 
-## Step 5: Setup Sphero Public SDK
+## Step 6: Setup Sphero Public SDK
 
 ### Long version
 
@@ -167,7 +189,7 @@ Voltage states:  [unknown: 0, ok: 1, low: 2, critical: 3]
 
 _Note: The firmware check seems to pop up from time to time._
 
-## Step 6: Run ROS
+## Step 7: Run ROS
 
 ### The main launch file
 
@@ -186,7 +208,7 @@ rosparam set joy_node/dev "/dev/input/js1"
 roslaunch rvr ground_control_center.launch
 ```
 
-## _**to do:**_ Step 6: Setting up ROS for autostart
+## _**to do:**_ Step 8: Setting up ROS for autostart
 
 ### systemd under Ubuntu
 
