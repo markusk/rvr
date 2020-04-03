@@ -47,8 +47,8 @@ loop = asyncio.get_event_loop()
 
 rvr = SpheroRvrAsync(
     dal=SerialAsyncDal(
-        loop,
-        device='/dev/ttyTHS1',
+        loop
+        # device='/dev/ttyTHS1',
     )
 )
 
