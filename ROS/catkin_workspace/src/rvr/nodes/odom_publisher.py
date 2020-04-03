@@ -15,12 +15,12 @@ which was published under Apache License 2.0.
 
 # RVR stuff
 # path to find the RVR lib from the public SDK
+import os
+import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../lib/')))
 
 
 from math import pi
-import os
-import sys
 import logging
 import asyncio
 from sphero_sdk import SpheroRvrAsync
