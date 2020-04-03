@@ -132,11 +132,13 @@ async def motor_server():
 
 
 if __name__ == "__main__":
-"""    try:
-        loop.run_until_complete( """
-            motor_server()
-"""        )
+	motor_server()
+#    try:
+#        loop.run_until_complete(
+#            motor_server()
+#        )
 
+"""
     except KeyboardInterrupt:
         print('\nProgram terminated with keyboard interrupt.')
 
