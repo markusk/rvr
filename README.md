@@ -110,9 +110,8 @@ catkin config -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/inc
 - Optional: If you see missing directories, you can create them. For example:
 
 ```bash
-mkdir ~/${USER}/catkin_ws/logs
+mkdir ~/catkin_ws/logs
 ```
-
 
 ## Step 5: Create a central place for this repository
 
@@ -139,7 +138,7 @@ cd ~/catkin_ws
 - Create symbolic link with the name 'src', pointing to the 'src' folder in the ROS directory from this repository:
 
 ```bash
-ln -s ~/${USER}/develop/rvr/ROS/catkin_workspace/src/ src
+ln -s ~/develop/rvr/ROS/catkin_workspace/src/ src
 catkin_make
 ```
 
