@@ -29,7 +29,7 @@ Controls the whole robot and has to run on the "RVR" (Raspberry Pi).
   <!-- <node name="battery_publisher" pkg="rvr" type="battery_publisher.py" output="screen"/> -->
 
   <!-- Publishing "odom" nav_msgs/Odometry for the local planner (navigation stack). -->
-  <node name="odom_publisher" pkg="rvr" type="odom_publisher.py" output="screen"/>
+  <!-- <node name="odom_publisher" pkg="rvr" type="odom_publisher.py" output="screen"/> -->
 
   <!-- Controlling the motor on a hardware level -->
   <node name="motor_server" pkg="rvr" type="motor_server.py" output="screen"/>
