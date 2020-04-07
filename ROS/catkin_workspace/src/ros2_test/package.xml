@@ -3,8 +3,8 @@
 <package format="3">
   <name>ros2_test</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="ros@direcs.de">markus</maintainer>
+  <description>RVR ROS2 test package</description>
+  <maintainer email="ros@direcs.de">Markus Knapp</maintainer>
   <license>TODO: License declaration</license>
 
   <exec_depend>rclpy</exec_depend>
