@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-		'talker = batteryPublisher.batteryPublisher:main',
+		'batteryPublisher = ros2test.batteryPublisher:main',
         ],
     },
 )
