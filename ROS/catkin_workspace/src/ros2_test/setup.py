@@ -15,11 +15,12 @@ setup(
     zip_safe=True,
     maintainer='Markus Knapp',
     maintainer_email='ros@direcs.de',
-    description='TODO: Package description',
+    description='RVR ROS2 test package',
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+		'talker = batteryPublisher.batteryPublisher:main',
         ],
     },
 )
