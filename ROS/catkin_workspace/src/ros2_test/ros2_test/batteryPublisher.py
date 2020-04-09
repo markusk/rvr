@@ -1,17 +1,3 @@
-# Copyright 2016 Open Source Robotics Foundation, Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 import rclpy
 
 from std_msgs.msg import String
@@ -32,7 +18,16 @@ from sphero_sdk import Colors
 from sphero_sdk import RvrLedGroups
 
 
-def main(args=None):
+loop = asyncio.get_event_loop()
+
+rvr = SpheroRvrAsync(
+    dal=SerialAsyncDal(
+        loop
+    )
+)
+
+
+async def main(args=None):
     rclpy.init(args=args)
 
     node = rclpy.create_node('minimal_publisher')
@@ -62,4 +57,19 @@ def main(args=None):
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        loop.run_until_complete(
+            main()
+        )
+
+    except KeyboardInterrupt:
+        print("\nProgram terminated with keyboard interrupt.")
+
+        loop.run_until_complete(
+            # rvr.close()
+            print("rvr close. :)")
+        )
+
+    finally:
+        if loop.is_running():
+            loop.close()
