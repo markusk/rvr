@@ -22,6 +22,15 @@ import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 
+import asyncio
+from sphero_sdk import SpheroRvrAsync
+from sphero_sdk import SerialAsyncDal
+from sphero_sdk import BatteryVoltageStatesEnum as VoltageStates
+
+# for LEDs:
+from sphero_sdk import Colors
+from sphero_sdk import RvrLedGroups
+
 
 def main(args=None):
     rclpy.init(args=args)
