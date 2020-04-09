@@ -16,6 +16,12 @@ import rclpy
 
 from std_msgs.msg import String
 
+# RVR stuff
+# path to find the RVR lib from the public SDK
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
+
 
 def main(args=None):
     rclpy.init(args=args)
