@@ -23,7 +23,10 @@ loop = asyncio.get_event_loop()
 try:
     rvr = SpheroRvrAsync(dal=SerialAsyncDal(loop))
 except:
-    print("+++ exception caught +++")
+    print("\n++++++++++++++++++++++++++++++++++")
+    print("+++ Error opening serial port. +++")
+    print("+++  Is the RVR switched on??  +++")
+    print("++++++++++++++++++++++++++++++++++\n")
 
 
 async def main(args=None):
