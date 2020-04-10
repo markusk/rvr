@@ -30,7 +30,8 @@ rvr = SpheroRvrAsync(
 async def main(args=None):
     rclpy.init(args=args)
 
-    node = rclpy.create_node('minimal_publisher')
+    # create ROS node
+    node = rclpy.create_node('batteryPublisher')
     publisher = node.create_publisher(String, 'topic', 10)
 
     msg = String()
@@ -38,7 +39,7 @@ async def main(args=None):
 
     def timer_callback():
         nonlocal i
-        msg.data = 'Hello World: %d' % i
+        msg.data = 'Hello RVR: %d' % i
         i += 1
         node.get_logger().info('Publishing: "%s"' % msg.data)
         publisher.publish(msg)
