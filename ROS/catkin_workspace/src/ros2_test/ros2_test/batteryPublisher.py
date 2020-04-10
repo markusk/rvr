@@ -20,11 +20,10 @@ from sphero_sdk import RvrLedGroups
 
 loop = asyncio.get_event_loop()
 
-rvr = SpheroRvrAsync(
-    dal=SerialAsyncDal(
-        loop
-    )
-)
+try:
+    rvr = SpheroRvrAsync(dal=SerialAsyncDal(loop))
+except:
+    print("+++ exception caught +++")
 
 
 async def main(args=None):
