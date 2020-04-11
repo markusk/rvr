@@ -17,10 +17,10 @@ _Please note: this code is still in the middle of the development process!_
 sudo ssh-keygen -A
 ```
 
-- Start ssh:
+- Enable ssh access:
 
 ```bash
-sudo systemctl restart ssh.service
+sudo systemctl enable ssh.service
 ```
 
 #### Setup the Raspbery Pi serial port
@@ -72,48 +72,37 @@ sudo apt-get install joystick
 jstest --normal /dev/input/js0
 ```
 
-## Step 3: ROS Setup
+## Step 3: ROS 2 Setup
 
-- Install ROS on your Ubuntu Mate ([Instruction](http://wiki.ros.org/melodic/Installation/Ubuntu/)):
+Since the RVR SDK needs Python 3, we need ROS 2. ROS1 (or simply "ROS") is Python2 based and will _not_ work with the RVR SDK!
+
+- Install ROS 2 "Dashing" on your Ubuntu Mate:
+https://index.ros.org/doc/ros2/Installation/Dashing/Linux-Install-Debians/
+
+I used the recommended "Desktop Install", since we then have all demos/examples like "talker and listener" included.
 
 ```bash
-sudo apt-get install ros-melodic-ros-base
+[...]
+sudo apt install ros-dashing-desktop
+[...]
 ```
 
 - Install ROS packages:
 
 ```bash
-sudo apt-get install ros-melodic-urg-node ros-melodic-teleop-twist-keyboard joystick ros-melodic-joystick-drivers ros-melodic-teleop-twist-joy
+sudo apt install ros-dashing-teleop-twist-keyboard ros-dashing-teleop-twist-joy ros-dashing-joy ros-dashing-joy-teleop ros-dashing-teleop-tools
 ```
 
-- Install ROS Python support
+__**to do:**__
+check the ROS 2 versions for _ros-dashing-urg-node_.
 
-```bash
-sudo apt install python-rosinstall python-rosinstall-generator python-wstool build-essential
-```
+- Configure your ROS 2 environent:
+https://index.ros.org/doc/ros2/Tutorials/Configuring-ROS2-Environment/
 
-## Step 4: Enable Python3 together with ROS
+- Create your ROS 2 workspace:
+https://index.ros.org/doc/ros2/Tutorials/Workspace/Creating-A-Workspace/#ros2workspace
 
-- Install these packages ([Credits](https://medium.com/@beta_b0t/how-to-setup-ros-with-python-3-44a69ca36674)):
-
-```bash
-sudo apt-get install python3-pip python3-yaml python-catkin-tools
-sudo pip3 install rospkg catkin_pkg
-```
-
-- Enable catkin to work with Python3:
-
-```bash
-catkin config -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so
-```
-
-- Optional: If you see missing directories, you can create them. For example:
-
-```bash
-mkdir ~/catkin_ws/logs
-```
-
-## Step 5: Create a central place for this repository
+## Step 4: Create a central place for this repository
 
 - Create your own development directory "develop"
 
@@ -128,18 +117,28 @@ cd ~/develop
 git clone https://github.com/markusk/rvr.git
 ```
 
-- Create a catkin workspace without 'src' folder:
+- Create a ROS 2 development workspace _without_ 'src' subfolder:
 
 ```bash
-mkdir ~/catkin_ws
-cd ~/catkin_ws
+mkdir ~/ros_ws
+cd ~/ros_ws
 ```
 
 - Create symbolic link with the name 'src', pointing to the 'src' folder in the ROS directory from this repository:
 
 ```bash
-ln -s ~/develop/rvr/ROS/catkin_workspace/src/ src
-catkin_make
+ln -s ~/develop/rvr/ROS/ros_workspace/src/ src
+```
+
+_**to do:**_
+
+- build the RVR ROS 2 package:
+
+```bash
+cd ~/ros_ws
+colcon build --packages-select !!NAME_TBD!!
+. install/setup.bash
+ros2 run !!my_package!! !!my_node!!
 ```
 
 ## Step 6: Setup Sphero Public SDK
