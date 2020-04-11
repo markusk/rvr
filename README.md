@@ -88,19 +88,25 @@ sudo apt install ros-dashing-desktop
 ```
 
 - Install ROS packages:
+(__**to do:**__ install the ROS 2 version for _ros-dashing-urg-node_)
 
 ```bash
 sudo apt install ros-dashing-teleop-twist-keyboard ros-dashing-teleop-twist-joy ros-dashing-joy ros-dashing-joy-teleop ros-dashing-teleop-tools
 ```
 
-__**to do:**__
-check the ROS 2 versions for _ros-dashing-urg-node_.
 
 - Configure your ROS 2 environent:
 https://index.ros.org/doc/ros2/Tutorials/Configuring-ROS2-Environment/
 
 - Create your ROS 2 workspace:
 https://index.ros.org/doc/ros2/Tutorials/Workspace/Creating-A-Workspace/#ros2workspace
+
+- Install ROS 2 colcon (Instructions)([https://index.ros.org/doc/ros2/Tutorials/Colcon-Tutorial/]):
+
+```bash
+sudo apt install python3-colcon-common-extensions
+```
+
 
 ## Step 4: Create a central place for this repository
 
@@ -121,12 +127,12 @@ git clone https://github.com/markusk/rvr.git
 
 ```bash
 mkdir ~/ros_ws
-cd ~/ros_ws
 ```
 
 - Create symbolic link with the name 'src', pointing to the 'src' folder in the ROS directory from this repository:
 
 ```bash
+cd ~/ros_ws
 ln -s ~/develop/rvr/ROS/ros_workspace/src/ src
 ```
 
@@ -136,7 +142,7 @@ _**to do:**_
 
 ```bash
 cd ~/ros_ws
-colcon build --packages-select !!NAME_TBD!!
+colcon build --packages-select ros2_test
 . install/setup.bash
 ros2 run !!my_package!! !!my_node!!
 ```
