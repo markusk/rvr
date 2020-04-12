@@ -1,3 +1,9 @@
+# rvr package individual staff
+ROS/catkin_workspace/src/CMakeLists.txt
+ROS/catkin_workspace/src/rvr/lib/.fw
+ROS/catkin_workspace/src/rvr/lib/sphero_sdk
+test/sphero_sdk
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -126,8 +132,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# Markus individual staff
-ROS/catkin_workspace/src/CMakeLists.txt
-ROS/catkin_workspace/src/rvr/lib/.fw
-ROS/catkin_workspace/src/rvr/lib/sphero_sdk
