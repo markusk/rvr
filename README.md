@@ -158,6 +158,7 @@ ros2 run !!my_package!! !!my_node!!
 - _Without_ [pipenv](https://github.com/pypa/pipenv):
 
 ```bash
+sudo apt install python3-pip
 pip3 install aiohttp pyserial_asyncio
 cd ~/develop
 git clone https://github.com/sphero-inc/sphero-sdk-raspberrypi-python
@@ -165,10 +166,18 @@ git clone https://github.com/sphero-inc/sphero-sdk-raspberrypi-python
 
 ### Make the Sphero Public SDK accessible
 
+_**to do: find a better place for the lib links**_
+
 - Create symbolic link, pointing to the 'sphero_sdk' folder:
 
 ```bash
-ln -s ~/develop/sphero-sdk-raspberrypi-python/sphero_sdk/ ~/develop/rvr/ROS/catkin_workspace/src/rvr/lib/
+ln -s ~/develop/sphero-sdk-raspberrypi-python/sphero_sdk/ ~/develop/rvr/ROS/ros_workspace/src/rvr/lib/
+```
+
+- For the RVR test code only:
+
+```bash
+ln -s ~/develop/sphero-sdk-raspberrypi-python/sphero_sdk/ ~/develop/rvr/test/
 ```
 
 #### Turn on the RVR and test the SDK
