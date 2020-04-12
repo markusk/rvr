@@ -46,10 +46,10 @@ Do _not_ reboot now!
 sudo nano /boot/cmdline.txt
 ```
 
-- Add your user to the dialout group:
+- Add your user to the relevant group to access the serial port:
 
 ```bash
-sudo gpasswd --add ${USER} dialout
+sudo gpasswd --add ${USER} dialout tty
 ```
 
 - Now reboot the Raspberry Pi!
