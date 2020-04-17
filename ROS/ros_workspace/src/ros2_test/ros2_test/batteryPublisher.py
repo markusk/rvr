@@ -29,7 +29,8 @@ from sphero_sdk import RvrLedGroups
 #    print("++++++++++++++++++++++++++++++++++\n")
 
 
-async def main(args=None):
+#async def main(args=None):
+def main(args=None):
     msg = String()
 
     print("init ROS...")
