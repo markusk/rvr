@@ -33,30 +33,31 @@ async def main(args=None):
     rclpy.init(args=args)
 
     # create ROS node
-    node = rclpy.create_node('batteryPublisher')
-    publisher = node.create_publisher(String, 'topic', 10)
+    #node = rclpy.create_node('batteryPublisher')
+    #publisher = node.create_publisher(String, 'topic', 10)
 
 
     # wake up RVR
     await rvr.wake()
+
     # give it time to wake up
     await asyncio.sleep(2)
 
 
-    msg = String()
+    #msg = String()
     # msg.data = 'Hello RVR: %d' % i
-    msg.data = 'Hello RVR!'
+    #msg.data = 'Hello RVR!'
 
-    node.get_logger().info('Publishing: "%s"' % msg.data)
-    publisher.publish(msg)
+    #node.get_logger().info('Publishing: "%s"' % msg.data)
+    #publisher.publish(msg)
 
     # close RVR
     await rvr.close()
 
-    rclpy.spin(node)
+    #rclpy.spin(node)
 
-    node.destroy_node()
-    rclpy.shutdown()
+    #node.destroy_node()
+    #rclpy.shutdown()
 
 
 if __name__ == '__main__':
