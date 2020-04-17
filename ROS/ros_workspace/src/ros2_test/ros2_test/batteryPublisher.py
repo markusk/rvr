@@ -20,17 +20,16 @@ from sphero_sdk import RvrLedGroups
 
 loop = asyncio.get_event_loop()
 
-#try:
-rvr = SpheroRvrAsync(dal=SerialAsyncDal(loop))
-#except:
-#    print("\n++++++++++++++++++++++++++++++++++")
-#    print("+++ Error opening serial port. +++")
-#    print("+++  Is the RVR switched on??  +++")
-#    print("++++++++++++++++++++++++++++++++++\n")
+try:
+    rvr = SpheroRvrAsync(dal=SerialAsyncDal(loop))
+except:
+    print("\n++++++++++++++++++++++++++++++++++")
+    print("+++ Error opening serial port. +++")
+    print("+++  Is the RVR switched on??  +++")
+    print("++++++++++++++++++++++++++++++++++\n")
 
 
 async def main(args=None):
-    # ROS init
     rclpy.init(args=args)
 
     # create ROS node
@@ -53,20 +52,16 @@ async def main(args=None):
 
 if __name__ == '__main__':
     try:
-        asyncio.ensure_future(
+        loop.run_until_complete(
             main()
         )
-        loop.run_forever()
 
     except KeyboardInterrupt:
         print("\nProgram terminated with keyboard interrupt.")
 
         loop.run_until_complete(
-            asyncio.gather(
-                # rvr.sensor_control.clear(),
-                # rvr.close()
-                print("rvr close. :)")
-            )
+            # rvr.close()
+            print("rvr close. :)")
         )
 
     finally:
