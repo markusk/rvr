@@ -81,7 +81,7 @@ def main(args=None):
     rclpy.spin(node)
 
     # close RVR
-    await rvr.close()
+    rvr.close()
 
     node.destroy_node()
     rclpy.shutdown()
