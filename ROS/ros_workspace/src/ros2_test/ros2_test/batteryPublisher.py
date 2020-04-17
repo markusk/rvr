@@ -30,6 +30,7 @@ rvr = SpheroRvrAsync(dal=SerialAsyncDal(loop))
 
 
 async def main(args=None):
+    print("init ROS...")
     rclpy.init(args=args)
 
     # create ROS node
@@ -38,6 +39,7 @@ async def main(args=None):
 
 
     # wake up RVR
+    print("waking up RVR...")
     await rvr.wake()
 
     # give it time to wake up
