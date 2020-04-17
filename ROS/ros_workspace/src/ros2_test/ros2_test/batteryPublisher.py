@@ -20,13 +20,13 @@ from sphero_sdk import RvrLedGroups
 
 loop = asyncio.get_event_loop()
 
-try:
-    rvr = SpheroRvrAsync(dal=SerialAsyncDal(loop))
-except:
-    print("\n++++++++++++++++++++++++++++++++++")
-    print("+++ Error opening serial port. +++")
-    print("+++  Is the RVR switched on??  +++")
-    print("++++++++++++++++++++++++++++++++++\n")
+#try:
+rvr = SpheroRvrAsync(dal=SerialAsyncDal(loop))
+#except:
+#    print("\n++++++++++++++++++++++++++++++++++")
+#    print("+++ Error opening serial port. +++")
+#    print("+++  Is the RVR switched on??  +++")
+#    print("++++++++++++++++++++++++++++++++++\n")
 
 
 async def main(args=None):
@@ -36,13 +36,22 @@ async def main(args=None):
     node = rclpy.create_node('batteryPublisher')
     publisher = node.create_publisher(String, 'topic', 10)
 
-    msg = String()
 
+    # wake up RVR
+    await rvr.wake()
+    # give it time to wake up
+    await asyncio.sleep(2)
+
+
+    msg = String()
     # msg.data = 'Hello RVR: %d' % i
     msg.data = 'Hello RVR!'
 
     node.get_logger().info('Publishing: "%s"' % msg.data)
     publisher.publish(msg)
+
+    # close RVR
+    await rvr.close()
 
     rclpy.spin(node)
 
@@ -60,7 +69,7 @@ if __name__ == '__main__':
         print("\nProgram terminated with keyboard interrupt.")
 
         loop.run_until_complete(
-            # rvr.close()
+            rvr.close()
             print("rvr close. :)")
         )
 
