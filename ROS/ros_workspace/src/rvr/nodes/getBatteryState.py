@@ -15,8 +15,6 @@ from sphero_sdk import Colors
 from sphero_sdk import RvrLedGroups
 
 
-
-
 loop = asyncio.get_event_loop()
 
 rvr = SpheroRvrAsync(
