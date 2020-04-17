@@ -10,7 +10,7 @@ from sphero_sdk import SerialAsyncDal
 from sphero_sdk import RvrStreamingServices
 import traceback
 
-import tf
+# import tf
 import rclpy
 from geometry_msgs.msg import PoseWithCovariance
 from geometry_msgs.msg import Pose
@@ -69,7 +69,7 @@ odom = Odometry(
 )
 
 pub_odom = None
-br = None
+#br = None
 
 received_components = set()
 
@@ -82,13 +82,13 @@ def check_if_need_to_send_msg(component):
         print(f"publishing! {odom}")
         try:
             pub_odom.publish(odom)
-            br.sendTransform(
-                (pose.position.x, pose.position.y, pose.position.z),
-                (pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w),
-                odom.header.stamp,
-                '/base_link',
-                '/odom'
-            )
+            #br.sendTransform(
+            #    (pose.position.x, pose.position.y, pose.position.z),
+            #    (pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w),
+            #    odom.header.stamp,
+            #    '/base_link',
+            #    '/odom'
+            #)
             print("published")
         except Exception:
             traceback.print_exc()
@@ -128,11 +128,11 @@ async def main(args=None):
     """
     rclpy.init(args=args)
     global pub_odom
-    global br
+    #global br
     node = rclpy.create_node('publish_odom')
     pub_odom = node.create_publisher(String, 'odom', Odometry, 10)
 
-    br = tf.TransformBroadcaster()
+    #br = tf.TransformBroadcaster()
 
     await rvr.wake()
 
