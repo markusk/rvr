@@ -133,3 +133,5 @@ ROS/catkin_workspace/src/rvr/lib/.fw
 ROS/catkin_workspace/src/rvr/lib/sphero_sdk
 test/sphero_sdk
 
+#individual staff
+.vscode/settings.json
