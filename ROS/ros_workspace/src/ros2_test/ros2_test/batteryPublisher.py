@@ -6,11 +6,13 @@ from std_msgs.msg import String
 # path to find the RVR lib from the public SDK
 import os
 import sys
+import time
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 
-import asyncio
+#import asyncio
 from sphero_sdk import SpheroRvrAsync
 from sphero_sdk import SerialAsyncDal
+from sphero_sdk import SpheroRvrObserver
 from sphero_sdk import BatteryVoltageStatesEnum as VoltageStates
 
 # for LEDs:
@@ -18,10 +20,8 @@ from sphero_sdk import Colors
 from sphero_sdk import RvrLedGroups
 
 
-# loop = asyncio.get_event_loop()
-
 #try:
-#rvr = SpheroRvrAsync(dal=SerialAsyncDal(loop))
+rvr = SpheroRvrObserver()
 #except:
 #    print("\n++++++++++++++++++++++++++++++++++")
 #    print("+++ Error opening serial port. +++")
@@ -29,7 +29,22 @@ from sphero_sdk import RvrLedGroups
 #    print("++++++++++++++++++++++++++++++++++\n")
 
 
-#async def main(args=None):
+def battery_percentage_handler(battery_percentage):
+    print('Battery percentage: ', battery_percentage)
+
+
+def battery_voltage_handler(battery_voltage_state):
+    print('Voltage state: ', battery_voltage_state)
+
+    state_info = '[{}, {}, {}, {}]'.format(
+        '{}: {}'.format(VoltageStates.unknown.name, VoltageStates.unknown.value),
+        '{}: {}'.format(VoltageStates.ok.name, VoltageStates.ok.value),
+        '{}: {}'.format(VoltageStates.low.name, VoltageStates.low.value),
+        '{}: {}'.format(VoltageStates.critical.name, VoltageStates.critical.value)
+    )
+    print('Voltage states: ', state_info)
+
+
 def main(args=None):
     msg = String()
 
@@ -47,22 +62,26 @@ def main(args=None):
 
     # wake up RVR
     print("waking up RVR...")
-    # await rvr.wake()
+    rvr.wake()
 
     # give it time to wake up
-    # await asyncio.sleep(2)
-
+    time.sleep(2)
 
     # msg.data = 'Hello RVR: %d' % i
-    #msg.data = 'Hello RVR!'
+    msg.data = 'Hello RVR!'
+    node.get_logger().info('Publishing: "%s"' % msg.data)
+    publisher.publish(msg)
 
-    #node.get_logger().info('Publishing: "%s"' % msg.data)
-    #publisher.publish(msg)
 
-    # close RVR
-    #await rvr.close()
+    rvr.get_battery_percentage(handler=battery_percentage_handler)
+
+    # Sleep for one second such that RVR has time to send data back
+    time.sleep(1)
 
     rclpy.spin(node)
+
+    # close RVR
+    await rvr.close()
 
     node.destroy_node()
     rclpy.shutdown()
