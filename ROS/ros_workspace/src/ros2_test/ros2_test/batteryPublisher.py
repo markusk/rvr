@@ -70,7 +70,6 @@ if __name__ == '__main__':
 
         loop.run_until_complete(
             rvr.close()
-            print("rvr close. :)")
         )
 
     finally:
