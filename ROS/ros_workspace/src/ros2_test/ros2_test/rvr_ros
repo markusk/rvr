@@ -11,7 +11,7 @@ from sphero_sdk import RvrStreamingServices
 import traceback
 
 import tf
-import rospy
+import rclpy
 from geometry_msgs.msg import PoseWithCovariance
 from geometry_msgs.msg import Pose
 from geometry_msgs.msg import TwistWithCovariance
@@ -123,13 +123,15 @@ async def velocity_handler(velocity_data):
     check_if_need_to_send_msg('velocity')
 
 
-async def main():
+async def main(args=None):
     """ This program demonstrates how to enable a single sensor to stream.
     """
-    rospy.init_node('publish_odom')
+    rclpy.init(args=args)
     global pub_odom
     global br
-    pub_odom = rospy.Publisher('odom', Odometry, queue_size=10)
+    node = rclpy.create_node('publish_odom')
+    pub_odom = node.create_publisher(String, 'odom', Odometry, 10)
+
     br = tf.TransformBroadcaster()
 
     await rvr.wake()
