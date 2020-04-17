@@ -18,10 +18,10 @@ from sphero_sdk import Colors
 from sphero_sdk import RvrLedGroups
 
 
-loop = asyncio.get_event_loop()
+# loop = asyncio.get_event_loop()
 
 #try:
-rvr = SpheroRvrAsync(dal=SerialAsyncDal(loop))
+#rvr = SpheroRvrAsync(dal=SerialAsyncDal(loop))
 #except:
 #    print("\n++++++++++++++++++++++++++++++++++")
 #    print("+++ Error opening serial port. +++")
@@ -46,10 +46,10 @@ async def main(args=None):
 
     # wake up RVR
     print("waking up RVR...")
-    await rvr.wake()
+    # await rvr.wake()
 
     # give it time to wake up
-    await asyncio.sleep(2)
+    # await asyncio.sleep(2)
 
 
     # msg.data = 'Hello RVR: %d' % i
@@ -59,27 +59,27 @@ async def main(args=None):
     #publisher.publish(msg)
 
     # close RVR
-    await rvr.close()
+    #await rvr.close()
 
     rclpy.spin(node)
 
-    #node.destroy_node()
+    node.destroy_node()
     rclpy.shutdown()
 
 
 if __name__ == '__main__':
-    try:
-        loop.run_until_complete(
-            main()
-        )
+    #try:
+    #    loop.run_until_complete(
+    main()
+    #    )
 
-    except KeyboardInterrupt:
-        print("\nProgram terminated with keyboard interrupt.")
+    #except KeyboardInterrupt:
+    #    print("\nProgram terminated with keyboard interrupt.")
 
-        loop.run_until_complete(
-            rvr.close()
-        )
+    #    loop.run_until_complete(
+    #        rvr.close()
+    #    )
 
-    finally:
-        if loop.is_running():
-            loop.close()
+    #finally:
+    #    if loop.is_running():
+    #        loop.close()
