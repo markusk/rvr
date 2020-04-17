@@ -30,13 +30,19 @@ rvr = SpheroRvrAsync(dal=SerialAsyncDal(loop))
 
 
 async def main(args=None):
+    msg = String()
+
     print("init ROS...")
     rclpy.init(args=args)
 
     # create ROS node
-    #node = rclpy.create_node('batteryPublisher')
-    #publisher = node.create_publisher(String, 'topic', 10)
-
+    node = rclpy.create_node('batteryPublisher')
+    publisher = node.create_publisher(String, 'topic', 10)
+    
+    # debug msg
+    msg.data = 'ROS init done.'
+    node.get_logger().info('Publishing: "%s"' % msg.data)
+    publisher.publish(msg)
 
     # wake up RVR
     print("waking up RVR...")
@@ -46,7 +52,6 @@ async def main(args=None):
     await asyncio.sleep(2)
 
 
-    #msg = String()
     # msg.data = 'Hello RVR: %d' % i
     #msg.data = 'Hello RVR!'
 
