@@ -56,10 +56,10 @@ async def main(args=None):
     # close RVR
     await rvr.close()
 
-    #rclpy.spin(node)
+    rclpy.spin(node)
 
     #node.destroy_node()
-    #rclpy.shutdown()
+    rclpy.shutdown()
 
 
 if __name__ == '__main__':
