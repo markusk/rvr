@@ -6,7 +6,7 @@ from std_msgs.msg import String
 # path to find the RVR lib from the public SDK
 import os
 import sys
-import time
+from time import sleep
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 
 #import asyncio
@@ -46,15 +46,14 @@ def battery_voltage_handler(battery_voltage_state):
 
 
 def main(args=None):
-    msg = String()
-
-    print("init ROS...")
     rclpy.init(args=args)
 
-    # create ROS node
     node = rclpy.create_node('batteryPublisher')
+
     publisher = node.create_publisher(String, 'topic', 10)
-    
+
+    msg = String()
+
     # debug msg
     msg.data = 'ROS init done.'
     node.get_logger().info('Publishing: "%s"' % msg.data)
@@ -65,20 +64,19 @@ def main(args=None):
     rvr.wake()
 
     # give it time to wake up
-    time.sleep(2)
+    sleep(2)
 
     # msg.data = 'Hello RVR: %d' % i
     msg.data = 'Hello RVR!'
     node.get_logger().info('Publishing: "%s"' % msg.data)
     publisher.publish(msg)
 
-
     rvr.get_battery_percentage(handler=battery_percentage_handler)
 
     # Sleep for one second such that RVR has time to send data back
-    time.sleep(1)
+    sleep(1)
 
-    rclpy.spin(node)
+    #rclpy.spin(node)
 
     # close RVR
     rvr.close()
@@ -88,18 +86,4 @@ def main(args=None):
 
 
 if __name__ == '__main__':
-    #try:
-    #    loop.run_until_complete(
     main()
-    #    )
-
-    #except KeyboardInterrupt:
-    #    print("\nProgram terminated with keyboard interrupt.")
-
-    #    loop.run_until_complete(
-    #        rvr.close()
-    #    )
-
-    #finally:
-    #    if loop.is_running():
-    #        loop.close()
