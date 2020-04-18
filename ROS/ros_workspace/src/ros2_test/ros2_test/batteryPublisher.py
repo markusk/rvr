@@ -63,7 +63,8 @@ def main(args=None):
     #rvr.wake()
 
     # give it time to wake up
-    rclpy.sleep(2)
+    # sleep 2 seconds
+    sleep(2)
 
     # msg.data = 'Hello RVR: %d' % i
     msg.data = 'Hello RVR!'
@@ -73,7 +74,7 @@ def main(args=None):
     #rvr.get_battery_percentage(handler=battery_percentage_handler)
 
     # Sleep for one second such that RVR has time to send data back
-    rclpy.sleep(1)
+    sleep(1)
 
     rclpy.spin(node)
 
