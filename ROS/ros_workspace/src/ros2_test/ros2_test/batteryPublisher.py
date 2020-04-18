@@ -54,17 +54,21 @@ def main(args=None):
     print("node creation......")
     node = rclpy.create_node('batteryPublisher')
     publisher = node.create_publisher(String, 'topic', 10)
+    print("......done")
 
     msg = String()
 
     # debug msg
+    print("Pubslish message......")
     msg.data = 'ROS init done.'
     node.get_logger().info('Publishing: "%s"' % msg.data)
     publisher.publish(msg)
+    print("......done")
 
     # wake up RVR
     print("waking up RVR...")
-    #rvr.wake()
+    rvr.wake()
+    print("......done")
 
     # give it time to wake up
     # sleep 2 seconds
@@ -83,7 +87,7 @@ def main(args=None):
     rclpy.spin(node)
 
     # close RVR
-    #rvr.close()
+    rvr.close()
 
     node.destroy_node()
     rclpy.shutdown()
