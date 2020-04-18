@@ -20,13 +20,13 @@ from sphero_sdk import Colors
 from sphero_sdk import RvrLedGroups
 
 
-#try:
-#rvr = SpheroRvrObserver()
-#except:
-#    print("\n++++++++++++++++++++++++++++++++++")
-#    print("+++ Error opening serial port. +++")
-#    print("+++  Is the RVR switched on??  +++")
-#    print("++++++++++++++++++++++++++++++++++\n")
+try:
+    rvr = SpheroRvrObserver()
+except:
+    print("\n++++++++++++++++++++++++++++++++++")
+    print("+++ Error opening serial port. +++")
+    print("+++  Is the RVR switched on??  +++")
+    print("++++++++++++++++++++++++++++++++++\n")
 
 
 def battery_percentage_handler(battery_percentage):
