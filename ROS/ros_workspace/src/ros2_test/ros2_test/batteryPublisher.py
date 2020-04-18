@@ -20,13 +20,15 @@ from sphero_sdk import Colors
 from sphero_sdk import RvrLedGroups
 
 
-try:
-    rvr = SpheroRvrObserver()
-except:
-    print("\n++++++++++++++++++++++++++++++++++")
-    print("+++ Error opening serial port. +++")
-    print("+++  Is the RVR switched on??  +++")
-    print("++++++++++++++++++++++++++++++++++\n")
+#try:
+print("Observer......")
+rvr = SpheroRvrObserver()
+print("......done")
+#except:
+#    print("\n++++++++++++++++++++++++++++++++++")
+#    print("+++ Error opening serial port. +++")
+#    print("+++  Is the RVR switched on??  +++")
+#    print("++++++++++++++++++++++++++++++++++\n")
 
 
 def battery_percentage_handler(battery_percentage):
@@ -46,8 +48,10 @@ def battery_voltage_handler(battery_voltage_state):
 
 
 def main(args=None):
+    print("ROS init......")
     rclpy.init(args=args)
 
+    print("node creation......")
     node = rclpy.create_node('batteryPublisher')
     publisher = node.create_publisher(String, 'topic', 10)
 
