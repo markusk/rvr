@@ -21,7 +21,7 @@ from sphero_sdk import RvrLedGroups
 
 
 #try:
-rvr = SpheroRvrObserver()
+#rvr = SpheroRvrObserver()
 #except:
 #    print("\n++++++++++++++++++++++++++++++++++")
 #    print("+++ Error opening serial port. +++")
@@ -49,7 +49,6 @@ def main(args=None):
     rclpy.init(args=args)
 
     node = rclpy.create_node('batteryPublisher')
-
     publisher = node.create_publisher(String, 'topic', 10)
 
     msg = String()
@@ -61,7 +60,7 @@ def main(args=None):
 
     # wake up RVR
     print("waking up RVR...")
-    rvr.wake()
+    #rvr.wake()
 
     # give it time to wake up
     rclpy.sleep(2)
@@ -71,15 +70,15 @@ def main(args=None):
     node.get_logger().info('Publishing: "%s"' % msg.data)
     publisher.publish(msg)
 
-    rvr.get_battery_percentage(handler=battery_percentage_handler)
+    #rvr.get_battery_percentage(handler=battery_percentage_handler)
 
     # Sleep for one second such that RVR has time to send data back
     rclpy.sleep(1)
 
-    #rclpy.spin(node)
+    rclpy.spin(node)
 
     # close RVR
-    rvr.close()
+    #rvr.close()
 
     node.destroy_node()
     rclpy.shutdown()
