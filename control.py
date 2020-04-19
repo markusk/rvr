@@ -193,6 +193,15 @@ armed = False
 rvr = SpheroRvrObserver()
 
 
+def turnLEDs(R, G, B):
+    rvr.set_all_leds(
+        led_group=RvrLedGroups.all_lights.value,
+        led_brightness_values=[color for x in range(10) for color in [R, G, B]]
+    )
+    # Delay to show LEDs change
+    time.sleep(1)
+
+
 #-------------------------
 # Wake up, Mr. Freeman!
 #-------------------------
@@ -202,13 +211,8 @@ rvr.wake()
 time.sleep(2)
 print("...done")
 
-# All LEDs to green
-rvr.set_all_leds(
-    led_group=RvrLedGroups.all_lights.value,
-    led_brightness_values=[color for x in range(10) for color in [0, 255, 0]]
-)
-# Delay to show LEDs change
-time.sleep(1)
+# All LEDs to blue
+turnLEDs(0, 0, 255)
 
 
 # joystick loop
