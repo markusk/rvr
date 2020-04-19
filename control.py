@@ -5,6 +5,9 @@
 """ Control the Sphero RVR with a Gamepad (Microsoft XBox Controller) """
 
 
+import time
+
+
 #-------------------
 #Joystick stuff
 #-------------------
@@ -179,7 +182,6 @@ signal.signal(signal.SIGTERM, sig_handler)
 #-------------------
 import os
 import sys
-import time
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), './lib/')))
 
 from sphero_sdk import SpheroRvrObserver
