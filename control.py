@@ -144,7 +144,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), './lib/'
 from sphero_sdk import SpheroRvrObserver
 from sphero_sdk import DriveFlagsBitmask
 
-rvr = SpheroRvrObserver()
+# temp disabled rvr = SpheroRvrObserver()
 
 
 # Main event loop
