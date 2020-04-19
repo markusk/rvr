@@ -141,6 +141,23 @@ for btn in buf[:num_buttons]:
 
 
 #-------------------
+# signal handling
+#-------------------
+import signal
+import sys
+
+# my signal handler
+def sig_handler(_signo, _stack_frame):
+    print("control.py terminated clean.")
+    sys.exit(0)
+
+# signals to be handled
+signal.signal(signal.SIGINT,  sig_handler)
+signal.signal(signal.SIGHUP,  sig_handler)
+signal.signal(signal.SIGTERM, sig_handler)
+
+
+#-------------------
 # RVR stuff
 #-------------------
 import os
