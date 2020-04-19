@@ -5,9 +5,6 @@
 """ Control the Sphero RVR with a Gamepad (Microsoft XBox Controller) """
 
 
-import time
-
-
 #-------------------
 #Joystick stuff
 #-------------------
@@ -148,12 +145,14 @@ for btn in buf[:num_buttons]:
 #-------------------
 import signal
 import sys
+import time
 
 # my signal handler
 def sig_handler(_signo, _stack_frame):
     # turn off RVR LEDs
     turnLEDs(0, 0, 0)
 
+    # close RVR
     rvr.close()
 
     print("\n\ncontrol.py terminated clean.\n")
@@ -181,7 +180,6 @@ from sphero_sdk import DriveFlagsBitmask
 # the robot is "disarmed"; all buttons are ignored, except the red one
 armed = False
 
-
 # create the RVR object.
 # This also lets the robot do a firmware check every now and then.
 rvr = SpheroRvrObserver()
@@ -205,8 +203,8 @@ rvr.wake()
 time.sleep(2)
 print("...done")
 
-# All LEDs to blue
-turnLEDs(0, 0, 255)
+# All LEDs to green
+turnLEDs(0, 255, 0)
 
 
 # joystick loop
