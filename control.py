@@ -207,13 +207,13 @@ while True:
                 button_states[button] = value
                 # pressed
                 if value:
-		    # red butoon
+                    # red butoon
                     if button == 'b':
-			# arm/disarm RVR
-			if armed not True:
+                        # arm/disarm RVR
+                        if armed == False:
                             armed = True
                             print("+++armed+++")
-			else:
+                        else:
                             armed = False
                             print("+++disarmed+++")
                     # RVR armed?
