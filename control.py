@@ -211,35 +211,6 @@ rvr.set_all_leds(
 time.sleep(1)
 
 
-"""# Main event loop
-try:
-    rvr.wake()
-    # Give RVR time to wake up
-    time.sleep(2)
-
-    rvr.set_all_leds(
-        led_group=RvrLedGroups.all_lights.value,
-        led_brightness_values=[color for _ in range(10) for color in Colors.off.value]
-    )
-
-    # Delay to show LEDs change
-    time.sleep(1)
-
-    rvr.set_all_leds(
-        led_group=RvrLedGroups.all_lights.value,
-        led_brightness_values=[color for _ in range(10) for color in [255, 0, 0]]
-    )
-
-    # Delay to show LEDs change
-    time.sleep(1)
-
-except KeyboardInterrupt:
-    print('\nProgram terminated with keyboard interrupt.')
-
-finally:
-    rvr.close() """
-
-
 # joystick loop
 while True:
     evbuf = jsdev.read(8)
