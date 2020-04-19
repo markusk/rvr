@@ -148,21 +148,20 @@ import sys
 
 # my signal handler
 def sig_handler(_signo, _stack_frame):
-    # turn of RVR LEDs
+    # turn off RVR LEDs
     try:
         rvr.set_all_leds(
             led_group=RvrLedGroups.all_lights.value,
-            led_brightness_values=[color for _ in range(10) for color in [255, 0, 0]]
+            led_brightness_values=[color for _ in range(10) for color in [0, 0, 0]]
         )
         # Delay to show LEDs change
         time.sleep(1)
     finally:
         rvr.close()
 
-
-
     print("\n\ncontrol.py terminated clean.\n")
     sys.exit(0)
+
 
 # signals to be handled
 signal.signal(signal.SIGINT,  sig_handler)
@@ -197,16 +196,15 @@ rvr = SpheroRvrObserver()
 #-------------------------
 print("Waking up RVR...")
 rvr.wake()
-
 # Give RVR time to wake up
 time.sleep(2)
 print("...done")
 
+# All LEDs to green
 rvr.set_all_leds(
     led_group=RvrLedGroups.all_lights.value,
-    led_brightness_values=[color for _ in range(10) for color in Colors.off.value]
+    led_brightness_values=[color for x in range(10) for color in [0, 255, 0]]
 )
-
 # Delay to show LEDs change
 time.sleep(1)
 
@@ -263,12 +261,11 @@ while True:
                             armed = True
                             print("+++armed+++")
 
-                            # set all LEDs to green
+                            # set all LEDs to red
                             rvr.set_all_leds(
                                 led_group=RvrLedGroups.all_lights.value,
-                                led_brightness_values=[color for _ in range(10) for color in Colors.off.value]
+                                led_brightness_values=[color for x in range(10) for color in [255, 0, 0]]
                             )
-
                             # Delay to show LEDs change
                             time.sleep(1)
                             
@@ -276,10 +273,10 @@ while True:
                             armed = False
                             print("+++disarmed+++")
 
-                            # turn off all LEDs
+                            # set all LEDs to green
                             rvr.set_all_leds(
                                 led_group=RvrLedGroups.all_lights.value,
-                                led_brightness_values=[color for _ in range(10) for color in [255, 0, 0]]
+                                led_brightness_values=[color for _ in range(10) for color in [0, 255, 0]]
                             )
 
                             # Delay to show LEDs change
