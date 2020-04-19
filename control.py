@@ -148,7 +148,20 @@ import sys
 
 # my signal handler
 def sig_handler(_signo, _stack_frame):
-    print("control.py terminated clean.")
+    # turn of RVR LEDs
+    try:
+        rvr.set_all_leds(
+            led_group=RvrLedGroups.all_lights.value,
+            led_brightness_values=[color for _ in range(10) for color in [255, 0, 0]]
+        )
+        # Delay to show LEDs change
+        time.sleep(1)
+    finally:
+        rvr.close()
+
+
+
+    print("\n\ncontrol.py terminated clean.\n")
     sys.exit(0)
 
 # signals to be handled
@@ -176,7 +189,26 @@ armed = False
 
 # create the RVR object.
 # This also lets the robot do a firmware check every now and then.
-# rvr = SpheroRvrObserver()
+rvr = SpheroRvrObserver()
+
+
+#-------------------------
+# Wake up, Mr. Freeman!
+#-------------------------
+print("Waking up RVR...")
+rvr.wake()
+
+# Give RVR time to wake up
+time.sleep(2)
+print("...done")
+
+rvr.set_all_leds(
+    led_group=RvrLedGroups.all_lights.value,
+    led_brightness_values=[color for _ in range(10) for color in Colors.off.value]
+)
+
+# Delay to show LEDs change
+time.sleep(1)
 
 
 """# Main event loop
@@ -230,9 +262,29 @@ while True:
                         if armed == False:
                             armed = True
                             print("+++armed+++")
+
+                            # set all LEDs to green
+                            rvr.set_all_leds(
+                                led_group=RvrLedGroups.all_lights.value,
+                                led_brightness_values=[color for _ in range(10) for color in Colors.off.value]
+                            )
+
+                            # Delay to show LEDs change
+                            time.sleep(1)
+                            
                         else:
                             armed = False
                             print("+++disarmed+++")
+
+                            # turn off all LEDs
+                            rvr.set_all_leds(
+                                led_group=RvrLedGroups.all_lights.value,
+                                led_brightness_values=[color for _ in range(10) for color in [255, 0, 0]]
+                            )
+
+                            # Delay to show LEDs change
+                            time.sleep(1)
+
                     # RVR armed?
                     if armed:
                         if button == 'dpad_up':
