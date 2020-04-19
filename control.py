@@ -186,10 +186,7 @@ rvr = SpheroRvrObserver()
 
 
 def turnLEDs(R, G, B):
-    rvr.set_all_leds(
-        led_group=RvrLedGroups.all_lights.value,
-        led_brightness_values=[color for x in range(10) for color in [R, G, B]]
-    )
+    rvr.led_control.set_all_leds_rgb(R, G, B)
     # Delay to show LEDs change
     sleep(1)
 
@@ -204,7 +201,7 @@ sleep(2)
 print("...done")
 
 # All LEDs to green
-turnLEDs(0, 255, 0)
+rvr.led_control.set_all_leds_color(color=Colors.green)
 
 
 # joystick loop
@@ -230,12 +227,14 @@ while True:
                             armed = True
                             print("+++armed+++")
                             # set all LEDs to red
-                            turnLEDs(255, 0, 0)
+                            rvr.led_control.set_all_leds_color(color=Colors.red)
+                            sleep(1)
                         else:
                             armed = False
                             print("+++disarmed+++")
                             # set all LEDs to green
-                            turnLEDs(0, 255, 0)
+                            rvr.led_control.set_all_leds_color(color=Colors.green)
+                            sleep(1)
                     # RVR armed?
                     if armed:
                         if button == 'dpad_up':
