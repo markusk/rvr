@@ -156,25 +156,33 @@ while True:
         if type & 0x80:
              print("(initial)")
 
-        # button pressed
+        # button change
         if type & 0x01:
             button = button_map[number]
             if button:
                 button_states[button] = value
+                # pressed
                 if value:
                     if button == 'dpad_up':
                         print("FORWARD")
+                    elif button == 'dpad_down':
+                        print("BACKWARD")
+                    elif button == 'dpad_left':
+                        print("LEFT")
+                    elif button == 'dpad_right':
+                        print("RIGHT")
                     else:
                         print(("%s pressed" % (button)))
                 else:
-                    if button == 'dpad_up':
+                    # released
+                    if button == 'dpad_up' || button button == 'dpad_down' || button == 'dpad_left' || button == 'dpad_right':
                         print("STOP")
-                    print(("%s released" % (button)))
+                    #print(("%s released" % (button)))
 
         # axis moved
-        if type & 0x02:
-            axis = axis_map[number]
-            if axis:
-                fvalue = value / 32767.0
-                axis_states[axis] = fvalue
-                print(("%s: %.3f" % (axis, fvalue)))
+        #if type & 0x02:
+        #    axis = axis_map[number]
+        #    if axis:
+        #        fvalue = value / 32767.0
+        #        axis_states[axis] = fvalue
+        #        print(("%s: %.3f" % (axis, fvalue)))
