@@ -152,15 +152,9 @@ import sys
 # my signal handler
 def sig_handler(_signo, _stack_frame):
     # turn off RVR LEDs
-    try:
-        rvr.set_all_leds(
-            led_group=RvrLedGroups.all_lights.value,
-            led_brightness_values=[color for _ in range(10) for color in [0, 0, 0]]
-        )
-        # Delay to show LEDs change
-        time.sleep(1)
-    finally:
-        rvr.close()
+    turnLEDs(0, 0, 0)
+
+    rvr.close()
 
     print("\n\ncontrol.py terminated clean.\n")
     sys.exit(0)
@@ -237,28 +231,13 @@ while True:
                         if armed == False:
                             armed = True
                             print("+++armed+++")
-
                             # set all LEDs to red
-                            rvr.set_all_leds(
-                                led_group=RvrLedGroups.all_lights.value,
-                                led_brightness_values=[color for x in range(10) for color in [255, 0, 0]]
-                            )
-                            # Delay to show LEDs change
-                            time.sleep(1)
-                            
+                            turnLEDs(255, 0, 0)
                         else:
                             armed = False
                             print("+++disarmed+++")
-
                             # set all LEDs to green
-                            rvr.set_all_leds(
-                                led_group=RvrLedGroups.all_lights.value,
-                                led_brightness_values=[color for _ in range(10) for color in [0, 255, 0]]
-                            )
-
-                            # Delay to show LEDs change
-                            time.sleep(1)
-
+                            turnLEDs(0, 255, 0)
                     # RVR armed?
                     if armed:
                         if button == 'dpad_up':
