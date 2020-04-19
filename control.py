@@ -131,8 +131,21 @@ for btn in buf[:num_buttons]:
     button_map.append(btn_name)
     button_states[btn_name] = 0
 
-print(('%d axes found: %s' % (num_axes, ', '.join(axis_map))))
-print(('%d buttons found: %s' % (num_buttons, ', '.join(button_map))))
+#print(('%d axes found: %s' % (num_axes, ', '.join(axis_map))))
+#print(('%d buttons found: %s' % (num_buttons, ', '.join(button_map))))
+
+
+# RVR stuff
+import os
+import sys
+import time
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), './lib/')))
+
+from sphero_sdk import SpheroRvrObserver
+from sphero_sdk import DriveFlagsBitmask
+
+rvr = SpheroRvrObserver()
+
 
 # Main event loop
 while True:
