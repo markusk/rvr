@@ -178,12 +178,16 @@ while True:
                         print("LEFT")
                     elif button == 'dpad_right':
                         print("RIGHT")
+                    elif button == 'b': # red button
+                        print("+++armed+++")
                     else:
                         print(("%s pressed" % (button)))
                 else:
                     # released
                     if button == 'dpad_up' or button == 'dpad_down' or button == 'dpad_left' or button == 'dpad_right':
                         print("STOP")
+                    elif button == 'b': # red button
+                        print("+++disarmed+++")
                     #print(("%s released" % (button)))
 
         # axis moved
