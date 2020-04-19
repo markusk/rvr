@@ -156,15 +156,22 @@ while True:
         if type & 0x80:
              print("(initial)")
 
+        # button pressed
         if type & 0x01:
             button = button_map[number]
             if button:
                 button_states[button] = value
                 if value:
-                    print(("%s pressed" % (button)))
+                    if value == 0x2c2:
+                        print("FORWARD")
+                    else:
+                        print(("%s pressed" % (button)))
                 else:
+                    if value == 0x2c2:
+                        print("STOP")
                     print(("%s released" % (button)))
 
+        # axis moved
         if type & 0x02:
             axis = axis_map[number]
             if axis:
