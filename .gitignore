@@ -127,9 +127,11 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Markus individual staff
+# ROS individual staff
 ROS/catkin_workspace/src/CMakeLists.txt
-ROS/catkin_workspace/src/rvr/lib/.fw
-ROS/catkin_workspace/src/rvr/lib/sphero_sdk
-# Visudal Code Studio settings
+# Visual Code Studio settings
 .vscode/settings.json
+# RVR Firmare check file
+.fw
+# Symbolic Link to the Sphero SDK
+sphero_sdk/
