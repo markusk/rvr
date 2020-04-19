@@ -151,7 +151,13 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), './lib/'
 from sphero_sdk import SpheroRvrObserver
 from sphero_sdk import DriveFlagsBitmask
 
-# temp disabled rvr = SpheroRvrObserver()
+# the robot is "disarmed"; all buttons are ignored, except the red one
+armed = False
+
+
+# create the RVR object.
+# This also lets the robot do a firmware check every now and then.
+# rvr = SpheroRvrObserver()
 
 
 # Main event loop
@@ -170,6 +176,8 @@ while True:
                 button_states[button] = value
                 # pressed
                 if value:
+                    # RVR armed?
+                    if armed:
                     if button == 'dpad_up':
                         print("FORWARD")
                     elif button == 'dpad_down':
@@ -179,14 +187,18 @@ while True:
                     elif button == 'dpad_right':
                         print("RIGHT")
                     elif button == 'b': # red button
+                            armed = True
                         print("+++armed+++")
                     else:
                         print(("%s pressed" % (button)))
                 else:
-                    # released
+                    # button released
+                    # RVR armed?
+                    if armed:
                     if button == 'dpad_up' or button == 'dpad_down' or button == 'dpad_left' or button == 'dpad_right':
                         print("STOP")
                     elif button == 'b': # red button
+                            armed = False
                         print("+++disarmed+++")
                     #print(("%s released" % (button)))
 
