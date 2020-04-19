@@ -134,4 +134,4 @@ ROS/catkin_workspace/src/CMakeLists.txt
 # RVR Firmare check file
 .fw
 # Symbolic Link to the Sphero SDK
-sphero_sdk/
+lib/sphero_sdk/
