@@ -162,12 +162,12 @@ while True:
             if button:
                 button_states[button] = value
                 if value:
-                    if value == 0x2c2:
+                    if button == 'dpad-up':
                         print("FORWARD")
                     else:
                         print(("%s pressed" % (button)))
                 else:
-                    if value == 0x2c2:
+                    if button == 'dpad-up':
                         print("STOP")
                     print(("%s released" % (button)))
 
