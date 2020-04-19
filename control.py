@@ -149,6 +149,8 @@ import time
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), './lib/')))
 
 from sphero_sdk import SpheroRvrObserver
+from sphero_sdk import Colors
+from sphero_sdk import RvrLedGroups
 from sphero_sdk import DriveFlagsBitmask
 
 # the robot is "disarmed"; all buttons are ignored, except the red one
@@ -161,6 +163,35 @@ armed = False
 
 
 # Main event loop
+try:
+    rvr.wake()
+    # Give RVR time to wake up
+    time.sleep(2)
+
+    rvr.set_all_leds(
+        led_group=RvrLedGroups.all_lights.value,
+        led_brightness_values=[color for _ in range(10) for color in Colors.off.value]
+    )
+
+    # Delay to show LEDs change
+    time.sleep(1)
+
+    rvr.set_all_leds(
+        led_group=RvrLedGroups.all_lights.value,
+        led_brightness_values=[color for _ in range(10) for color in [255, 0, 0]]
+    )
+
+    # Delay to show LEDs change
+    time.sleep(1)
+
+except KeyboardInterrupt:
+    print('\nProgram terminated with keyboard interrupt.')
+
+finally:
+    rvr.close()
+
+
+# joystick loop
 while True:
     evbuf = jsdev.read(8)
     if evbuf:
@@ -178,29 +209,29 @@ while True:
                 if value:
                     # RVR armed?
                     if armed:
-                    if button == 'dpad_up':
-                        print("FORWARD")
-                    elif button == 'dpad_down':
-                        print("BACKWARD")
-                    elif button == 'dpad_left':
-                        print("LEFT")
-                    elif button == 'dpad_right':
-                        print("RIGHT")
-                    elif button == 'b': # red button
+                        if button == 'dpad_up':
+                            print("FORWARD")
+                        elif button == 'dpad_down':
+                            print("BACKWARD")
+                        elif button == 'dpad_left':
+                            print("LEFT")
+                        elif button == 'dpad_right':
+                            print("RIGHT")
+                        elif button == 'b': # red button
                             armed = True
-                        print("+++armed+++")
-                    else:
-                        print(("%s pressed" % (button)))
+                            print("+++armed+++")
+                        else:
+                            print(("%s pressed" % (button)))
                 else:
                     # button released
                     # RVR armed?
                     if armed:
-                    if button == 'dpad_up' or button == 'dpad_down' or button == 'dpad_left' or button == 'dpad_right':
-                        print("STOP")
-                    elif button == 'b': # red button
+                        if button == 'dpad_up' or button == 'dpad_down' or button == 'dpad_left' or button == 'dpad_right':
+                            print("STOP")
+                        elif button == 'b': # red button
                             armed = False
-                        print("+++disarmed+++")
-                    #print(("%s released" % (button)))
+                            print("+++disarmed+++")
+                        #print(("%s released" % (button)))
 
         # axis moved
         #if type & 0x02:
