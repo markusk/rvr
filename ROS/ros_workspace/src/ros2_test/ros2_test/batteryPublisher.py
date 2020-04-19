@@ -22,7 +22,7 @@ from sphero_sdk import RvrLedGroups
 
 #try:
 print("Observer......")
-rvr = SpheroRvrObserver()
+#rvr = SpheroRvrObserver()
 print("......done")
 #except:
 #    print("\n++++++++++++++++++++++++++++++++++")
@@ -67,7 +67,7 @@ def main(args=None):
 
     # wake up RVR
     print("waking up RVR...")
-    rvr.wake()
+    #rvr.wake()
     print("......done")
 
     # give it time to wake up
@@ -87,7 +87,7 @@ def main(args=None):
     rclpy.spin(node)
 
     # close RVR
-    rvr.close()
+    #rvr.close()
 
     node.destroy_node()
     rclpy.shutdown()
