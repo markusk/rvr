@@ -175,7 +175,7 @@ while True:
                         print(("%s pressed" % (button)))
                 else:
                     # released
-                    if button == 'dpad_up' || button button == 'dpad_down' || button == 'dpad_left' || button == 'dpad_right':
+                    if button == 'dpad_up' or button == 'dpad_down' or button == 'dpad_left' or button == 'dpad_right':
                         print("STOP")
                     #print(("%s released" % (button)))
 
