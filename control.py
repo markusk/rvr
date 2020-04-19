@@ -143,11 +143,6 @@ for btn in buf[:num_buttons]:
 #print(('%d buttons found: %s' % (num_buttons, ', '.join(button_map))))
 
 
-# stupid trick
-def mysleep(seconds):
-    time.sleep(seconds)
-
-
 #-------------------
 # signal handling
 #-------------------
@@ -163,7 +158,7 @@ def sig_handler(_signo, _stack_frame):
             led_brightness_values=[color for _ in range(10) for color in [0, 0, 0]]
         )
         # Delay to show LEDs change
-        mysleep(1)
+        time.sleep(1)
     finally:
         rvr.close()
 
@@ -204,7 +199,7 @@ rvr = SpheroRvrObserver()
 print("Waking up RVR...")
 rvr.wake()
 # Give RVR time to wake up
-mysleep(2)
+time.sleep(2)
 print("...done")
 
 # All LEDs to green
@@ -213,7 +208,7 @@ rvr.set_all_leds(
     led_brightness_values=[color for x in range(10) for color in [0, 255, 0]]
 )
 # Delay to show LEDs change
-mysleep(1)
+time.sleep(1)
 
 
 """# Main event loop
@@ -274,7 +269,7 @@ while True:
                                 led_brightness_values=[color for x in range(10) for color in [255, 0, 0]]
                             )
                             # Delay to show LEDs change
-                            mysleep(1)
+                            time.sleep(1)
                             
                         else:
                             armed = False
@@ -287,7 +282,7 @@ while True:
                             )
 
                             # Delay to show LEDs change
-                            mysleep(1)
+                            time.sleep(1)
 
                     # RVR armed?
                     if armed:
