@@ -145,7 +145,7 @@ for btn in buf[:num_buttons]:
 #-------------------
 import signal
 import sys
-import time
+from time import sleep
 
 # my signal handler
 def sig_handler(_signo, _stack_frame):
@@ -191,7 +191,7 @@ def turnLEDs(R, G, B):
         led_brightness_values=[color for x in range(10) for color in [R, G, B]]
     )
     # Delay to show LEDs change
-    time.sleep(1)
+    sleep(1)
 
 
 #-------------------------
@@ -200,7 +200,7 @@ def turnLEDs(R, G, B):
 print("Waking up RVR...")
 rvr.wake()
 # Give RVR time to wake up
-time.sleep(2)
+sleep(2)
 print("...done")
 
 # All LEDs to green
