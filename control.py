@@ -207,6 +207,15 @@ while True:
                 button_states[button] = value
                 # pressed
                 if value:
+		    # red butoon
+                    if button == 'b':
+			# arm/disarm RVR
+			if armed not True:
+                            armed = True
+                            print("+++armed+++")
+			else:
+                            armed = False
+                            print("+++disarmed+++")
                     # RVR armed?
                     if armed:
                         if button == 'dpad_up':
@@ -217,9 +226,6 @@ while True:
                             print("LEFT")
                         elif button == 'dpad_right':
                             print("RIGHT")
-                        elif button == 'b': # red button
-                            armed = True
-                            print("+++armed+++")
                         else:
                             print(("%s pressed" % (button)))
                 else:
@@ -228,9 +234,6 @@ while True:
                     if armed:
                         if button == 'dpad_up' or button == 'dpad_down' or button == 'dpad_left' or button == 'dpad_right':
                             print("STOP")
-                        elif button == 'b': # red button
-                            armed = False
-                            print("+++disarmed+++")
                         #print(("%s released" % (button)))
 
         # axis moved
