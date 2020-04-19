@@ -1,6 +1,6 @@
 # rvr
 
-A Python3 package for the Sphero RVR.
+A ROS Python package for the Sphero RVR.
 
 _Please note: this code is still in the middle of the development process!_
 
@@ -72,7 +72,46 @@ sudo apt-get install joystick
 jstest --normal /dev/input/js0
 ```
 
-## Step 3: 
+## Step 3: ROS Setup
+
+- Install ROS on your Ubuntu Mate ([Instruction](http://wiki.ros.org/melodic/Installation/Ubuntu/)):
+
+```bash
+sudo apt-get install ros-melodic-ros-base
+```
+
+- Install ROS packages:
+
+```bash
+sudo apt-get install ros-melodic-urg-node ros-melodic-teleop-twist-keyboard joystick ros-melodic-joystick-drivers ros-melodic-teleop-twist-joy
+```
+
+- Install ROS Python support
+
+```bash
+sudo apt install python-rosinstall python-rosinstall-generator python-wstool build-essential
+```
+
+## Step 4: Enable Python3 together with ROS
+
+- Install these packages ([Credits](https://medium.com/@beta_b0t/how-to-setup-ros-with-python-3-44a69ca36674)):
+
+```bash
+sudo apt-get install python3-pip python3-yaml python-catkin-tools
+sudo pip3 install rospkg catkin_pkg
+```
+
+- Enable catkin to work with Python3:
+
+```bash
+catkin config -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so
+```
+
+- Optional: If you see missing directories, you can create them. For example:
+
+```bash
+mkdir ~/catkin_ws/logs
+```
 
 ## Step 5: Create a central place for this repository
 
@@ -96,10 +135,11 @@ mkdir ~/catkin_ws
 cd ~/catkin_ws
 ```
 
-- Create symbolic link with the name 'src', pointing to the 'src' folder in the XXX directory from this repository:
+- Create symbolic link with the name 'src', pointing to the 'src' folder in the ROS directory from this repository:
 
 ```bash
-ln -s ~/develop/rvr/XXX/ src
+ln -s ~/develop/rvr/ROS/catkin_workspace/src/ src
+catkin_make
 ```
 
 ## Step 6: Setup Sphero Public SDK
@@ -123,7 +163,7 @@ git clone https://github.com/sphero-inc/sphero-sdk-raspberrypi-python
 - Create symbolic link, pointing to the 'sphero_sdk' folder:
 
 ```bash
-ln -s ~/develop/sphero-sdk-raspberrypi-python/sphero_sdk/ ~/develop/rvr/XXX/lib/
+ln -s ~/develop/sphero-sdk-raspberrypi-python/sphero_sdk/ ~/develop/rvr/ROS/catkin_workspace/src/rvr/lib/
 ```
 
 #### Turn on the RVR and test the SDK
@@ -131,7 +171,7 @@ ln -s ~/develop/sphero-sdk-raspberrypi-python/sphero_sdk/ ~/develop/rvr/XXX/lib/
 - Start the test program:
 
 ```bash
-cd ~/.../test
+cd ~/catkin_ws/src/rvr/nodes
 ./test.py
 ```
 
@@ -148,11 +188,26 @@ Voltage states:  [unknown: 0, ok: 1, low: 2, critical: 3]
 
 _Note: The firmware check seems to pop up from time to time._
 
-## Step 7: Run XXX
+## Step 7: Run ROS
 
+### The main launch file
 
+- Run the main launch file on the robot (Raspberry Pi):
 
-## _**to do:**_ Step 8: Setting up some code for autostart
+```bash
+cd ~/catkin_ws
+roslaunch rvr rvr.launch
+```
+
+_**to do:**_ On another computer (the ground control center):
+
+```bash
+export ROS_MASTER_URI=http://<hostname>:11311
+rosparam set joy_node/dev "/dev/input/js1"
+roslaunch rvr ground_control_center.launch
+```
+
+## _**to do:**_ Step 8: Setting up ROS for autostart
 
 ### systemd under Ubuntu
 
@@ -162,3 +217,40 @@ sudo systemctl daemon-reload
 sudo systemctl start rvr-ros-start.service
 sudo systemctl enable rvr-ros-start.service
 ```
+
+---
+
+## The ROS launch files
+
+### K
+
+#### keyboard_control_test
+
+Listens to a teleop_twist_keyboard node and prints out the data/messages. Uses:
+
+- _teleop_twist_keyboard_
+- _nodes/keyboard_listener.py_
+
+### M
+
+#### motor_server
+
+Controls the motors on the robot. Uses:
+
+- _motor_server.py_
+
+### R
+
+#### rvr
+
+Controls the whole robot. To be started on the robot. Uses:
+
+- _motor_server.py_
+
+_**to do:**_
+- _tf_broadcaster.py_
+- _battery_publisher.py_
+- _imu_bno055.py_
+- _base_controller.py_
+- _minibot_camera_
+- _urg_node_
