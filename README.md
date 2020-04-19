@@ -72,9 +72,7 @@ sudo apt-get install joystick
 jstest --normal /dev/input/js0
 ```
 
-## Step 3: 
-
-## Step 5: Create a central place for this repository
+## Step 3: Create a central place for this repository
 
 - Create your own development directory "develop"
 
@@ -89,20 +87,7 @@ cd ~/develop
 git clone https://github.com/markusk/rvr.git
 ```
 
-- Create a catkin workspace without 'src' folder:
-
-```bash
-mkdir ~/catkin_ws
-cd ~/catkin_ws
-```
-
-- Create symbolic link with the name 'src', pointing to the 'src' folder in the XXX directory from this repository:
-
-```bash
-ln -s ~/develop/rvr/XXX/ src
-```
-
-## Step 6: Setup Sphero Public SDK
+## Step 4: Setup Sphero Public SDK
 
 ### Long version
 
@@ -123,7 +108,7 @@ git clone https://github.com/sphero-inc/sphero-sdk-raspberrypi-python
 - Create symbolic link, pointing to the 'sphero_sdk' folder:
 
 ```bash
-ln -s ~/develop/sphero-sdk-raspberrypi-python/sphero_sdk/ ~/develop/rvr/XXX/lib/
+ln -s ~/develop/sphero-sdk-raspberrypi-python/sphero_sdk/ ~/develop/rvr/lib/
 ```
 
 #### Turn on the RVR and test the SDK
@@ -148,11 +133,11 @@ Voltage states:  [unknown: 0, ok: 1, low: 2, critical: 3]
 
 _Note: The firmware check seems to pop up from time to time._
 
-## Step 7: Run XXX
+## Step 5: Run XXX
 
 
 
-## _**to do:**_ Step 8: Setting up some code for autostart
+## _**to do:**_ Step 6: Setting up some code for autostart
 
 ### systemd under Ubuntu
 
