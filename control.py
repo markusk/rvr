@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 # coding=utf-8
 
+
 """ Control the Sphero RVR with a Gamepad (Microsoft XBox Controller) """
 
+
+#-------------------
+#Joystick stuff
+#-------------------
 import os, struct, array
 from fcntl import ioctl
 
@@ -135,7 +140,9 @@ for btn in buf[:num_buttons]:
 #print(('%d buttons found: %s' % (num_buttons, ', '.join(button_map))))
 
 
+#-------------------
 # RVR stuff
+#-------------------
 import os
 import sys
 import time
