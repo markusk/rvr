@@ -162,7 +162,7 @@ armed = False
 # rvr = SpheroRvrObserver()
 
 
-# Main event loop
+"""# Main event loop
 try:
     rvr.wake()
     # Give RVR time to wake up
@@ -188,7 +188,7 @@ except KeyboardInterrupt:
     print('\nProgram terminated with keyboard interrupt.')
 
 finally:
-    rvr.close()
+    rvr.close() """
 
 
 # joystick loop
