@@ -177,8 +177,15 @@ from sphero_sdk import Colors
 from sphero_sdk import RvrLedGroups
 from sphero_sdk import DriveFlagsBitmask
 
+
 # the robot is "disarmed"; all buttons are ignored, except the red one
 armed = False
+
+# Valid speed values are 0-255
+driveSpeed = 128
+# Valid heading values are 0-359
+driveHeading = 0
+
 
 # create the RVR object.
 # This also lets the robot do a firmware check every now and then.
@@ -202,6 +209,11 @@ print("...done")
 
 # All LEDs to green
 rvr.led_control.set_all_leds_color(color=Colors.green)
+
+# reset yaw
+print("Resetting yaw...")
+rvr.reset_yaw()
+print("...done")
 
 
 # joystick loop
