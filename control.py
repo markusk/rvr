@@ -222,8 +222,9 @@ while True:
     if evbuf:
         time, value, type, number = struct.unpack('IhBB', evbuf)
 
-        if type & 0x80:
-             print("(initial)")
+        # initial button state
+        #if type & 0x80:
+        #     print("(initial)")
 
         # button change
         if type & 0x01:
