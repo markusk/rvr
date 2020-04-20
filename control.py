@@ -254,8 +254,20 @@ while True:
                     if armed:
                         if button == 'dpad_up':
                             print("FORWARD")
+                            # drive
+                            rvr.drive_with_heading(
+                                speed=driveSpeed,
+                                heading=driveHeading,
+                                flags=DriveFlagsBitmask.none.value
+                            )
                         elif button == 'dpad_down':
                             print("BACKWARD")
+                            # drive
+                            rvr.drive_with_heading(
+                                speed=driveSpeed,
+                                heading=driveHeading,
+                                flags=DriveFlagsBitmask.drive_reverse.value
+                            )
                         elif button == 'dpad_left':
                             print("LEFT")
                         elif button == 'dpad_right':
@@ -268,6 +280,12 @@ while True:
                     if armed:
                         if button == 'dpad_up' or button == 'dpad_down' or button == 'dpad_left' or button == 'dpad_right':
                             print("STOP")
+                            # drive
+                            rvr.drive_with_heading(
+                                speed=0,
+                                heading=0,
+                                flags=DriveFlagsBitmask.none.value
+                            )
                         #print(("%s released" % (button)))
 
         # axis moved
