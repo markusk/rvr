@@ -153,7 +153,9 @@ def sig_handler(_signo, _stack_frame):
     turnLEDs(0, 0, 0)
 
     # close RVR
+    print("Closing conection to RVR...")
     rvr.close()
+    print("...done")
 
     print("\n\ncontrol.py terminated clean.\n")
     sys.exit(0)
