@@ -181,7 +181,7 @@ fontSymbol = ImageFont.truetype('/usr/share/fonts/truetype/font-awesome/fontawes
 # ----------------------
 
 # the battery symbols
-batteryEmpty = unichr(0xf244) # <25% = minVoltage
+batteryEmpty = chr(0xf244) # <25% = minVoltage
 
 # battery level (white rectangle in empty battery symbol
 maxRectLength = 16
@@ -205,7 +205,7 @@ import socket
 import subprocess
 
 # the network symbol
-networkSymbol = unichr(0xf1eb) # fa-wifi
+networkSymbol = chr(0xf1eb) # fa-wifi
 
 
 # -------------------------------
@@ -214,11 +214,11 @@ networkSymbol = unichr(0xf1eb) # fa-wifi
 import os
 
 # the time symbol
-timeSymbol = unichr(0xf017) # fa-clock-o
+timeSymbol = chr(0xf017) # fa-clock-o
 # the temperature symbol
-tempSymbol = unichr(0xf21e) # fa-heartbeat  0xf2db
+tempSymbol = chr(0xf21e) # fa-heartbeat  0xf2db
 # the joystick symbol
-joySymbol = unichr(0xf11b) # fa-gamepad
+joySymbol = chr(0xf11b) # fa-gamepad
 
 def getCpuTemperature():
     tempFile = open("/sys/class/thermal/thermal_zone0/temp")
