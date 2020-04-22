@@ -66,8 +66,8 @@ def sig_handler(_signo, _stack_frame):
     #GPIO.remove_event_detect(switchPin)
     #GPIO.cleanup()
     # clear display
-    disp.clear()
-    disp.display()
+    oled.clear()
+    oled.display()
     print("powermonitor terminated clean.")
     sys.exit(0)
 
@@ -108,17 +108,17 @@ signal.signal(signal.SIGTERM, sig_handler)
 
 
 # piezo beep function
-#def beep(numberBeeps):
-#    for x in range(0, numberBeeps):
-#        # Piezo OFF
-#        GPIO.output(piezoPin, GPIO.HIGH)
-#        # wait
-#        time.sleep(waitTimePiezo)
-#
-#        # Piezo ON (low active!)
-#        GPIO.output(piezoPin, GPIO.LOW)
-#        # "wait" (generate a square wave for the piezo)
-#        time.sleep(waitTimePiezo)
+def beep(numberBeeps):
+    for x in range(0, numberBeeps):
+        # Piezo OFF
+        #GPIO.output(piezoPin, GPIO.HIGH)
+        # wait
+        time.sleep(waitTimePiezo)
+
+        # Piezo ON (low active!)
+        #GPIO.output(piezoPin, GPIO.LOW)
+        # "wait" (generate a square wave for the piezo)
+        time.sleep(waitTimePiezo)
 
 
 # switch detection by interrupt, falling edge, with debouncing
@@ -129,8 +129,8 @@ signal.signal(signal.SIGTERM, sig_handler)
 #    print("Shutdown button on GPIO " + str(answer) + " pushed.")
 #
 #    # clear display
-#    disp.clear()
-#    disp.display()
+#    oled.clear()
+#    oled.display()
 #    # show some shutdown text on OLED
 #
 #    # send message to all users
@@ -153,17 +153,18 @@ signal.signal(signal.SIGTERM, sig_handler)
 # ----------------------
 
 # Clear display.
-disp.clear()
-disp.display()
+oled.fill(0)
+oled.show()
 
 # Create blank image for drawing.
 # Make sure to create image with mode '1' for 1-bit color.
-width = disp.width
-height = disp.height
-image = Image.new('1', (width, height))
+image = Image.new("1", (oled.width, oled.height))
 
 # Get drawing object to draw on image.
 draw = ImageDraw.Draw(image)
+
+# Draw a white background
+draw.rectangle((0, 0, oled.width, oled.height), outline=255, fill=255)
 
 # The fonts and sizes
 size = 15
@@ -191,9 +192,9 @@ minVoltage      = 3*3.3 # 3S LiPo-Battery with 3 x 3.3Volt =  9.9 Volt (empty ba
 maxVoltage      = 3*4.2 # 3S LiPo-Battery with 3 x 4.2Volt = 12.6 Volt (full  battery)
 
 # the AD converter object
-adc = Adafruit_ADS1x15.ADS1015()
+#adc = Adafruit_ADS1x15.ADS1015()
 # Gain 1 means, max a value of +4.096 Volt (+4,096 Volt in Europe) on the ADC channel, resulting in a 'value' of +2047.
-GAIN = 1
+#GAIN = 1
 
 
 # ----------------------
@@ -241,7 +242,7 @@ while (1):
 
     # clear OLED
     # Draw a black filled box to clear the image.
-    draw.rectangle((0,0,width,height), outline=0, fill=0)
+    draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
 
     # get hostname
     hostname = socket.gethostname()
@@ -264,8 +265,8 @@ while (1):
     draw.text((0, size), ip4string, font=fontText, fill=255)
 
     # Display image.
-    disp.image(image)
-    disp.display()
+    oled.image(image)
+    oled.show()
 
     # wait some seconds and/or beep
     if batteryIsEmpty is True:
@@ -282,11 +283,12 @@ while (1):
 
     # clear OLED
     # Draw a black filled box to clear the image.
-    draw.rectangle((0,0,width,height), outline=0, fill=0)
+    draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
 
     # read AD converter (battery voltage)
     # use channel 0 on IC
-    value = adc.read_adc(0, gain=GAIN)
+    # value = adc.read_adc(0, gain=GAIN)
+    value = 175
 
     # 13.44 Volt battery voltage resulted in 2,94 Volt on the ADC channel with my circuit (voltage divider w/ two resistors (39k + 11k)).
     # This resulted in a ADC 'value' of 1465.
@@ -331,8 +333,8 @@ while (1):
     draw.text((0, size), str("%.2f Volt" % measuredVoltage), font=fontText, fill=255)
 
     # Display image.
-    disp.image(image)
-    disp.display()
+    oled.image(image)
+    oled.show()
 
     # wait some seconds and/or beep
     if batteryIsEmpty is True:
@@ -349,7 +351,7 @@ while (1):
 
     # clear OLED
     # Draw a black filled box to clear the image.
-    draw.rectangle((0,0,width,height), outline=0, fill=0)
+    draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
 
     # get time
     timeString = time.strftime("%H:%M", time.localtime(time.time()) )
@@ -369,8 +371,8 @@ while (1):
     draw.text((symbolWidth, size), str(round(getCpuTemperature(), 1)) + " " + u'\N{DEGREE SIGN}'  + "C", font=fontText, fill=255)
 
     # Display image.
-    disp.image(image)
-    disp.display()
+    oled.image(image)
+    oled.show()
 
     # wait some seconds and/or beep
     if batteryIsEmpty is True:
