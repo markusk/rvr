@@ -203,9 +203,14 @@ maxVoltage      = 3*4.2 # 3S LiPo-Battery with 3 x 4.2Volt = 12.6 Volt (full  ba
 # for getting the hostname and IP of the underlying system
 import socket
 #import subprocess
+import functools
+import operator
 
 # the network symbol
 networkSymbol = chr(0xf1eb) # fa-wifi
+
+# IP for the OLED
+ip4string = "-"
 
 
 # -------------------------------
@@ -248,17 +253,23 @@ while (1):
     hostname = socket.gethostname()
     # get IP
     #ip = subprocess.check_output(['hostname', '-I'])
-    ip = socket.gethostbyname(hostname)
+    ip = socket.gethostbyname_ex(hostname)
     # do we have an IP?
-    if len(ip) >= 7:
-        # find first space and cut string at this index
-        #ip4string = ip[:ip.index(" ")]
-        ip4string = ip
-    else:
-        ip4string = "-"
+    #ip4string = ip
+    for group in ip:
+        ip4string =  ", ".join(ip)
+    #str4string = functools.reduce(operator.add, (ip))
+
+    #if len(ip) >= 7:
+    #    # find first space and cut string at this index
+    #    #ip4string = ip[:ip.index(" ")]
+    #    ip4string = ip
+    #else:
+    #    ip4string = "-"
 
     # debug
-    print ("IP:" + ip)
+    #print (ip4string)
+    print("My IP is: {}".format(ip))
 
     # Write lines of text to display
     # line 1, network symbol
