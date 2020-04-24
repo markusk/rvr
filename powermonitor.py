@@ -66,8 +66,8 @@ def sig_handler(_signo, _stack_frame):
     #GPIO.remove_event_detect(switchPin)
     #GPIO.cleanup()
     # clear display
-    oled.clear()
-    oled.display()
+    oled.fill(0)
+    oled.show()
     print("powermonitor terminated clean.")
     sys.exit(0)
 
@@ -202,7 +202,7 @@ maxVoltage      = 3*4.2 # 3S LiPo-Battery with 3 x 4.2Volt = 12.6 Volt (full  ba
 # ----------------------
 # for getting the hostname and IP of the underlying system
 import socket
-import subprocess
+#import subprocess
 
 # the network symbol
 networkSymbol = chr(0xf1eb) # fa-wifi
@@ -256,6 +256,9 @@ while (1):
         ip4string = ip
     else:
         ip4string = "-"
+
+    # debug
+    print ("IP:" + ip)
 
     # Write lines of text to display
     # line 1, network symbol
