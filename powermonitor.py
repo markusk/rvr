@@ -246,12 +246,14 @@ while (1):
 
     # get hostname
     hostname = socket.gethostname()
-    # get IP via shell
-    ip = subprocess.check_output(['hostname', '-I'])
+    # get IP
+    #ip = subprocess.check_output(['hostname', '-I'])
+    ip = socket.gethostbyname(hostname)
     # do we have an IP?
     if len(ip) >= 7:
         # find first space and cut string at this index
-        ip4string = ip[:ip.index(" ")]
+        #ip4string = ip[:ip.index(" ")]
+        ip4string = ip
     else:
         ip4string = "-"
 
