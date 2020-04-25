@@ -80,72 +80,72 @@ signal.signal(signal.SIGTERM, sig_handler)
 # ----------------------
 # GPIO/pushbotton stuff
 # ----------------------
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 # for poweroff
-#from subprocess import call
+from subprocess import call
 
 # init
-#GPIO.setmode(GPIO.BCM) # use the GPIO names, _not_ the pin numbers on the board
+GPIO.setmode(GPIO.BCM) # use the GPIO names, _not_ the pin numbers on the board
 
 # Raspberry Pi pin configuration:
 # pins	    BCM   BOARD
-#switchPin  = 17 # pin 11
-#ledPin     = 18 # pin 12
-#piezoPin   = 25 # pin
+switchPin  = 17 # pin 11 (pushbutton)
+ledPin     = 27 # pin 13
+piezoPin   = 13 # pin 33
 
 
 # setup
-#print('setup...')
-#GPIO.setup(switchPin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # waits for LOW
-#GPIO.setup(ledPin,    GPIO.OUT)
-#GPIO.setup(piezoPin,  GPIO.OUT)
+print('setup...')
+GPIO.setup(switchPin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # waits for LOW
+GPIO.setup(ledPin,    GPIO.OUT)
+GPIO.setup(piezoPin,  GPIO.OUT)
 
 # LED OFF (low active!)
-#GPIO.output(ledPin, GPIO.HIGH)
+GPIO.output(ledPin, GPIO.HIGH)
 
 # checker
-#buttonPressed = False
+buttonPressed = False
 
 
 # piezo beep function
 def beep(numberBeeps):
     for x in range(0, numberBeeps):
         # Piezo OFF
-        #GPIO.output(piezoPin, GPIO.HIGH)
+        GPIO.output(piezoPin, GPIO.HIGH)
         # wait
         time.sleep(waitTimePiezo)
 
         # Piezo ON (low active!)
-        #GPIO.output(piezoPin, GPIO.LOW)
+        GPIO.output(piezoPin, GPIO.LOW)
         # "wait" (generate a square wave for the piezo)
         time.sleep(waitTimePiezo)
 
 
 # switch detection by interrupt, falling edge, with debouncing
-#def my_callback(answer):
-#    # LED ON (low active!)
-#    GPIO.output(ledPin, GPIO.LOW)
-#
-#    print("Shutdown button on GPIO " + str(answer) + " pushed.")
-#
-#    # clear display
-#    oled.clear()
-#    oled.display()
-#    # show some shutdown text on OLED
-#
-#    # send message to all users
-#    call('wall +++ Shutting down Pi in 5 seconds +++', shell=True)
-#
-#    # delay
-#    time.sleep(5)
-#
-#    # power off
-#    call('sudo shutdown --poweroff "now"', shell=True)
+def my_callback(answer):
+    # LED ON (low active!)
+    GPIO.output(ledPin, GPIO.LOW)
+
+    print("Shutdown button on GPIO " + str(answer) + " pushed.")
+
+    # clear display
+    oled.clear()
+    oled.display()
+    # show some shutdown text on OLED
+
+    # send message to all users
+    call('wall +++ Shutting down Pi in 5 seconds +++', shell=True)
+
+    # delay
+    time.sleep(5)
+
+    # power off
+    call('sudo shutdown --poweroff "now"', shell=True)
 
 
 # add button pressed event detector
-#print('registering event handler...')
-#GPIO.add_event_detect(switchPin, GPIO.FALLING, callback=my_callback, bouncetime=200)
+print('registering event handler...')
+GPIO.add_event_detect(switchPin, GPIO.FALLING, callback=my_callback, bouncetime=200)
 
 
 # ----------------------
