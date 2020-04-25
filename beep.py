@@ -35,7 +35,7 @@ import time
 GPIO.setmode(GPIO.BCM) # use the GPIO names, _not_ the pin numbers on the board
 # Raspberry Pi pin configuration:
 # pins	    BCM   BOARD
-piezoPin  = 25 # pin
+piezoPin  = 13 # pin
 
 # GPIO setup
 GPIO.setup(piezoPin, GPIO.OUT)
