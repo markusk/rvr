@@ -5,7 +5,7 @@
 """ Control the Sphero RVR with a Gamepad (Microsoft XBox Controller) """
 
 #-------------------
-RVR settings
+# RVR settings
 #-------------------
 # Valid speed values are 0-255
 driveSpeed = 100
