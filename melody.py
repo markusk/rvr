@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# coding=utf-8
+
 import RPi.GPIO as GPIO
 import time
 
@@ -17,6 +20,7 @@ def buzz(noteFreq, duration):
 
 def play():
     t=0
+    # the notes have these frequencies: https://pages.mtu.edu/~suits/notefreqs.html
     notes=[262,294,330,262,262,294,330,262,330,349,392,330,349,392,392,440,392,349,330,262,392,440,392,349,330,262,262,196,262,262,196,262]
     duration=[0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,1,0.5,0.5,1,0.25,0.25,0.25,0.25,0.5,0.5,0.25,0.25,0.25,0.25,0.5,0.5,0.5,0.5,1,0.5,0.5,1]
     for n in notes:
