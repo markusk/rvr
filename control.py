@@ -271,8 +271,20 @@ while True:
                             )
                         elif button == 'dpad_left':
                             print("LEFT")
+                            # drive
+                            rvr.drive_with_heading(
+                                speed   = driveSpeed,
+                                heading = -90,
+                                flags=DriveFlagsBitmask.none.value
+                            )
                         elif button == 'dpad_right':
                             print("RIGHT")
+                            # drive
+                            rvr.drive_with_heading(
+                                speed   = driveSpeed,
+                                heading = +90,
+                                flags=DriveFlagsBitmask.none.value
+                            )
                         else:
                             print(("%s pressed" % (button)))
                 else:
