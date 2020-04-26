@@ -4,6 +4,16 @@
 
 """ Control the Sphero RVR with a Gamepad (Microsoft XBox Controller) """
 
+#-------------------
+RVR settings
+#-------------------
+# Valid speed values are 0-255
+driveSpeed = 100
+# Valid heading values are 0-359
+driveHeading = 0
+# the robot is "disarmed" at first; all Gamepad buttons are ignored, except the red one
+armed = False
+
 
 #-------------------
 #Joystick stuff
@@ -178,15 +188,6 @@ from sphero_sdk import SpheroRvrObserver
 from sphero_sdk import Colors
 from sphero_sdk import RvrLedGroups
 from sphero_sdk import DriveFlagsBitmask
-
-
-# the robot is "disarmed"; all buttons are ignored, except the red one
-armed = False
-
-# Valid speed values are 0-255
-driveSpeed = 128
-# Valid heading values are 0-359
-driveHeading = 0
 
 
 # create the RVR object.
