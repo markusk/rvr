@@ -61,10 +61,10 @@ import sys
 # my signal handler
 def sig_handler(_signo, _stack_frame):
     # LED OFF (low active!)
-    #GPIO.output(ledPin, GPIO.HIGH)
+    GPIO.output(ledPin, GPIO.HIGH)
     ## GPIO cleanup
-    #GPIO.remove_event_detect(switchPin)
-    #GPIO.cleanup()
+    GPIO.remove_event_detect(switchPin)
+    GPIO.cleanup()
     # clear display
     oled.fill(0)
     oled.show()
@@ -129,8 +129,8 @@ def my_callback(answer):
     print("Shutdown button on GPIO " + str(answer) + " pushed.")
 
     # clear display
-    oled.clear()
-    oled.display()
+    oled.fill(0)
+    oled.show()
     # show some shutdown text on OLED
 
     # send message to all users
