@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # coding=utf-8
 
 # import time
@@ -10,21 +10,21 @@ import sys
 if len(sys.argv) != 3:
 #    print "1. argument: " + sys.argv[1]
 #    print "2. argument: " + sys.argv[2]
-    print "ERROR. Correct Usage is: " + sys.argv[0] + " text1 text2"
+    print("ERROR. Correct Usage is: " + sys.argv[0] + " text1 text2")
     sys.exit(-1)
 
 # check arg length
 length = 15
 if len(sys.argv[1]) > length:
-    print "ERROR: Text 1 exceeds length of %d." % length
+    print ("ERROR: Text 1 exceeds length of %d." % length)
     if len(sys.argv[2]) > length:
-        print "ERROR: Text 2 exceeds length of %d." % length
+        print ("ERROR: Text 2 exceeds length of %d." % length)
     sys.exit(-1)
 
 if len(sys.argv[2]) > length:
-    print "ERROR: Text 2 exceeds length of %d." % length
+    print ("ERROR: Text 2 exceeds length of %d." % length)
     if len(sys.argv[1]) > length:
-        print "ERROR: Text 1 exceeds length of %d." % length
+        print ("ERROR: Text 1 exceeds length of %d." % length)
     sys.exit(-1)
 
 
@@ -59,7 +59,7 @@ image = Image.new("1", (oled.width, oled.height))
 draw = ImageDraw.Draw(image)
 
 # Draw a black filled box to clear the image.
-draw.rectangle((0,0,width,height), outline=0, fill=0)
+draw.rectangle((0, 0, WIDTH, HEIGHT), outline=0, fill=0)
 
 # Load TTF font.
 size = 15
