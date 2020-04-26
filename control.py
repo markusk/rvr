@@ -274,7 +274,7 @@ while True:
                             # drive
                             rvr.drive_with_heading(
                                 speed   = driveSpeed,
-                                heading = -90,
+                                heading = 270,
                                 flags=DriveFlagsBitmask.none.value
                             )
                         elif button == 'dpad_right':
@@ -282,7 +282,7 @@ while True:
                             # drive
                             rvr.drive_with_heading(
                                 speed   = driveSpeed,
-                                heading = +90,
+                                heading = 90,
                                 flags=DriveFlagsBitmask.none.value
                             )
                         else:
