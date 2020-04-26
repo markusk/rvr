@@ -22,39 +22,38 @@ if len(sys.argv[1]) > length:
     sys.exit(-1)
 
 if len(sys.argv[2]) > length:
+    print "ERROR: Text 2 exceeds length of %d." % length
     if len(sys.argv[1]) > length:
         print "ERROR: Text 1 exceeds length of %d." % length
-    print "ERROR: Text 2 exceeds length of %d." % length
     sys.exit(-1)
 
 
-# LCD stuff
-#import Adafruit_GPIO.SPI as SPI
-import Adafruit_SSD1306
-
-from PIL import Image
-from PIL import ImageDraw
-from PIL import ImageFont
+# OLED stuff
+import board
+import digitalio
+from PIL import Image, ImageDraw, ImageFont
+import adafruit_ssd1306
 
 
-# Raspberry Pi pin configuration:
-RST = 24
+# Define the Reset Pin
+oled_reset = digitalio.DigitalInOut(board.D4)
 
-# 128x32 display with hardware I2C:
-disp = Adafruit_SSD1306.SSD1306_128_32(rst=RST)
+# OLED resolution
+WIDTH = 128
+HEIGHT = 32  # Change to 64 if needed
+BORDER = 1
 
-# Initialize library.
-disp.begin()
+# Use for I2C.
+i2c = board.I2C()
+oled = adafruit_ssd1306.SSD1306_I2C(WIDTH, HEIGHT, i2c, addr=0x3C, reset=oled_reset)
 
 # Clear display.
-disp.clear()
-disp.display()
+oled.fill(0)
+oled.show()
 
 # Create blank image for drawing.
 # Make sure to create image with mode '1' for 1-bit color.
-width = disp.width
-height = disp.height
-image = Image.new('1', (width, height))
+image = Image.new("1", (oled.width, oled.height))
 
 # Get drawing object to draw on image.
 draw = ImageDraw.Draw(image)
@@ -66,10 +65,10 @@ draw.rectangle((0,0,width,height), outline=0, fill=0)
 size = 15
 font = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', size)
 
-# Send text to LCD (arguments from command line)
+# Send text to OLED (arguments from command line)
 draw.text((0, 0),    sys.argv[1],  font=font, fill=255)
 draw.text((0, size), sys.argv[2], font=font, fill=255)
 
 # Display image.
-disp.image(image)
-disp.display()
+oled.image(image)
+oled.show()
