@@ -9,8 +9,7 @@ the battery level is lower than 50%,  ... [tbd].
 
 It also shows the hostname, the IP and the time and CPU temoerature.
 
-to do:
-It also checks a pushbotton state, connected to #17 (pin 11 on Raspberry Pi 3)
+It also checks a pushbotton state, connected to BCM 17 on Raspberry Pi 3
 via 10k pull-down resistor. If pushed, it calls the "shutdown now" command.
 """
 
