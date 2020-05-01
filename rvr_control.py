@@ -14,6 +14,35 @@ via 10k pull-down resistor. If pushed, it calls the "shutdown now" command.
 """
 
 
+#-------------------
+# RVR settings
+#-------------------
+# Valid speed values are 0-255
+driveSpeed = 100
+# Valid heading values are 0-359
+driveHeading = 0
+# the robot is "disarmed" at first; all Gamepad buttons are ignored, except the red one
+armed = False
+
+
+#-------------------
+# RVR stuff
+#-------------------
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), './lib/')))
+
+from sphero_sdk import SpheroRvrObserver
+from sphero_sdk import Colors
+from sphero_sdk import RvrLedGroups
+from sphero_sdk import DriveFlagsBitmask
+
+
+# create the RVR object.
+# This also lets the robot do a firmware check every now and then.
+rvr = SpheroRvrObserver()
+
+
 # for battery empty alarm
 batteryEmptyLevel = 50  # below 50% means it is empty
 batteryIsEmpty = False
@@ -38,7 +67,7 @@ import adafruit_ssd1306
 import os.path
 
 
-# Define the Reset Pin
+# Define the OLED reset Pin
 oled_reset = digitalio.DigitalInOut(board.D4)
 
 # OLED resolution
@@ -58,6 +87,7 @@ import signal
 import sys
 
 # my signal handler
+# handling program termination, i.e. CTRL C pressed
 def sig_handler(_signo, _stack_frame):
     # LED OFF (low active!)
     GPIO.output(ledPin, GPIO.HIGH)
@@ -94,7 +124,7 @@ piezoPin   = 13 # pin 33
 
 
 # setup
-print('setup...')
+print('GPIO setup...')
 GPIO.setup(switchPin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # waits for LOW
 GPIO.setup(ledPin,    GPIO.OUT)
 GPIO.setup(piezoPin,  GPIO.OUT)
@@ -120,8 +150,8 @@ def beep(numberBeeps):
         time.sleep(waitTimePiezo)
 
 
-# switch detection by interrupt, falling edge, with debouncing
-def my_callback(answer):
+# pushbotten detection by interrupt, falling edge, with debouncing
+def pushbutton_callback(answer):
     # LED ON (low active!)
     GPIO.output(ledPin, GPIO.LOW)
 
@@ -144,14 +174,14 @@ def my_callback(answer):
 
 # add button pressed event detector
 print('registering event handler...')
-GPIO.add_event_detect(switchPin, GPIO.FALLING, callback=my_callback, bouncetime=200)
+GPIO.add_event_detect(switchPin, GPIO.FALLING, callback=pushbutton_callback, bouncetime=200)
 
 
 # ----------------------
 # OLED stuff
 # ----------------------
 
-# Clear display.
+# Clear display
 oled.fill(0)
 oled.show()
 
@@ -228,6 +258,16 @@ def getCpuTemperature():
 
 # let's go
 print('ready.')
+
+
+#-------------------------
+# Wake up, RVR!
+#-------------------------
+print("Waking up RVR...")
+rvr.wake()
+# Give RVR time to wake up
+sleep(2)
+print("...done")
 
 
 # --------------
