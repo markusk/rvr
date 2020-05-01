@@ -116,8 +116,14 @@ def sig_handler(_signo, _stack_frame):
     # clear display
     oled.fill(0)
     oled.show()
-    print("powermonitor terminated clean.")
+
+    # close RVR
+    print("Closing conection to RVR...")
+    rvr.close()
+    print("...done")
+    print("RVR program terminated clean.")
     sys.exit(0)
+
 
 # signals to be handled
 signal.signal(signal.SIGINT,  sig_handler)
