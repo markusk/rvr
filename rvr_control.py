@@ -36,11 +36,16 @@ from sphero_sdk import SpheroRvrObserver
 from sphero_sdk import Colors
 from sphero_sdk import RvrLedGroups
 from sphero_sdk import DriveFlagsBitmask
+from sphero_sdk import BatteryVoltageStatesEnum as VoltageStates
 
 
 # create the RVR object.
 # This also lets the robot do a firmware check every now and then.
 rvr = SpheroRvrObserver()
+
+# RVR battery state handler
+def battery_voltage_state_change_handler(battery_voltage_state):
+    print('RVR Battery voltage state: ', battery_voltage_state)
 
 
 # for battery empty alarm
@@ -268,6 +273,10 @@ rvr.wake()
 # Give RVR time to wake up
 sleep(2)
 print("...done")
+
+# register enable battery state change notifications
+rvr.on_battery_voltage_state_change_notify(handler=battery_voltage_state_change_handler)
+rvr.enable_battery_voltage_state_change_notify(is_enabled=True)
 
 
 # --------------
