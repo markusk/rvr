@@ -43,14 +43,28 @@ from sphero_sdk import BatteryVoltageStatesEnum as VoltageStates
 # This also lets the robot do a firmware check every now and then.
 rvr = SpheroRvrObserver()
 
+# for battery empty alarm
+batteryEmptyLevel = 25  # below 25% means it is empty
+batteryPercent = 0
+batteryState = 'unknown'
+
 # RVR battery state handler
 def battery_voltage_state_change_handler(battery_voltage_state):
     print('RVR Battery voltage state: ', battery_voltage_state)
 
+    # to do: get percentage instead of "ok/low/critical/unknown"
+    batteryState = battery_voltage_state
+    #battery_percentage = rvr.get_battery_percentage()
+    #print('Battery percentage: ', battery_percentage)
+    if batteryState = 'low':
+        batteryPercent = 60
+    elif batteryState = 'critical':
+        batteryPercent = 30
+    elif batteryState = 'ok':
+        batteryPercent = 100
+    else:
+        batteryPercent = 0
 
-# for battery empty alarm
-batteryEmptyLevel = 50  # below 50% means it is empty
-batteryIsEmpty = False
 
 
 # wait time in seconds between different display information
@@ -213,22 +227,11 @@ fontSymbol = ImageFont.truetype('/usr/share/fonts/truetype/font-awesome/fontawes
 # ----------------------
 # Voltage stuff
 # ----------------------
-
 # the battery symbols
 batteryEmpty = chr(0xf244) # <25% = minVoltage
 
 # battery level (white rectangle in empty battery symbol
 maxRectLength = 16
-
-# min and max voltages
-measuredVoltage = 0.0
-minVoltage      = 3*3.3 # 3S LiPo-Battery with 3 x 3.3Volt =  9.9 Volt (empty battery)
-maxVoltage      = 3*4.2 # 3S LiPo-Battery with 3 x 4.2Volt = 12.6 Volt (full  battery)
-
-# the AD converter object
-#adc = Adafruit_ADS1x15.ADS1015()
-# Gain 1 means, max a value of +4.096 Volt (+4,096 Volt in Europe) on the ADC channel, resulting in a 'value' of +2047.
-#GAIN = 1
 
 
 # ----------------------
@@ -318,7 +321,7 @@ while (1):
     oled.show()
 
     # wait some seconds and/or beep
-    if batteryIsEmpty is True:
+    if batteryState = 'low':
         # print('BATTERY is EMPTY.')
         # beep n times
         beep(5)
@@ -334,37 +337,8 @@ while (1):
     # Draw a black filled box to clear the image.
     draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
 
-    # read AD converter (battery voltage)
-    # use channel 0 on IC
-    # value = adc.read_adc(0, gain=GAIN)
-    value = 175
-
-    # 13.44 Volt battery voltage resulted in 2,94 Volt on the ADC channel with my circuit (voltage divider w/ two resistors (39k + 11k)).
-    # This resulted in a ADC 'value' of 1465.
-    # The conversion factor for the battery voltage is then: 1465 / 13.44 = 109.00297619047619
-    #
-    measuredVoltage = (value / 109.00297619047619)
-    if measuredVoltage < 0:
-        measuredVoltage = 0
-    # print("Value: %d" % value)
-    # print("Battery: %.1f Volt" % voltage)
-
-    # percent calculation
-    convertedVoltage = measuredVoltage - minVoltage
-    percent = convertedVoltage / (maxVoltage-minVoltage) * 100
-    if percent < 0:
-        percent = 0
-
-    # --------------------------------------
-    # this is for the battery alarn / piezo
-    # --------------------------------------
-    if percent < batteryEmptyLevel:
-        batteryIsEmpty = True
-    else:
-        batteryIsEmpty = False
-
-    # rectangle in battery symbol
-    rectLength = round(percent * maxRectLength / 100, 0)
+    # length of rectangle in battery symbol
+    rectLength = round(batteryPercent * maxRectLength / 100, 0)
 
     # Write lines of text to display
     # line 1, empty battery symbol
@@ -376,7 +350,7 @@ while (1):
     draw.rectangle((1, 3, rectLength, 11), outline=255, fill=255)
 
     # line 1, text after symbol
-    string = ("%.0f %%" % round(percent, 2))
+    string = ("%.0f %%" % round(batteryPercent, 2))
     draw.text((symbolWidth, 0), string, font=fontText, fill=255)
     # line 2
     draw.text((0, size), str("%.2f Volt" % measuredVoltage), font=fontText, fill=255)
@@ -386,7 +360,7 @@ while (1):
     oled.show()
 
     # wait some seconds and/or beep
-    if batteryIsEmpty is True:
+    if batteryState = 'low':
         # print('BATTERY is EMPTY.')
         # beep n times
         beep(5)
@@ -424,7 +398,7 @@ while (1):
     oled.show()
 
     # wait some seconds and/or beep
-    if batteryIsEmpty is True:
+    if batteryState = 'low':
         # print('BATTERY is EMPTY.')
         # beep n times
         beep(5)
