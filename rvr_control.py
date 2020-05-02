@@ -26,27 +26,6 @@ driveSpeed = 100
 driveHeading = 0
 # the robot is "disarmed" at first; all Gamepad buttons are ignored, except the red one
 armed = False
-
-
-#-------------------
-# RVR stuff
-#-------------------
-import os
-import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), './lib/')))
-
-from sphero_sdk import SpheroRvrObserver
-from sphero_sdk import Colors
-from sphero_sdk import RvrLedGroups
-from sphero_sdk import DriveFlagsBitmask
-from sphero_sdk import BatteryVoltageStatesEnum as VoltageStates
-
-
-# create the RVR object.
-# This also lets the robot do a firmware check every now and then.
-print("Starting RVR observer...")
-rvr = SpheroRvrObserver()
-
 # for battery empty alarm
 batteryEmptyLevel = 25  # below 25% means it is empty
 batteryPercent = 0
@@ -58,35 +37,44 @@ LOW      = 2
 CRITICAL = 3
 
 
-
-
-# RVR battery voltage handler
-def battery_percentage_handler(battery_percentage):
-    #print("The battery has {0:2d} % left.".format(battery_percentage["percentage"]))
-    # store globally
-    global batteryPercent
-    batteryPercent = battery_percentage["percentage"]
-
-
-# RVR battery state handler
-def battery_voltage_state_change_handler(battery_voltage_state):
-    #print("The battery voltage state is {0:1d}.".format(battery_voltage_state["state"]))
-    global batteryState
-    batteryState = battery_voltage_state["state"]
-
-
+# OLED timing
 # wait time in seconds between different display information
-waitTime = 2
+waitTimeOLED = 2
 # wait time for a piezo beep
 waitTimePiezo = 0.2
+# OLED resolution
+WIDTH = 128
+HEIGHT = 32  # Change to 64 if needed
+BORDER = 1
 
+
+# Raspberry Pi pin configuration:
+# pins	    BCM   BOARD
+switchPin  = 17 # pin 11 (pushbutton)
+ledPin     = 27 # pin 13
+piezoPin   = 13 # pin 33
+
+
+# for RVR and CPU temperature
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), './lib/')))
+
+from sphero_sdk import SpheroRvrObserver
+from sphero_sdk import Colors
+from sphero_sdk import RvrLedGroups
+from sphero_sdk import DriveFlagsBitmask
+from sphero_sdk import BatteryVoltageStatesEnum as VoltageStates
+
+# for signal handling
+import signal
+import sys
 
 # for time and sleep
 from time import time
 from time import sleep
 from time import strftime
 from time import localtime
-
 
 # for OLED
 import board
@@ -97,12 +85,36 @@ import adafruit_ssd1306
 # for joystick is connected check (path/file exists)
 import os.path
 
+# for GPIO/pushbotton
+import RPi.GPIO as GPIO
+# for poweroff
+from subprocess import call
+
+# for getting the hostname and IP of the underlying system
+import socket
 
 
-# OLED resolution
-WIDTH = 128
-HEIGHT = 32  # Change to 64 if needed
-BORDER = 1
+#-------------------
+# RVR stuff
+#-------------------
+# create the RVR object.
+# This also lets the robot do a firmware check every now and then.
+print("Starting RVR observer...")
+rvr = SpheroRvrObserver()
+
+# RVR battery voltage handler
+def battery_percentage_handler(battery_percentage):
+    #print("The battery has {0:2d} % left.".format(battery_percentage["percentage"]))
+    # store globally
+    global batteryPercent
+    batteryPercent = battery_percentage["percentage"]
+
+# RVR battery state handler
+def battery_voltage_state_change_handler(battery_voltage_state):
+    #print("The battery voltage state is {0:1d}.".format(battery_voltage_state["state"]))
+    global batteryState
+    batteryState = battery_voltage_state["state"]
+
 
 # Use I2C for OLED
 print("Starting OLED...")
@@ -113,12 +125,8 @@ oled = adafruit_ssd1306.SSD1306_I2C(WIDTH, HEIGHT, i2c, addr=0x3C, reset=oled_re
 
 
 # --------------------
-# for signal handling
-# --------------------
-import signal
-import sys
-
 # my signal handler
+# --------------------
 # handling program termination, i.e. CTRL C pressed
 def sig_handler(_signo, _stack_frame):
     # LED OFF (low active!)
@@ -147,20 +155,8 @@ signal.signal(signal.SIGTERM, sig_handler)
 # ----------------------
 # GPIO/pushbotton stuff
 # ----------------------
-import RPi.GPIO as GPIO
-# for poweroff
-from subprocess import call
-
-# init
 print('GPIO setup...')
 GPIO.setmode(GPIO.BCM) # use the GPIO names, _not_ the pin numbers on the board
-
-# Raspberry Pi pin configuration:
-# pins	    BCM   BOARD
-switchPin  = 17 # pin 11 (pushbutton)
-ledPin     = 27 # pin 13
-piezoPin   = 13 # pin 33
-
 
 # setup
 GPIO.setup(switchPin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # waits for LOW
@@ -216,9 +212,8 @@ GPIO.add_event_detect(switchPin, GPIO.FALLING, callback=pushbutton_callback, bou
 
 
 # ----------------------
-# OLED stuff
+# OLED part
 # ----------------------
-
 # Clear display
 oled.fill(0)
 oled.show()
@@ -244,7 +239,7 @@ fontSymbol = ImageFont.truetype('/usr/share/fonts/truetype/font-awesome/fontawes
 
 
 # ----------------------
-# Voltage stuff
+# Voltage part
 # ----------------------
 # the battery OLED symbols
 batteryEmptySymbol    = chr(0xf244) # battery-empty
@@ -262,20 +257,15 @@ joySymbol = chr(0xf11b) # fa-gamepad
 
 
 # ----------------------
-# network stuff
+# network part
 # ----------------------
-# for getting the hostname and IP of the underlying system
-import socket
-
 # the network symbol
 networkSymbol = chr(0xf1eb) # fa-wifi
 
 
 # -------------------------------
-# CPU temperature and time stuff
+# CPU temperature and time part
 # -------------------------------
-import os
-
 # the time symbol
 timeSymbol = chr(0xf017) # fa-clock-o
 # the temperature symbol
@@ -346,7 +336,7 @@ while (1):
     #    # beep n times
     #    beep(5)
     #else:
-    #    sleep(waitTime)
+    #    sleep(waitTimeOLED)
 
 
     # -----------------------------
@@ -404,7 +394,7 @@ while (1):
         # beep n times
         beep(5)
     else:
-        sleep(waitTime)
+        sleep(waitTimeOLED)
 
 
     # --------------------------
@@ -439,7 +429,7 @@ while (1):
         # beep n times
         beep(5)
     else:
-        sleep(waitTime)
+        sleep(waitTimeOLED)
 
 
 # wtf?
