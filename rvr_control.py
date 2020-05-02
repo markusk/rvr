@@ -52,7 +52,7 @@ batteryState = 0
 
 # RVR battery voltage handler
 def battery_percentage_handler(battery_percentage):
-    print("The battery has {0:2d} % left.".format(battery_percentage["percentage"]))
+    #print("The battery has {0:2d} % left.".format(battery_percentage["percentage"]))
     # store globally
     global batteryPercent
     batteryPercent = battery_percentage["percentage"]
@@ -61,9 +61,7 @@ def battery_percentage_handler(battery_percentage):
 # RVR battery state handler
 def battery_voltage_state_change_handler(battery_voltage_state):
     # Voltage states:  [unknown: 0, ok: 1, low: 2, critical: 3]
-    print("The battery voltage state is {0:1d}.".format(battery_voltage_state["state"]))
-
-    # to do: get percentage instead of "ok/low/critical/unknown"
+    #print("The battery voltage state is {0:1d}.".format(battery_voltage_state["state"]))
     global batteryState
     batteryState = battery_voltage_state["state"]
 
