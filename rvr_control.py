@@ -343,6 +343,14 @@ GPIO.add_event_detect(switchPin, GPIO.FALLING, callback=pushbutton_callback, bou
 # Gamepad part
 # -------------
 def connectGamepad():
+    # use the global vars!
+    global axis_states
+    global button_states
+    global axis_names
+    global button_names
+    global axis_map
+    global button_map
+
     # Open the joystick device.
     print(('Connecting to Gamepad %s...' % fn))
     jsdev = open(fn, 'rb')
