@@ -296,20 +296,21 @@ button_map = []
 
 # piezo beep function
 def beep(numberBeeps):
-    for x in range(0, numberBeeps):
-        # n LOW/HIGH signales generate a kind of square wave
-        for n in range(0, toneLength):
-            # Piezo OFF
-            GPIO.output(piezoPin, GPIO.HIGH)
-            # wait
-            sleep(waitTimePiezo)
-            # Piezo ON (low active!)
-            GPIO.output(piezoPin, GPIO.LOW)
-            # "wait" (generate a square wave for the piezo)
-            sleep(waitTimePiezo)
-
+    #for x in range(0, numberBeeps):
+    #    # n LOW/HIGH signales generate a kind of square wave
+    #    for n in range(0, toneLength):
+    #        # Piezo OFF
+    #        GPIO.output(piezoPin, GPIO.HIGH)
+    #        # wait
+    #        sleep(waitTimePiezo)
+    #        # Piezo ON (low active!)
+    #        GPIO.output(piezoPin, GPIO.LOW)
+    #        # "wait" (generate a square wave for the piezo)
+    #        sleep(waitTimePiezo)
+    #
     # "wait" (generate a square wave for the piezo)
-    sleep(tonePause)
+    # sleep(tonePause)
+    sleep(waitTimeOLED)
 
 
 # pushbotten detection by interrupt, falling edge, with debouncing
@@ -525,6 +526,7 @@ while (1):
         # Open Gamepad
         if gamepadOpend == False:
             openGamepad()
+        else:
             # draw "connection ok" at the end of the row
             draw.text((symbolWidth+5*fontSize, fontSize), batteryOkSymbol, font=fontSymbol, fill=255)
 
