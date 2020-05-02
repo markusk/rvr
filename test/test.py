@@ -26,6 +26,7 @@ async def main():
     """ This program demonstrates how to retrieve the battery state of RVR.
     """
 
+    print("Wake up RVR...")
     await rvr.wake()
 
     # Give RVR time to wake up
@@ -33,22 +34,22 @@ async def main():
 
 
     battery_percentage = await rvr.get_battery_percentage()
-    print('Battery percentage: ', battery_percentage)
+    #print('Battery percentage: ', battery_percentage)
+    # the result is a Python dictionary
+    print("The battery has {0:2d} % left.".format(battery_percentage["percentage"]))
 
-    # parse percent (JSON), the result is a Python dictionary:
-    value = json.loads(battery_percentage)
-    print('Battery percentage: ', value["percentage"])
- 
     battery_voltage_state = await rvr.get_battery_voltage_state()
-    print('Voltage state: ', battery_voltage_state)
+    # print('Voltage state: ', battery_voltage_state)
+    print("The battery voltage state is {0:1d}.".format(battery_voltage_state["state"]))
 
+    # the battery states
     state_info = '[{}, {}, {}, {}]'.format(
         '{}: {}'.format(VoltageStates.unknown.name, VoltageStates.unknown.value),
         '{}: {}'.format(VoltageStates.ok.name, VoltageStates.ok.value),
         '{}: {}'.format(VoltageStates.low.name, VoltageStates.low.value),
         '{}: {}'.format(VoltageStates.critical.name, VoltageStates.critical.value)
     )
-    print('Voltage states: ', state_info)
+    print('\nVoltage states: ', state_info)
 
     await rvr.close()
 
