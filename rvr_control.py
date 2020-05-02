@@ -360,18 +360,26 @@ while (1):
     # Write lines of text to display
     # line 1, empty battery symbol
     draw.text((0, 0), batteryEmptySymbol, font=fontSymbol, fill=255)
-    # add filling level as filled rectangle
 
+    # add filling level as filled rectangle
     # empty: draw.rectangle((1, 3,  1, 11), outline=255, fill=255)
     # full:  draw.rectangle((1, 3, 16, 11), outline=255, fill=255)
     draw.rectangle((1, 3, rectLength, 11), outline=255, fill=255)
 
     # line 1, text after symbol
-    string = ("%.0f %%" % round(batteryPercent, 2))
+    # old: string = ("%.0f %%" % round(batteryPercent, 2))
+    string = "{0:2d} %".format(batteryPercent)
     draw.text((symbolWidth, 0), string, font=fontText, fill=255)
     # line 2
-    #draw.text((0, size), str("%.2f Volt" % measuredVoltage), font=fontText, fill=255)
-    draw.text((0, size), str("State: %1d" % batteryState), font=fontText, fill=255)
+    if batteryState == 0:
+        draw.text((0, 0), batteryUnknownSymbol, font=fontSymbol, fill=255)
+    elif batteryState == 1:
+        draw.text((0, 0), batteryOkSymbol, font=fontSymbol, fill=255)
+    elif batteryState == 2:
+        draw.text((0, 0), batteryLowSymbol, font=fontSymbol, fill=255)
+    elif batteryState == 3:
+        draw.text((0, 0), batteryCriticalSymbol, font=fontSymbol, fill=255)
+    #draw.text((0, size), str("State: %1d" % batteryState), font=fontText, fill=255)
 
     # Display image.
     oled.image(image)
