@@ -523,6 +523,7 @@ while (1):
     # Gamepad already opened?
     if gamepadOpend == True:
         # draw "connection ok" at the end of the row
+        draw.text((0, fontSize), joySymbol, font=fontSymbol, fill=255)
         draw.text((symbolWidth+5*fontSize, fontSize), batteryOkSymbol, font=fontSymbol, fill=255)
         # Display image.
         oled.image(image)
