@@ -18,7 +18,7 @@ armed = False
 #-------------------
 #Joystick stuff
 #-------------------
-import os, struct, array
+import os, struct, array, sys
 from fcntl import ioctl
 
 # Iterate over the joystick devices.
@@ -27,6 +27,10 @@ print('Available Gamepad devices:')
 for fn in os.listdir('/dev/input'):
     if fn.startswith('js'):
         print(('  /dev/input/%s' % (fn)))
+    else:
+        print("No Gamepads/Joysticks found at /dev/input/js*")
+        sys.exit(0)
+
 
 # We'll store the states here.
 axis_states = {}
