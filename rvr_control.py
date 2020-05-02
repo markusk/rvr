@@ -46,7 +46,7 @@ rvr = SpheroRvrObserver()
 # for battery empty alarm
 batteryEmptyLevel = 25  # below 25% means it is empty
 batteryPercent = 0
-batteryState = 'unknown'
+batteryState = 0
 
 # RVR battery state handler
 def battery_voltage_state_change_handler(battery_voltage_state):
@@ -54,14 +54,14 @@ def battery_voltage_state_change_handler(battery_voltage_state):
     print("The battery voltage state is {0:1d}.".format(battery_voltage_state["state"]))
 
     # to do: get percentage instead of "ok/low/critical/unknown"
-    batteryState = battery_voltage_state
+    batteryState = battery_voltage_state["state"]
     #battery_percentage = rvr.get_battery_percentage()
     #print("The battery has {0:2d} % left.".format(battery_percentage["percentage"]))
-    if battery_voltage_state["state"] == 0:
+    if batteryState == 0:
         batteryPercent = 0
-    elif battery_voltage_state["state"] == 1:
+    elif batteryState == 1:
         batteryPercent = 66
-    elif battery_voltage_state["state"] == 2:
+    elif batteryState == 2:
         batteryPercent = 33
     else:
         batteryPercent = 10
@@ -360,7 +360,8 @@ while (1):
     string = ("%.0f %%" % round(batteryPercent, 2))
     draw.text((symbolWidth, 0), string, font=fontText, fill=255)
     # line 2
-    draw.text((0, size), str("%.2f Volt" % measuredVoltage), font=fontText, fill=255)
+    #draw.text((0, size), str("%.2f Volt" % measuredVoltage), font=fontText, fill=255)
+    draw.text((0, size), str("State %1d" % batteryState), font=fontText, fill=255)
 
     # Display image.
     oled.image(image)
