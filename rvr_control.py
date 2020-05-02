@@ -225,13 +225,13 @@ draw = ImageDraw.Draw(image)
 draw.rectangle((0, 0, oled.width, oled.height), outline=255, fill=255)
 
 # The fonts and sizes
-size = 15
+fontSize = 15
 symbolWidth = 28
 # text
-fontText = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', size)
+fontText = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', fontSize)
 # https://fontawesome.io
 # install via sudo 'sudo apt install fonts-font-awesome'
-fontSymbol = ImageFont.truetype('/usr/share/fonts/truetype/font-awesome/fontawesome-webfont.ttf', size)
+fontSymbol = ImageFont.truetype('/usr/share/fonts/truetype/font-awesome/fontawesome-webfont.ttf', fontSize)
 
 
 # ----------------------
@@ -324,7 +324,7 @@ while (1):
     # line 1, hostname, after symbol
     draw.text((symbolWidth, 0), hostname, font=fontText, fill=255)
     # line 2, IP
-    draw.text((0, size), ip, font=fontText, fill=255)
+    draw.text((0, fontSize), ip, font=fontText, fill=255)
 
     # Display image.
     oled.image(image)
@@ -372,14 +372,14 @@ while (1):
     draw.text((symbolWidth, 0), string, font=fontText, fill=255)
     # line 2
     if batteryState == 0:
-        draw.text((0, 0), batteryUnknownSymbol, font=fontSymbol, fill=255)
+        draw.text((symbolWidth+6*fontSize, 0), batteryUnknownSymbol, font=fontSymbol, fill=255)
     elif batteryState == 1:
-        draw.text((0, 0), batteryOkSymbol, font=fontSymbol, fill=255)
+        draw.text((symbolWidth+6*fontSize, 0), batteryOkSymbol, font=fontSymbol, fill=255)
     elif batteryState == 2:
-        draw.text((0, 0), batteryLowSymbol, font=fontSymbol, fill=255)
+        draw.text((symbolWidth+6*fontSize, 0), batteryLowSymbol, font=fontSymbol, fill=255)
     elif batteryState == 3:
-        draw.text((0, 0), batteryCriticalSymbol, font=fontSymbol, fill=255)
-    #draw.text((0, size), str("State: %1d" % batteryState), font=fontText, fill=255)
+        draw.text((symbolWidth+6*fontSize, 0), batteryCriticalSymbol, font=fontSymbol, fill=255)
+    #draw.text((0, fontSize), str("State: %1d" % batteryState), font=fontText, fill=255)
 
     # Display image.
     oled.image(image)
@@ -415,9 +415,9 @@ while (1):
     draw.text((symbolWidth, 0), timeString, font=fontText, fill=255)
 
     # line 2, temp symbol
-    draw.text((0, size), tempSymbol, font=fontSymbol, fill=255)
+    draw.text((0, fontSize), tempSymbol, font=fontSymbol, fill=255)
     # line 2, text after symbol
-    draw.text((symbolWidth, size), str(round(getCpuTemperature(), 1)) + " " + u'\N{DEGREE SIGN}'  + "C", font=fontText, fill=255)
+    draw.text((symbolWidth, fontSize), str(round(getCpuTemperature(), 1)) + " " + u'\N{DEGREE SIGN}'  + "C", font=fontText, fill=255)
 
     # Display image.
     oled.image(image)
