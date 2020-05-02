@@ -22,7 +22,7 @@ import os, struct, array
 from fcntl import ioctl
 
 # Iterate over the joystick devices.
-print('Available devices:')
+print('Available Gamepad devices:')
 
 for fn in os.listdir('/dev/input'):
     if fn.startswith('js'):
@@ -192,6 +192,7 @@ from sphero_sdk import DriveFlagsBitmask
 
 # create the RVR object.
 # This also lets the robot do a firmware check every now and then.
+print("Starting RVR observer...")
 rvr = SpheroRvrObserver()
 
 
