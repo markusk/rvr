@@ -248,6 +248,9 @@ batteryCriticalSymbol = chr(0xf059) # question-triangle
 # battery level (white rectangle in empty battery symbol
 maxRectLength = 16
 
+# the Gamepad symbol
+joySymbol = chr(0xf11b) # fa-gamepad
+
 
 # ----------------------
 # network stuff
@@ -267,9 +270,7 @@ import os
 # the time symbol
 timeSymbol = chr(0xf017) # fa-clock-o
 # the temperature symbol
-tempSymbol = chr(0xf21e) # fa-heartbeat  0xf2db
-# the joystick symbol
-joySymbol = chr(0xf11b) # fa-gamepad
+chipSymbol = chr(0xf2db) # fas fa-microchip
 
 def getCpuTemperature():
     tempFile = open("/sys/class/thermal/thermal_zone0/temp")
@@ -339,9 +340,9 @@ while (1):
     #    sleep(waitTime)
 
 
-    # --------------------------
-    # Battery display
-    # -------------------------
+    # -----------------------------
+    # Battery and Gamepad display
+    # -----------------------------
 
     # get RVRs battery voltage and state
     rvr.get_battery_percentage(handler=battery_percentage_handler)
@@ -370,7 +371,7 @@ while (1):
     # old: string = ("%.0f %%" % round(batteryPercent, 2))
     string = "{0:3d}%".format(batteryPercent)
     draw.text((symbolWidth, 0), string, font=fontText, fill=255)
-    # line 2
+    # battery state
     if batteryState == 0:
         draw.text((symbolWidth+5*fontSize, 0), batteryUnknownSymbol, font=fontSymbol, fill=255)
     elif batteryState == 1:
@@ -379,6 +380,11 @@ while (1):
         draw.text((symbolWidth+5*fontSize, 0), batteryLowSymbol, font=fontSymbol, fill=255)
     elif batteryState == 3:
         draw.text((symbolWidth+5*fontSize, 0), batteryCriticalSymbol, font=fontSymbol, fill=255)
+    # line 2, joystick symbol if connected or clock symbol
+    if os.path.exists("/dev/input/js0"):
+        draw.text((0, fontSize), joySymbol, font=fontSymbol, fill=255)
+    else:
+
 
     # Display image.
     oled.image(image)
@@ -393,9 +399,9 @@ while (1):
         sleep(waitTime)
 
 
-    # ---------------------------------------
-    # Time and CPU temp and joystick display
-    # ---------------------------------------
+    # --------------------------
+    # Time and CPU temp display
+    # --------------------------
 
     # clear OLED
     # Draw a black filled box to clear the image.
@@ -404,17 +410,14 @@ while (1):
     # get time
     timeString = strftime("%H:%M", localtime(time()) )
 
-    # line 1, joystick symbol if connected or clock symbol
-    if os.path.exists("/dev/input/js0"):
-        draw.text((0, 0), joySymbol, font=fontSymbol, fill=255)
-    else:
-        draw.text((0, 0), timeSymbol, font=fontSymbol, fill=255)
+    # line 1: clock symbol
+    draw.text((0, 0), timeSymbol, font=fontSymbol, fill=255)
 
     # line 1, text after symbol
     draw.text((symbolWidth, 0), timeString, font=fontText, fill=255)
 
     # line 2, temp symbol
-    draw.text((0, fontSize), tempSymbol, font=fontSymbol, fill=255)
+    draw.text((0, fontSize), chipSymbol, font=fontSymbol, fill=255)
     # line 2, text after symbol
     draw.text((symbolWidth, fontSize), str(round(getCpuTemperature(), 1)) + " " + u'\N{DEGREE SIGN}'  + "C", font=fontText, fill=255)
 
