@@ -237,8 +237,13 @@ fontSymbol = ImageFont.truetype('/usr/share/fonts/truetype/font-awesome/fontawes
 # ----------------------
 # Voltage stuff
 # ----------------------
-# the battery OLED symbol
-batteryEmptySymbol = chr(0xf244) # <25% = minVoltage
+# the battery OLED symbols
+batteryEmptySymbol    = chr(0xf244) # battery-empty
+# Battery states [unknown: 0, ok: 1, low: 2, critical: 3]
+batteryUnknownSymbol  = chr(0xf071) # exclamation-triangle
+batteryOkSymbol       = chr(0xf058) # check-circle
+batteryLowSymbol      = chr(0xf0e7) # bolt
+batteryCriticalSymbol = chr(0xf059) # question-triangle
 
 # battery level (white rectangle in empty battery symbol
 maxRectLength = 16
