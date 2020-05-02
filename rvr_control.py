@@ -42,6 +42,7 @@ CRITICAL = 3
 waitTimeOLED = 0.4
 # wait time for a piezo beep
 waitTimePiezo = 0.2
+toneLength = 100
 # OLED resolution
 WIDTH = 128
 HEIGHT = 32  # Change to 64 if needed
@@ -199,15 +200,16 @@ GPIO.output(ledPin, GPIO.HIGH)
 # piezo beep function
 def beep(numberBeeps):
     for x in range(0, numberBeeps):
-        # Piezo OFF
-        GPIO.output(piezoPin, GPIO.HIGH)
-        # wait
-        sleep(waitTimePiezo)
-
-        # Piezo ON (low active!)
-        GPIO.output(piezoPin, GPIO.LOW)
-        # "wait" (generate a square wave for the piezo)
-        sleep(waitTimePiezo)
+        # n LOW/HIGH signales generate a kind of square wave
+        for n in range(0, toneLength):
+            # Piezo OFF
+            GPIO.output(piezoPin, GPIO.HIGH)
+            # wait
+            sleep(waitTimePiezo)
+            # Piezo ON (low active!)
+            GPIO.output(piezoPin, GPIO.LOW)
+            # "wait" (generate a square wave for the piezo)
+            sleep(waitTimePiezo)
 
 
 # pushbotten detection by interrupt, falling edge, with debouncing
