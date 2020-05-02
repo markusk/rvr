@@ -6,8 +6,9 @@ Sends n beeps to a piezo buzzer.
 Usage for 5 beeps: beep.py 5
 """
 
-# wait time in seconds
-waitTime = 0.3
+# wait time in seconds -> This is the square wave for the piezo
+waitTime = 0.0004
+toneLength = 100
 
 # for getting arguments
 import sys
@@ -32,6 +33,7 @@ import time
 ##
 ## GPIO stuff
 ##
+GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM) # use the GPIO names, _not_ the pin numbers on the board
 # Raspberry Pi pin configuration:
 # pins	    BCM   BOARD
@@ -62,12 +64,17 @@ signal.signal(signal.SIGTERM, sig_handler)
 ###### Beeping
 ######
 for x in range(0, int(sys.argv[1])):
-    # Piezo OFF
-    GPIO.output(piezoPin, GPIO.HIGH)
-    # wait
-    time.sleep(waitTime)
+    # 10 LOW/HIGH signales generate a kind of square wave
+    for x in range(0, toneLength):
+        # Piezo OFF
+        GPIO.output(piezoPin, GPIO.HIGH)
+        # wait
+        time.sleep(waitTime)
 
-    # Piezo ON (low active!)
-    GPIO.output(piezoPin, GPIO.LOW)
-    # "wait" (generate a square wave for the piezo)
-    time.sleep(waitTime)
+        # Piezo ON (low active!)
+        GPIO.output(piezoPin, GPIO.LOW)
+        # "wait" (generate a square wave for the piezo)
+        time.sleep(waitTime)
+
+# GPIO cleanup
+GPIO.cleanup()
