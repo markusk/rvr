@@ -520,19 +520,22 @@ while (1):
         draw.text((symbolWidth+5*fontSize, 0), batteryCriticalSymbol, font=fontSymbol, fill=255)
 
     # line 2, Gamepad symbol
-    # Gamepad connected?
-    if os.path.exists(gamepadPath):
-        draw.text((0, fontSize), joySymbol, font=fontSymbol, fill=255)
-        # Open Gamepad
-        if gamepadOpend == False:
+    # Gamepad already opened?
+    if gamepadOpend == True:
+        # draw "connection ok" at the end of the row
+        draw.text((symbolWidth+5*fontSize, fontSize), batteryOkSymbol, font=fontSymbol, fill=255)
+        # Display image.
+        oled.image(image)
+        oled.show()
+    else:
+        # Gamepad connected?
+        if os.path.exists(gamepadPath):
+            draw.text((0, fontSize), joySymbol, font=fontSymbol, fill=255)
+            # Display image.
+            oled.image(image)
+            oled.show()
+            # Open Gamepad
             openGamepad()
-        else:
-            # draw "connection ok" at the end of the row
-            draw.text((symbolWidth+5*fontSize, fontSize), batteryOkSymbol, font=fontSymbol, fill=255)
-
-    # Display image.
-    oled.image(image)
-    oled.show()
 
     # wait some seconds and/or beep
     if batteryPercent < batteryEmptyLevel:
