@@ -368,18 +368,17 @@ while (1):
 
     # line 1, text after symbol
     # old: string = ("%.0f %%" % round(batteryPercent, 2))
-    string = "{0:2d} %".format(batteryPercent)
+    string = "{0:3d}%".format(batteryPercent)
     draw.text((symbolWidth, 0), string, font=fontText, fill=255)
     # line 2
     if batteryState == 0:
-        draw.text((symbolWidth+6*fontSize, 0), batteryUnknownSymbol, font=fontSymbol, fill=255)
+        draw.text((symbolWidth+5*fontSize, 0), batteryUnknownSymbol, font=fontSymbol, fill=255)
     elif batteryState == 1:
-        draw.text((symbolWidth+6*fontSize, 0), batteryOkSymbol, font=fontSymbol, fill=255)
+        draw.text((symbolWidth+5*fontSize, 0), batteryOkSymbol, font=fontSymbol, fill=255)
     elif batteryState == 2:
-        draw.text((symbolWidth+6*fontSize, 0), batteryLowSymbol, font=fontSymbol, fill=255)
+        draw.text((symbolWidth+5*fontSize, 0), batteryLowSymbol, font=fontSymbol, fill=255)
     elif batteryState == 3:
-        draw.text((symbolWidth+6*fontSize, 0), batteryCriticalSymbol, font=fontSymbol, fill=255)
-    #draw.text((0, fontSize), str("State: %1d" % batteryState), font=fontText, fill=255)
+        draw.text((symbolWidth+5*fontSize, 0), batteryCriticalSymbol, font=fontSymbol, fill=255)
 
     # Display image.
     oled.image(image)
