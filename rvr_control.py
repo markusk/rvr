@@ -326,12 +326,12 @@ while (1):
     oled.show()
 
     # wait some seconds and/or beep
-    if batteryPercent < batteryEmptyLevel:
-        # print('BATTERY is EMPTY.')
-        # beep n times
-        beep(5)
-    else:
-        sleep(waitTime)
+    #if batteryPercent < batteryEmptyLevel:
+    #    # print('BATTERY is EMPTY.')
+    #    # beep n times
+    #    beep(5)
+    #else:
+    #    sleep(waitTime)
 
 
     # --------------------------
