@@ -22,9 +22,8 @@ import os, struct, array, sys
 from fcntl import ioctl
 
 # Iterate over the joystick devices.
-print('Available Gamepad devices:')
-
 for fn in os.listdir('/dev/input'):
+    print('Available Gamepad devices:')
     if fn.startswith('js'):
         print(('  /dev/input/%s' % (fn)))
     else:
