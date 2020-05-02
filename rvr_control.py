@@ -54,6 +54,7 @@ batteryState = 0
 def battery_percentage_handler(battery_percentage):
     print("The battery has {0:2d} % left.".format(battery_percentage["percentage"]))
     # store globally
+    global batteryPercent
     batteryPercent = battery_percentage["percentage"]
 
 
@@ -63,6 +64,7 @@ def battery_voltage_state_change_handler(battery_voltage_state):
     print("The battery voltage state is {0:1d}.".format(battery_voltage_state["state"]))
 
     # to do: get percentage instead of "ok/low/critical/unknown"
+    global batteryState
     batteryState = battery_voltage_state["state"]
 
 
