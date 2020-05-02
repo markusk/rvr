@@ -43,7 +43,7 @@ gamepadOpend = False
 
 # OLED timing
 # wait time in seconds between different display information
-waitTimeOLED = 0.4
+waitTimeOLED = 0.75
 # OLED resolution
 WIDTH = 128
 HEIGHT = 32  # Change to 64 if needed
@@ -53,9 +53,9 @@ BORDER = 1
 # wait time in seconds -> This is the square wave for the piezo
 waitTimePiezo = 0.0004
 # this is just a count, not a time unit
-toneLength = 4 # 400
+toneLength = 400 # 400
 # pause between each tone in seconds
-tonePause = 0.1 # 0.5
+tonePause = 0.5 # 0.5
 
 # Raspberry Pi pin configuration:
 # pins	    BCM   BOARD
@@ -296,21 +296,19 @@ button_map = []
 
 # piezo beep function
 def beep(numberBeeps):
-    #for x in range(0, numberBeeps):
-    #    # n LOW/HIGH signales generate a kind of square wave
-    #    for n in range(0, toneLength):
-    #        # Piezo OFF
-    #        GPIO.output(piezoPin, GPIO.HIGH)
-    #        # wait
-    #        sleep(waitTimePiezo)
-    #        # Piezo ON (low active!)
-    #        GPIO.output(piezoPin, GPIO.LOW)
-    #        # "wait" (generate a square wave for the piezo)
-    #        sleep(waitTimePiezo)
-    #
+    for x in range(0, numberBeeps):
+        # n LOW/HIGH signales generate a kind of square wave
+        for n in range(0, toneLength):
+            # Piezo OFF
+            GPIO.output(piezoPin, GPIO.HIGH)
+            # wait
+            sleep(waitTimePiezo)
+            # Piezo ON (low active!)
+            GPIO.output(piezoPin, GPIO.LOW)
+            # "wait" (generate a square wave for the piezo)
+            sleep(waitTimePiezo)
     # "wait" (generate a square wave for the piezo)
-    # sleep(tonePause)
-    sleep(waitTimeOLED)
+    sleep(tonePause)
 
 
 # pushbotten detection by interrupt, falling edge, with debouncing
@@ -538,12 +536,12 @@ while (1):
 
 
     # wait some seconds and/or beep
-    if batteryPercent < batteryEmptyLevel:
-        # print('BATTERY is EMPTY.')
-        # beep n times
-        beep(5)
-    else:
-        sleep(waitTimeOLED)
+    #if batteryPercent < batteryEmptyLevel:
+    #    # print('BATTERY is EMPTY.')
+    #    # beep n times
+    #    beep(5)
+    #else:
+    sleep(waitTimeOLED)
 
 
     # --------------------------
@@ -570,10 +568,9 @@ while (1):
     oled.show()
 
     # wait some seconds and/or beep
-    if batteryPercent < batteryEmptyLevel:
-        # print('BATTERY is EMPTY.')
-        # beep n times
-        beep(5)
-    else:
-        sleep(waitTimeOLED)
-
+    #if batteryPercent < batteryEmptyLevel:
+    #    # print('BATTERY is EMPTY.')
+    #    # beep n times
+    #    beep(5)
+    #else:
+    sleep(waitTimeOLED)
