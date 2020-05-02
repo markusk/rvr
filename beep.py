@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # coding=utf-8
 
 """
@@ -8,16 +8,19 @@ Usage for 5 beeps: beep.py 5
 
 # wait time in seconds -> This is the square wave for the piezo
 waitTime = 0.0004
-toneLength = 100
+# this is just a count, not a time unit
+toneLength = 400
+# pause between each tone in seconds
+tonePause = 0.5
 
 # for getting arguments
 import sys
 
 # check arguments
 if len(sys.argv) != 2:
-#    print "1. argument: " + sys.argv[1]
-#    print "2. argument: " + sys.argv[2]
-    print "ERROR. Correct usage for three beeps is: " + sys.argv[0] + " 3"
+#    print("1. argument: " + sys.argv[1])
+#    print("2. argument: " + sys.argv[2])
+    print("ERROR. Correct usage for three beeps is: " + sys.argv[0] + " 3")
     sys.exit(-1)
 
 
@@ -51,7 +54,7 @@ import sys
 def sig_handler(_signo, _stack_frame):
     # GPIO cleanup
     GPIO.cleanup()
-    print "piezo terminated clean."
+    print("beep terminated clean.")
     sys.exit(0)
 
 # signals to be handled
@@ -65,7 +68,7 @@ signal.signal(signal.SIGTERM, sig_handler)
 ######
 for x in range(0, int(sys.argv[1])):
     # 10 LOW/HIGH signales generate a kind of square wave
-    for x in range(0, toneLength):
+    for n in range(0, toneLength):
         # Piezo OFF
         GPIO.output(piezoPin, GPIO.HIGH)
         # wait
@@ -75,6 +78,9 @@ for x in range(0, int(sys.argv[1])):
         GPIO.output(piezoPin, GPIO.LOW)
         # "wait" (generate a square wave for the piezo)
         time.sleep(waitTime)
+
+    # "wait" (generate a square wave for the piezo)
+    time.sleep(tonePause)
 
 # GPIO cleanup
 GPIO.cleanup()
