@@ -39,7 +39,7 @@ CRITICAL = 3
 # Gamepad/Joystick device path
 gamepadPath = '/dev/input/js0'
 # True, when Gamepad connected and device opened
-gamepadConnected = False
+gamepadOpend = False
 
 # OLED timing
 # wait time in seconds between different display information
@@ -342,8 +342,9 @@ GPIO.add_event_detect(switchPin, GPIO.FALLING, callback=pushbutton_callback, bou
 # -------------
 # Gamepad part
 # -------------
-def connectGamepad():
+def openGamepad():
     # use the global vars!
+    global gamepadOpend
     global axis_states
     global button_states
     global axis_names
@@ -388,6 +389,9 @@ def connectGamepad():
         btn_name = button_names.get(btn, 'unknown(0x%03x)' % btn)
         button_map.append(btn_name)
         button_states[btn_name] = 0
+
+    # store the state
+    gamepadOpend = True
 
 
 # ----------------------
@@ -513,9 +517,16 @@ while (1):
         draw.text((symbolWidth+5*fontSize, 0), batteryLowSymbol, font=fontSymbol, fill=255)
     elif batteryState == CRITICAL:
         draw.text((symbolWidth+5*fontSize, 0), batteryCriticalSymbol, font=fontSymbol, fill=255)
-    # line 2, joystick symbol if connected or clock symbol
-    if os.path.exists("/dev/input/js0"):
+
+    # line 2, Gamepad symbol
+    # Gamepad connected?
+    if os.path.exists(gamepadPath):
         draw.text((0, fontSize), joySymbol, font=fontSymbol, fill=255)
+        # Open Gamepad
+        if gamepadOpend == False:
+            openGamepad()
+            # draw "connection ok" at the end of the row
+            draw.text((symbolWidth+5*fontSize, fontSize), batteryOkSymbol, font=fontSymbol, fill=255)
 
     # Display image.
     oled.image(image)
