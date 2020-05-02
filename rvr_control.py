@@ -383,7 +383,6 @@ while (1):
     # line 2, joystick symbol if connected or clock symbol
     if os.path.exists("/dev/input/js0"):
         draw.text((0, fontSize), joySymbol, font=fontSymbol, fill=255)
-    else:
 
 
     # Display image.
