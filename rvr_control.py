@@ -4,13 +4,16 @@
 
 """
 This code reads the RVR battery voltage and shows the values on an OLED
-via SSD1306 with a nice graphical battery level symbol. If
-the battery level is lower than 50%,  ... [tbd].
+via SSD1306 using I2C with a nice graphical battery level symbol. If
+the battery level is lower than a specific percentate, the piezo beeps.
 
-It also shows the hostname, the IP and the time and CPU temoerature.
+It also shows the hostname, the IP and the time and CPU temoerature
+and a Gamepad symbol - if live conected.
 
 It also checks a pushbotton state, connected to BCM 17 on Raspberry Pi 3
 via 10k pull-down resistor. If pushed, it calls the "shutdown now" command.
+
+For the latter this script has to be started as a system service.
 """
 
 
@@ -48,6 +51,13 @@ rvr = SpheroRvrObserver()
 batteryEmptyLevel = 25  # below 25% means it is empty
 batteryPercent = 0
 batteryState = 0
+# Battery voltage states: unknown=0, ok=1, low=2, critical=3
+UNKNOWN  = 0
+OK       = 1
+LOW      = 2
+CRITICAL = 3
+
+
 
 
 # RVR battery voltage handler
@@ -60,7 +70,6 @@ def battery_percentage_handler(battery_percentage):
 
 # RVR battery state handler
 def battery_voltage_state_change_handler(battery_voltage_state):
-    # Voltage states:  [unknown: 0, ok: 1, low: 2, critical: 3]
     #print("The battery voltage state is {0:1d}.".format(battery_voltage_state["state"]))
     global batteryState
     batteryState = battery_voltage_state["state"]
@@ -372,13 +381,13 @@ while (1):
     string = "{0:3d}%".format(batteryPercent)
     draw.text((symbolWidth, 0), string, font=fontText, fill=255)
     # battery state
-    if batteryState == 0:
+    if batteryState == UNKNOWN:
         draw.text((symbolWidth+5*fontSize, 0), batteryUnknownSymbol, font=fontSymbol, fill=255)
-    elif batteryState == 1:
+    elif batteryState == OK:
         draw.text((symbolWidth+5*fontSize, 0), batteryOkSymbol, font=fontSymbol, fill=255)
-    elif batteryState == 2:
+    elif batteryState == LOW:
         draw.text((symbolWidth+5*fontSize, 0), batteryLowSymbol, font=fontSymbol, fill=255)
-    elif batteryState == 3:
+    elif batteryState == CRITICAL:
         draw.text((symbolWidth+5*fontSize, 0), batteryCriticalSymbol, font=fontSymbol, fill=255)
     # line 2, joystick symbol if connected or clock symbol
     if os.path.exists("/dev/input/js0"):
