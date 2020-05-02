@@ -73,7 +73,10 @@ waitTimePiezo = 0.2
 
 
 # for time and sleep
+from time import time
 from time import sleep
+from time import strftime
+from time import localtime
 
 
 # for OLED
@@ -387,7 +390,7 @@ while (1):
     draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
 
     # get time
-    timeString = time.strftime("%H:%M", time.localtime(time.time()) )
+    timeString = strftime("%H:%M", localtime(time()) )
 
     # line 1, joystick symbol if connected or clock symbol
     if os.path.exists("/dev/input/js0"):
