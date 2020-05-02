@@ -37,7 +37,7 @@ LOW      = 2
 CRITICAL = 3
 
 # Gamepad/Joystick device path
-fn = '/dev/input/js0'
+gamepadPath = '/dev/input/js0'
 # True, when Gamepad connected and device opened
 gamepadConnected = False
 
@@ -352,8 +352,8 @@ def connectGamepad():
     global button_map
 
     # Open the joystick device.
-    print(('Connecting to Gamepad %s...' % fn))
-    jsdev = open(fn, 'rb')
+    print(('Connecting to Gamepad %s...' % gamepadPath))
+    jsdev = open(gamepadPath, 'rb')
 
     # Get the device name.
     #buf = bytearray(63)
