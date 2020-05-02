@@ -74,7 +74,8 @@ waitTimePiezo = 0.2
 
 
 # for time and sleep
-import time
+from time import sleep
+
 
 # for OLED
 import board
@@ -167,12 +168,12 @@ def beep(numberBeeps):
         # Piezo OFF
         GPIO.output(piezoPin, GPIO.HIGH)
         # wait
-        time.sleep(waitTimePiezo)
+        sleep(waitTimePiezo)
 
         # Piezo ON (low active!)
         GPIO.output(piezoPin, GPIO.LOW)
         # "wait" (generate a square wave for the piezo)
-        time.sleep(waitTimePiezo)
+        sleep(waitTimePiezo)
 
 
 # pushbotten detection by interrupt, falling edge, with debouncing
@@ -191,7 +192,7 @@ def pushbutton_callback(answer):
     call('wall +++ Shutting down Pi in 5 seconds +++', shell=True)
 
     # delay
-    time.sleep(5)
+    sleep(5)
 
     # power off
     call('sudo shutdown --poweroff "now"', shell=True)
@@ -327,12 +328,12 @@ while (1):
     oled.show()
 
     # wait some seconds and/or beep
-    if batteryState = 'low':
+    if batteryPercent < batteryEmptyLevel:
         # print('BATTERY is EMPTY.')
         # beep n times
         beep(5)
     else:
-        time.sleep(waitTime)
+        sleep(waitTime)
 
 
     # --------------------------
@@ -366,12 +367,12 @@ while (1):
     oled.show()
 
     # wait some seconds and/or beep
-    if batteryState = 'low':
+    if batteryPercent < batteryEmptyLevel:
         # print('BATTERY is EMPTY.')
         # beep n times
         beep(5)
     else:
-        time.sleep(waitTime)
+        sleep(waitTime)
 
 
     # ---------------------------------------
@@ -404,12 +405,12 @@ while (1):
     oled.show()
 
     # wait some seconds and/or beep
-    if batteryState = 'low':
+    if batteryPercent < batteryEmptyLevel:
         # print('BATTERY is EMPTY.')
         # beep n times
         beep(5)
     else:
-        time.sleep(waitTime)
+        sleep(waitTime)
 
 
 # wtf?
