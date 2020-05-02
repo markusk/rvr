@@ -40,14 +40,18 @@ CRITICAL = 3
 # OLED timing
 # wait time in seconds between different display information
 waitTimeOLED = 0.4
-# wait time for a piezo beep
-waitTimePiezo = 0.2
-toneLength = 100
 # OLED resolution
 WIDTH = 128
 HEIGHT = 32  # Change to 64 if needed
 BORDER = 1
 
+# Piezo
+# wait time in seconds -> This is the square wave for the piezo
+waitTimePiezo = 0.0004
+# this is just a count, not a time unit
+toneLength = 400
+# pause between each tone in seconds
+tonePause = 0.5
 
 # Raspberry Pi pin configuration:
 # pins	    BCM   BOARD
@@ -210,6 +214,9 @@ def beep(numberBeeps):
             GPIO.output(piezoPin, GPIO.LOW)
             # "wait" (generate a square wave for the piezo)
             sleep(waitTimePiezo)
+
+    # "wait" (generate a square wave for the piezo)
+    time.sleep(tonePause)
 
 
 # pushbotten detection by interrupt, falling edge, with debouncing
