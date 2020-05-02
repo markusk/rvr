@@ -41,12 +41,21 @@ from sphero_sdk import BatteryVoltageStatesEnum as VoltageStates
 
 # create the RVR object.
 # This also lets the robot do a firmware check every now and then.
+print("Starting RVR observer...")
 rvr = SpheroRvrObserver()
 
 # for battery empty alarm
 batteryEmptyLevel = 25  # below 25% means it is empty
 batteryPercent = 0
 batteryState = 0
+
+
+# RVR battery voltage handler
+def battery_percentage_handler(battery_percentage):
+    print("The battery has {0:2d} % left.".format(battery_percentage["percentage"]))
+    # store globally
+    batteryPercent = battery_percentage["percentage"]
+
 
 # RVR battery state handler
 def battery_voltage_state_change_handler(battery_voltage_state):
@@ -55,16 +64,6 @@ def battery_voltage_state_change_handler(battery_voltage_state):
 
     # to do: get percentage instead of "ok/low/critical/unknown"
     batteryState = battery_voltage_state["state"]
-    #battery_percentage = rvr.get_battery_percentage()
-    #print("The battery has {0:2d} % left.".format(battery_percentage["percentage"]))
-    if batteryState == 0:
-        batteryPercent = 0
-    elif batteryState == 1:
-        batteryPercent = 66
-    elif batteryState == 2:
-        batteryPercent = 33
-    else:
-        batteryPercent = 10
 
 
 # wait time in seconds between different display information
@@ -87,15 +86,16 @@ import adafruit_ssd1306
 import os.path
 
 
-# Define the OLED reset Pin
-oled_reset = digitalio.DigitalInOut(board.D4)
 
 # OLED resolution
 WIDTH = 128
 HEIGHT = 32  # Change to 64 if needed
 BORDER = 1
 
-# Use for I2C.
+# Use I2C for OLED
+print("Starting OLED...")
+# Define the OLED reset Pin
+oled_reset = digitalio.DigitalInOut(board.D4)
 i2c = board.I2C()
 oled = adafruit_ssd1306.SSD1306_I2C(WIDTH, HEIGHT, i2c, addr=0x3C, reset=oled_reset)
 
@@ -140,6 +140,7 @@ import RPi.GPIO as GPIO
 from subprocess import call
 
 # init
+print('GPIO setup...')
 GPIO.setmode(GPIO.BCM) # use the GPIO names, _not_ the pin numbers on the board
 
 # Raspberry Pi pin configuration:
@@ -150,7 +151,6 @@ piezoPin   = 13 # pin 33
 
 
 # setup
-print('GPIO setup...')
 GPIO.setup(switchPin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # waits for LOW
 GPIO.setup(ledPin,    GPIO.OUT)
 GPIO.setup(piezoPin,  GPIO.OUT)
@@ -234,7 +234,7 @@ fontSymbol = ImageFont.truetype('/usr/share/fonts/truetype/font-awesome/fontawes
 # ----------------------
 # Voltage stuff
 # ----------------------
-# the battery symbols
+# the battery OLED symbol
 batteryEmptySymbol = chr(0xf244) # <25% = minVoltage
 
 # battery level (white rectangle in empty battery symbol
@@ -270,7 +270,6 @@ def getCpuTemperature():
     return float(cpu_temp)/1000
 
 
-
 # let's go
 print('ready.')
 
@@ -283,10 +282,6 @@ rvr.wake()
 # Give RVR time to wake up
 sleep(2)
 print("...done")
-
-# register enable battery state change notifications
-rvr.on_battery_voltage_state_change_notify(handler=battery_voltage_state_change_handler)
-rvr.enable_battery_voltage_state_change_notify(is_enabled=True)
 
 
 # --------------
@@ -340,6 +335,13 @@ while (1):
     # Battery display
     # -------------------------
 
+    # get RVRs battery voltage and state
+    rvr.get_battery_percentage(handler=battery_percentage_handler)
+    sleep(1)
+    rvr.get_battery_voltage_state(handler=battery_voltage_state_change_handler)
+    sleep(1)
+    #rvr.enable_battery_voltage_state_change_notify(is_enabled=True)
+
     # clear OLED
     # Draw a black filled box to clear the image.
     draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
@@ -361,7 +363,7 @@ while (1):
     draw.text((symbolWidth, 0), string, font=fontText, fill=255)
     # line 2
     #draw.text((0, size), str("%.2f Volt" % measuredVoltage), font=fontText, fill=255)
-    draw.text((0, size), str("State %1d" % batteryState), font=fontText, fill=255)
+    draw.text((0, size), str("State: %1d" % batteryState), font=fontText, fill=255)
 
     # Display image.
     oled.image(image)
