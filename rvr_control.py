@@ -123,11 +123,39 @@ oled_reset = digitalio.DigitalInOut(board.D4)
 i2c = board.I2C()
 oled = adafruit_ssd1306.SSD1306_I2C(WIDTH, HEIGHT, i2c, addr=0x3C, reset=oled_reset)
 
+# OLED fonts and sizes
+fontSize = 15
+symbolWidth = 28
+# text
+fontText = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', fontSize)
+# https://fontawesome.io
+# install via sudo 'sudo apt install fonts-font-awesome'
+fontSymbol = ImageFont.truetype('/usr/share/fonts/truetype/font-awesome/fontawesome-webfont.ttf', fontSize)
+
+# the battery OLED symbols
+batteryEmptySymbol    = chr(0xf244) # battery-empty
+# battery level (white rectangle in empty battery symbol)
+maxRectLength = 16
+# Battery states [unknown: 0, ok: 1, low: 2, critical: 3]
+batteryUnknownSymbol  = chr(0xf071) # exclamation-triangle
+batteryOkSymbol       = chr(0xf058) # check-circle
+batteryLowSymbol      = chr(0xf0e7) # bolt
+batteryCriticalSymbol = chr(0xf059) # question-triangle
+# the Gamepad symbol
+joySymbol = chr(0xf11b) # fa-gamepad
+# the network symbol
+networkSymbol = chr(0xf1eb) # fa-wifi
+# Clock symbol
+timeSymbol = chr(0xf017) # fa-clock-o
+# the temperature symbol
+chipSymbol = chr(0xf2db) # fas fa-microchip
+
 
 # --------------------
 # my signal handler
 # --------------------
 # handling program termination, i.e. CTRL C pressed
+print("Creating signal handler...")
 def sig_handler(_signo, _stack_frame):
     # LED OFF (low active!)
     GPIO.output(ledPin, GPIO.HIGH)
@@ -147,6 +175,7 @@ def sig_handler(_signo, _stack_frame):
 
 
 # signals to be handled
+print("Registering signal handler...")
 signal.signal(signal.SIGINT,  sig_handler)
 signal.signal(signal.SIGHUP,  sig_handler)
 signal.signal(signal.SIGTERM, sig_handler)
@@ -165,9 +194,6 @@ GPIO.setup(piezoPin,  GPIO.OUT)
 
 # LED OFF (low active!)
 GPIO.output(ledPin, GPIO.HIGH)
-
-# checker
-buttonPressed = False
 
 
 # piezo beep function
@@ -207,7 +233,7 @@ def pushbutton_callback(answer):
 
 
 # add button pressed event detector
-print('registering event handler...')
+print('Registering event handler...')
 GPIO.add_event_detect(switchPin, GPIO.FALLING, callback=pushbutton_callback, bouncetime=200)
 
 
@@ -228,48 +254,6 @@ draw = ImageDraw.Draw(image)
 # Draw a white background
 draw.rectangle((0, 0, oled.width, oled.height), outline=255, fill=255)
 
-# The fonts and sizes
-fontSize = 15
-symbolWidth = 28
-# text
-fontText = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', fontSize)
-# https://fontawesome.io
-# install via sudo 'sudo apt install fonts-font-awesome'
-fontSymbol = ImageFont.truetype('/usr/share/fonts/truetype/font-awesome/fontawesome-webfont.ttf', fontSize)
-
-
-# ----------------------
-# Voltage part
-# ----------------------
-# the battery OLED symbols
-batteryEmptySymbol    = chr(0xf244) # battery-empty
-# Battery states [unknown: 0, ok: 1, low: 2, critical: 3]
-batteryUnknownSymbol  = chr(0xf071) # exclamation-triangle
-batteryOkSymbol       = chr(0xf058) # check-circle
-batteryLowSymbol      = chr(0xf0e7) # bolt
-batteryCriticalSymbol = chr(0xf059) # question-triangle
-
-# battery level (white rectangle in empty battery symbol
-maxRectLength = 16
-
-# the Gamepad symbol
-joySymbol = chr(0xf11b) # fa-gamepad
-
-
-# ----------------------
-# network part
-# ----------------------
-# the network symbol
-networkSymbol = chr(0xf1eb) # fa-wifi
-
-
-# -------------------------------
-# CPU temperature and time part
-# -------------------------------
-# the time symbol
-timeSymbol = chr(0xf017) # fa-clock-o
-# the temperature symbol
-chipSymbol = chr(0xf2db) # fas fa-microchip
 
 def getCpuTemperature():
     tempFile = open("/sys/class/thermal/thermal_zone0/temp")
@@ -299,7 +283,6 @@ while (1):
     # ------------------
     # Network data
     # ------------------
-
     # clear OLED
     # Draw a black filled box to clear the image.
     draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
@@ -342,7 +325,6 @@ while (1):
     # -----------------------------
     # Battery and Gamepad display
     # -----------------------------
-
     # get RVRs battery voltage and state
     rvr.get_battery_percentage(handler=battery_percentage_handler)
     sleep(1)
@@ -351,7 +333,6 @@ while (1):
     #rvr.enable_battery_voltage_state_change_notify(is_enabled=True)
 
     # clear OLED
-    # Draw a black filled box to clear the image.
     draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
 
     # length of rectangle in battery symbol
@@ -383,7 +364,6 @@ while (1):
     if os.path.exists("/dev/input/js0"):
         draw.text((0, fontSize), joySymbol, font=fontSymbol, fill=255)
 
-
     # Display image.
     oled.image(image)
     oled.show()
@@ -400,9 +380,7 @@ while (1):
     # --------------------------
     # Time and CPU temp display
     # --------------------------
-
     # clear OLED
-    # Draw a black filled box to clear the image.
     draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
 
     # get time
@@ -410,7 +388,6 @@ while (1):
 
     # line 1: clock symbol
     draw.text((0, 0), timeSymbol, font=fontSymbol, fill=255)
-
     # line 1, text after symbol
     draw.text((symbolWidth, 0), timeString, font=fontText, fill=255)
 
@@ -431,6 +408,3 @@ while (1):
     else:
         sleep(waitTimeOLED)
 
-
-# wtf?
-print('This line should never be reached')
