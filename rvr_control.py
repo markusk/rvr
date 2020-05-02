@@ -39,7 +39,7 @@ CRITICAL = 3
 
 # OLED timing
 # wait time in seconds between different display information
-waitTimeOLED = 2
+waitTimeOLED = 0.4
 # wait time for a piezo beep
 waitTimePiezo = 0.2
 # OLED resolution
