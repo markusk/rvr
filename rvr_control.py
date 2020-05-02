@@ -53,9 +53,9 @@ BORDER = 1
 # wait time in seconds -> This is the square wave for the piezo
 waitTimePiezo = 0.0004
 # this is just a count, not a time unit
-toneLength = 400
+toneLength = 4 # 400
 # pause between each tone in seconds
-tonePause = 0.5
+tonePause = 0.1 # 0.5
 
 # Raspberry Pi pin configuration:
 # pins	    BCM   BOARD
