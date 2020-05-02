@@ -122,13 +122,15 @@ def battery_voltage_state_change_handler(battery_voltage_state):
 
 
 # Use I2C for OLED
-print("Starting OLED...")
+print("Starting I2C...")
 # Define the OLED reset Pin
 oled_reset = digitalio.DigitalInOut(board.D4)
 i2c = board.I2C()
+print("Starting OLED...")
 oled = adafruit_ssd1306.SSD1306_I2C(WIDTH, HEIGHT, i2c, addr=0x3C, reset=oled_reset)
 
 # OLED fonts and sizes
+print("Loading fonts and symbols...")
 fontSize = 15
 symbolWidth = 28
 # text
@@ -216,7 +218,7 @@ def beep(numberBeeps):
             sleep(waitTimePiezo)
 
     # "wait" (generate a square wave for the piezo)
-    time.sleep(tonePause)
+    sleep(tonePause)
 
 
 # pushbotten detection by interrupt, falling edge, with debouncing
