@@ -27,7 +27,7 @@ for fn in os.listdir('/dev/input'):
     if fn.startswith('js'):
         print(('  /dev/input/%s' % (fn)))
     else:
-        print("No Gamepads/Joysticks found at /dev/input/js*")
+        print("None.")
         sys.exit(0)
 
 
