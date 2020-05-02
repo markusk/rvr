@@ -50,21 +50,21 @@ batteryState = 'unknown'
 
 # RVR battery state handler
 def battery_voltage_state_change_handler(battery_voltage_state):
-    print('RVR Battery voltage state: ', battery_voltage_state)
+    # Voltage states:  [unknown: 0, ok: 1, low: 2, critical: 3]
+    print("The battery voltage state is {0:1d}.".format(battery_voltage_state["state"]))
 
     # to do: get percentage instead of "ok/low/critical/unknown"
     batteryState = battery_voltage_state
     #battery_percentage = rvr.get_battery_percentage()
-    #print('Battery percentage: ', battery_percentage)
-    if batteryState = 'low':
-        batteryPercent = 60
-    elif batteryState = 'critical':
-        batteryPercent = 30
-    elif batteryState = 'ok':
-        batteryPercent = 100
-    else:
+    #print("The battery has {0:2d} % left.".format(battery_percentage["percentage"]))
+    if battery_voltage_state["state"] == 0:
         batteryPercent = 0
-
+    elif battery_voltage_state["state"] == 1:
+        batteryPercent = 66
+    elif battery_voltage_state["state"] == 2:
+        batteryPercent = 33
+    else:
+        batteryPercent = 10
 
 
 # wait time in seconds between different display information
@@ -234,7 +234,7 @@ fontSymbol = ImageFont.truetype('/usr/share/fonts/truetype/font-awesome/fontawes
 # Voltage stuff
 # ----------------------
 # the battery symbols
-batteryEmpty = chr(0xf244) # <25% = minVoltage
+batteryEmptySymbol = chr(0xf244) # <25% = minVoltage
 
 # battery level (white rectangle in empty battery symbol
 maxRectLength = 16
@@ -348,7 +348,7 @@ while (1):
 
     # Write lines of text to display
     # line 1, empty battery symbol
-    draw.text((0, 0), batteryEmpty, font=fontSymbol, fill=255)
+    draw.text((0, 0), batteryEmptySymbol, font=fontSymbol, fill=255)
     # add filling level as filled rectangle
 
     # empty: draw.rectangle((1, 3,  1, 11), outline=255, fill=255)
