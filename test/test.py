@@ -10,6 +10,8 @@ from sphero_sdk import SpheroRvrAsync
 from sphero_sdk import SerialAsyncDal
 from sphero_sdk import BatteryVoltageStatesEnum as VoltageStates
 
+# for converting JSON to Python
+import json
 
 loop = asyncio.get_event_loop()
 
@@ -29,9 +31,14 @@ async def main():
     # Give RVR time to wake up
     await asyncio.sleep(2)
 
+
     battery_percentage = await rvr.get_battery_percentage()
     print('Battery percentage: ', battery_percentage)
 
+    # parse percent (JSON), the result is a Python dictionary:
+    value = json.loads(battery_percentage)
+    print('Battery percentage: ', value["percentage"])
+ 
     battery_voltage_state = await rvr.get_battery_voltage_state()
     print('Voltage state: ', battery_voltage_state)
 
