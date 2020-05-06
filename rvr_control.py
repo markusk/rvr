@@ -306,13 +306,13 @@ def beep(numberBeeps):
             # Piezo OFF
             GPIO.output(piezoPin, GPIO.HIGH)
             # wait
-            sleep(waitTimePiezo)
+            time.sleep(waitTimePiezo)
             # Piezo ON (low active!)
             GPIO.output(piezoPin, GPIO.LOW)
             # "wait" (generate a square wave for the piezo)
-            sleep(waitTimePiezo)
+            time.sleep(waitTimePiezo)
     # "wait" (generate a square wave for the piezo)
-    sleep(tonePause)
+    time.sleep(tonePause)
 
 
 # pushbotten detection by interrupt, falling edge, with debouncing
@@ -331,7 +331,7 @@ def pushbutton_callback(answer):
     call('wall +++ Shutting down Pi in 5 seconds +++', shell=True)
 
     # delay
-    sleep(5)
+    time.sleep(5)
 
     # power off
     call('sudo shutdown --poweroff "now"', shell=True)
@@ -433,7 +433,7 @@ print('ready.')
 print("Waking up RVR...")
 rvr.wake()
 # Give RVR time to wake up
-sleep(2)
+time.sleep(2)
 print("...done")
 
 
@@ -481,7 +481,7 @@ while (1):
     #    beep(5)
     #else:
     #    if armed == False:
-    #       sleep(waitTimeOLED)
+    #       time.sleep(waitTimeOLED)
 
 
     # -----------------------------
@@ -489,9 +489,9 @@ while (1):
     # -----------------------------
     # get RVRs battery voltage and state
     rvr.get_battery_percentage(handler=battery_percentage_handler)
-    sleep(1)
+    time.sleep(1)
     rvr.get_battery_voltage_state(handler=battery_voltage_state_change_handler)
-    sleep(1)
+    time.sleep(1)
     #rvr.enable_battery_voltage_state_change_notify(is_enabled=True)
 
     # clear OLED
@@ -560,13 +560,13 @@ while (1):
                                 print("+++armed+++")
                                 # set all LEDs to red
                                 rvr.led_control.set_all_leds_color(color=Colors.red)
-                                sleep(1)
+                                time.sleep(1)
                             else:
                                 armed = False
                                 print("+++disarmed+++")
                                 # set all LEDs to green
                                 rvr.led_control.set_all_leds_color(color=Colors.green)
-                                sleep(1)
+                                time.sleep(1)
                         # RVR armed?
                         if armed:
                             if button == 'dpad_up':
@@ -644,7 +644,7 @@ while (1):
     #    beep(5)
     #else:
     if armed == False:
-        sleep(waitTimeOLED)
+        time.sleep(waitTimeOLED)
 
 
     # --------------------------
@@ -654,7 +654,7 @@ while (1):
     draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
 
     # get time
-    timeString = time.strftime("%H:%M", localtime(time.time()) )
+    timeString = time.strftime("%H:%M", time.localtime(time.time()) )
 
     # line 1: clock symbol
     draw.text((0, 0), timeSymbol, font=fontSymbol, fill=255)
@@ -677,4 +677,4 @@ while (1):
     #    beep(5)
     #else:
     if armed == False:
-        sleep(waitTimeOLED)
+        time.sleep(waitTimeOLED)
