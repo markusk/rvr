@@ -524,6 +524,10 @@ while (1):
         draw.text((0, fontSize), joySymbol, font=fontSymbol, fill=255)
         # draw "connection ok" at the end of the row
         draw.text((symbolWidth+5*fontSize, fontSize), batteryOkSymbol, font=fontSymbol, fill=255)
+        # Display image.
+        oled.image(image)
+        oled.show()
+
     else:
         # Gamepad connected?
         if os.path.exists(gamepadPath):
@@ -531,7 +535,6 @@ while (1):
             draw.text((0, fontSize), joySymbol, font=fontSymbol, fill=255)
             # Open Gamepad
             openGamepad()
-
     # Display image.
     oled.image(image)
     oled.show()
