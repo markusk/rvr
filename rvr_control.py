@@ -83,10 +83,11 @@ import signal
 import sys
 
 # for time and sleep
-from time import time
-from time import sleep
-from time import strftime
-from time import localtime
+import time
+#from time import time
+#from time import sleep
+#from time import strftime
+#from time import localtime
 
 # for OLED
 import board
@@ -653,7 +654,7 @@ while (1):
     draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
 
     # get time
-    timeString = strftime("%H:%M", localtime(time()) )
+    timeString = time.strftime("%H:%M", localtime(time.time()) )
 
     # line 1: clock symbol
     draw.text((0, 0), timeSymbol, font=fontSymbol, fill=255)
