@@ -520,12 +520,14 @@ while (1):
     # line 2, Gamepad symbol
     # Gamepad already opened?
     if gamepadOpend == True:
-        # draw "connection ok" at the end of the row
+        # draw jostick symbol
         draw.text((0, fontSize), joySymbol, font=fontSymbol, fill=255)
+        # draw "connection ok" at the end of the row
         draw.text((symbolWidth+5*fontSize, fontSize), batteryOkSymbol, font=fontSymbol, fill=255)
     else:
         # Gamepad connected?
         if os.path.exists(gamepadPath):
+            # draw jostick symbol
             draw.text((0, fontSize), joySymbol, font=fontSymbol, fill=255)
             # Open Gamepad
             openGamepad()
