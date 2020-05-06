@@ -528,6 +528,97 @@ while (1):
         oled.image(image)
         oled.show()
 
+        #---------------
+        # read joystick
+        #---------------
+        evbuf = jsdev.read(8)
+        if evbuf:
+            time, value, type, number = struct.unpack('IhBB', evbuf)
+
+            # initial button state
+            #if type & 0x80:
+            #     print("(initial)")
+
+            # button change
+            if type & 0x01:
+                button = button_map[number]
+                if button:
+                    button_states[button] = value
+                    # pressed
+                    if value:
+                        # red butoon
+                        if button == 'b':
+                            # arm/disarm RVR
+                            if armed == False:
+                                armed = True
+                                print("+++armed+++")
+                                # set all LEDs to red
+                                rvr.led_control.set_all_leds_color(color=Colors.red)
+                                sleep(1)
+                            else:
+                                armed = False
+                                print("+++disarmed+++")
+                                # set all LEDs to green
+                                rvr.led_control.set_all_leds_color(color=Colors.green)
+                                sleep(1)
+                        # RVR armed?
+                        if armed:
+                            if button == 'dpad_up':
+                                print("FORWARD")
+                                # drive
+                                rvr.drive_with_heading(
+                                    speed=driveSpeed,
+                                    heading=driveHeading,
+                                    flags=DriveFlagsBitmask.none.value
+                                )
+                            elif button == 'dpad_down':
+                                print("BACKWARD")
+                                # drive
+                                rvr.drive_with_heading(
+                                    speed=driveSpeed,
+                                    heading=driveHeading,
+                                    flags=DriveFlagsBitmask.drive_reverse.value
+                                )
+                            elif button == 'dpad_left':
+                                print("LEFT")
+                                # drive
+                                rvr.drive_with_heading(
+                                    speed   = driveSpeed,
+                                    heading = 270,
+                                    flags=DriveFlagsBitmask.none.value
+                                )
+                            elif button == 'dpad_right':
+                                print("RIGHT")
+                                # drive
+                                rvr.drive_with_heading(
+                                    speed   = driveSpeed,
+                                    heading = 90,
+                                    flags=DriveFlagsBitmask.none.value
+                                )
+                            else:
+                                print(("%s pressed" % (button)))
+                    else:
+                        # button released
+                        # RVR armed?
+                        if armed:
+                            if button == 'dpad_up' or button == 'dpad_down' or button == 'dpad_left' or button == 'dpad_right':
+                                print("STOP")
+                                # drive
+                                rvr.drive_with_heading(
+                                    speed=0,
+                                    heading=0,
+                                    flags=DriveFlagsBitmask.none.value
+                                )
+                            #print(("%s released" % (button)))
+
+            # axis moved
+            #if type & 0x02:
+            #    axis = axis_map[number]
+            #    if axis:
+            #        fvalue = value / 32767.0
+            #        axis_states[axis] = fvalue
+            #        print(("%s: %.3f" % (axis, fvalue)))
+
     else:
         # Gamepad connected?
         if os.path.exists(gamepadPath):
@@ -535,9 +626,9 @@ while (1):
             draw.text((0, fontSize), joySymbol, font=fontSymbol, fill=255)
             # Open Gamepad
             openGamepad()
-    # Display image.
-    oled.image(image)
-    oled.show()
+            # Display image.
+            oled.image(image)
+            oled.show()
 
 
     # wait some seconds and/or beep
