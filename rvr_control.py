@@ -475,7 +475,8 @@ while (1):
     #    # beep n times
     #    beep(5)
     #else:
-    #    sleep(waitTimeOLED)
+    #    if armed == False:
+    #       sleep(waitTimeOLED)
 
 
     # -----------------------------
@@ -637,7 +638,8 @@ while (1):
     #    # beep n times
     #    beep(5)
     #else:
-    sleep(waitTimeOLED)
+    if armed == False:
+        sleep(waitTimeOLED)
 
 
     # --------------------------
@@ -669,4 +671,5 @@ while (1):
     #    # beep n times
     #    beep(5)
     #else:
-    sleep(waitTimeOLED)
+    if armed == False:
+        sleep(waitTimeOLED)
