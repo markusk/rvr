@@ -40,6 +40,9 @@ CRITICAL = 3
 gamepadPath = '/dev/input/js0'
 # True, when Gamepad connected and device opened
 gamepadOpend = False
+# the joystick file handler
+jsdev = 0
+
 
 # OLED timing
 # wait time in seconds between different display information
@@ -350,6 +353,7 @@ def openGamepad():
     global button_names
     global axis_map
     global button_map
+    global jsdev
 
     # Open the joystick device.
     print(('Connecting to Gamepad %s...' % gamepadPath))
