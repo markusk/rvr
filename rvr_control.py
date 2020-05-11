@@ -211,6 +211,8 @@ GPIO.setup(switchPin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # waits for LOW
 GPIO.setup(ledPin,    GPIO.OUT)
 GPIO.setup(piezoPin,  GPIO.OUT)
 
+# Piezo OFF
+GPIO.output(piezoPin, GPIO.LOW)
 # LED OFF (low active!)
 GPIO.output(ledPin, GPIO.HIGH)
 
