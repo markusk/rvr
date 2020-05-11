@@ -11,42 +11,39 @@ from sphero_sdk import SpheroRvrObserver
 from sphero_sdk import SpheroRvrTargets
 
 
+RVRisOn = False
+
+
 rvr = SpheroRvrObserver()
 
 
 def echo_handler(echo_response):
+    global RVRisOn
     print('Echo response: ', echo_response)
+    RVRisOn = True
 
 
 def main():
-    """ This program demonstrates how to use the echo command, which sends data to RVR and RVR returns
-        the same data. Echo can be used to check to see if RVR is connected and awake.
-    """
-
+    print("Waking up RVR...")
     rvr.wake()
-
     # Give RVR time to wake up
     time.sleep(2)
+    print("done.")
 
+
+    # ping RVR
     rvr.echo(
-        data=[0, 1, 2],
+        data=[4, 2],
         handler=echo_handler,
         target=SpheroRvrTargets.primary.value
     )
-
     # Give RVR time to respond
     time.sleep(1)
 
-    rvr.echo(
-        data=[3, 4, 5],
-        handler=echo_handler,
-        target=SpheroRvrTargets.secondary.value
-    )
 
-    # Sleep for one second such that RVR has time to send data back
-    time.sleep(1)
-
+    print("Closing connection to RVR...")
     rvr.close()
+    print("done.")
 
 
 if __name__ == '__main__':
