@@ -35,6 +35,8 @@ UNKNOWN  = 0
 OK       = 1
 LOW      = 2
 CRITICAL = 3
+# store the state of the RVR
+RVRisOn = False
 
 # Gamepad/Joystick device path
 gamepadPath = '/dev/input/js0'
@@ -77,6 +79,7 @@ from sphero_sdk import Colors
 from sphero_sdk import RvrLedGroups
 from sphero_sdk import DriveFlagsBitmask
 from sphero_sdk import BatteryVoltageStatesEnum as VoltageStates
+from sphero_sdk import SpheroRvrTargets
 
 # for signal handling
 import signal
@@ -131,6 +134,42 @@ def battery_voltage_state_change_handler(battery_voltage_state):
     #print("The battery voltage state is {0:1d}.".format(battery_voltage_state["state"]))
     global batteryState
     batteryState = battery_voltage_state["state"]
+
+
+# RVR echo handler (checks if the robot is ON (answers))
+def echo_handler(echo_response):
+    global RVRisOn
+    RVRisOn = True
+    print("\n++++++++++++++++")
+    print("+ RVR woke up! +")
+    print("++++++++++++++++\n")
+    #print("RVR pings back with: ", echo_response)
+
+
+# check if RVR is ON
+def check_rvr():
+    global RVRisOn
+
+    while RVRisOn == False:
+        print("Waking up RVR...")
+        rvr.wake()
+        # Give RVR time to wake up
+        time.sleep(2)
+        #print("done.")
+
+        # ping RVR
+        rvr.echo(
+            data=[42],
+            handler=echo_handler,
+            target=SpheroRvrTargets.primary.value
+        )
+        # Give RVR time to respond
+        time.sleep(1)
+
+    # RVR woke up
+    print("Closing connection to RVR...")
+    rvr.close()
+    print("done.")
 
 
 # Use I2C for OLED
