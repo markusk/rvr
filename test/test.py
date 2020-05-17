@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # coding=utf-8
 
+
+""" Reads the battery voltage and state of the Sphero RVR """
+
+
 import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../lib/')))
@@ -23,15 +27,11 @@ rvr = SpheroRvrAsync(
 
 
 async def main():
-    """ This program demonstrates how to retrieve the battery state of RVR.
-    """
-
     print("Wake up RVR...")
     await rvr.wake()
 
     # Give RVR time to wake up
     await asyncio.sleep(2)
-
 
     battery_percentage = await rvr.get_battery_percentage()
     #print('Battery percentage: ', battery_percentage)

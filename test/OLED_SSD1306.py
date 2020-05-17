@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 # coding=utf-8
 
+
 """ Shows "Hello World" on the OLED (SSD1306) """
+
 
 import board
 import digitalio
