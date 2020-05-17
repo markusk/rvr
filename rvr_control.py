@@ -150,7 +150,7 @@ def echo_handler(echo_response):
 def check_rvr():
     global RVRisOn
 
-    while RVRisOn == False:
+    if RVRisOn == False:
         print("Waking up RVR...")
         rvr.wake()
         # Give RVR time to wake up
@@ -165,11 +165,7 @@ def check_rvr():
         )
         # Give RVR time to respond
         time.sleep(1)
-
-    # RVR woke up
-    print("Closing connection to RVR...")
-    rvr.close()
-    print("done.")
+        # the result will be stored globally in the handler "echo_handler"!
 
 
 # Use I2C for OLED
