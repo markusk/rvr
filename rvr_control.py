@@ -524,12 +524,17 @@ while (1):
     # -----------------------------
     # Battery and Gamepad display
     # -----------------------------
-    # get RVRs battery voltage and state
-    rvr.get_battery_percentage(handler=battery_percentage_handler)
-    tim.sleep(1)
-    rvr.get_battery_voltage_state(handler=battery_voltage_state_change_handler)
-    tim.sleep(1)
-    #rvr.enable_battery_voltage_state_change_notify(is_enabled=True)
+    # is the RVR on?
+    if RVRisOn == True:
+        # get RVRs battery voltage and state
+        rvr.get_battery_percentage(handler=battery_percentage_handler)
+        tim.sleep(1)
+        rvr.get_battery_voltage_state(handler=battery_voltage_state_change_handler)
+        tim.sleep(1)
+        #rvr.enable_battery_voltage_state_change_notify(is_enabled=True)
+    else:
+        # try to wake up rvr
+        wake_rvr()
 
     # clear OLED
     draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
@@ -595,49 +600,67 @@ while (1):
                             if armed == False:
                                 armed = True
                                 print("+++armed+++")
-                                # set all LEDs to red
-                                rvr.led_control.set_all_leds_color(color=Colors.red)
-                                tim.sleep(1)
+                                if RVRisOn == True:
+                                    # set all LEDs to red
+                                    rvr.led_control.set_all_leds_color(color=Colors.red)
+                                    tim.sleep(1)
+                                else:
+                                    print("The RVR is OFF!")
                             else:
                                 armed = False
                                 print("+++disarmed+++")
-                                # set all LEDs to green
-                                rvr.led_control.set_all_leds_color(color=Colors.green)
-                                tim.sleep(1)
+                                if RVRisOn == True:
+                                    # set all LEDs to green
+                                    rvr.led_control.set_all_leds_color(color=Colors.green)
+                                    tim.sleep(1)
+                                else:
+                                    print("The RVR is OFF!")
                         # RVR armed?
                         if armed:
                             if button == 'dpad_up':
                                 print("FORWARD")
-                                # drive
-                                rvr.drive_with_heading(
-                                    speed=driveSpeed,
-                                    heading=driveHeading,
-                                    flags=DriveFlagsBitmask.none.value
-                                )
+                                if RVRisOn == True:
+                                    # drive
+                                    rvr.drive_with_heading(
+                                        speed=driveSpeed,
+                                        heading=driveHeading,
+                                        flags=DriveFlagsBitmask.none.value
+                                    )
+                                else:
+                                    print("The RVR is OFF!")
                             elif button == 'dpad_down':
                                 print("BACKWARD")
-                                # drive
-                                rvr.drive_with_heading(
-                                    speed=driveSpeed,
-                                    heading=driveHeading,
-                                    flags=DriveFlagsBitmask.drive_reverse.value
-                                )
+                                if RVRisOn == True:
+                                    # drive
+                                    rvr.drive_with_heading(
+                                        speed=driveSpeed,
+                                        heading=driveHeading,
+                                        flags=DriveFlagsBitmask.drive_reverse.value
+                                    )
+                                else:
+                                    print("The RVR is OFF!")
                             elif button == 'dpad_left':
                                 print("LEFT")
+                                if RVRisOn == True:
                                 # drive
-                                rvr.drive_with_heading(
-                                    speed   = driveSpeed,
-                                    heading = 270,
-                                    flags=DriveFlagsBitmask.none.value
-                                )
+                                    rvr.drive_with_heading(
+                                        speed   = driveSpeed,
+                                        heading = 270,
+                                        flags=DriveFlagsBitmask.none.value
+                                    )
+                                else:
+                                    print("The RVR is OFF!")
                             elif button == 'dpad_right':
                                 print("RIGHT")
-                                # drive
-                                rvr.drive_with_heading(
-                                    speed   = driveSpeed,
-                                    heading = 90,
-                                    flags=DriveFlagsBitmask.none.value
-                                )
+                                if RVRisOn == True:
+                                    # drive
+                                    rvr.drive_with_heading(
+                                        speed   = driveSpeed,
+                                        heading = 90,
+                                        flags=DriveFlagsBitmask.none.value
+                                    )
+                                else:
+                                    print("The RVR is OFF!")
                             else:
                                 print(("%s pressed" % (button)))
                     else:
@@ -646,12 +669,15 @@ while (1):
                         if armed:
                             if button == 'dpad_up' or button == 'dpad_down' or button == 'dpad_left' or button == 'dpad_right':
                                 print("STOP")
-                                # drive
-                                rvr.drive_with_heading(
-                                    speed=0,
-                                    heading=0,
-                                    flags=DriveFlagsBitmask.none.value
-                                )
+                                if RVRisOn == True:
+                                    # drive
+                                    rvr.drive_with_heading(
+                                        speed=0,
+                                        heading=0,
+                                        flags=DriveFlagsBitmask.none.value
+                                    )
+                                else:
+                                    print("The RVR is OFF!")
                             #print(("%s released" % (button)))
 
             # axis moved
