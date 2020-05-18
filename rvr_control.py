@@ -147,7 +147,7 @@ def echo_handler(echo_response):
 
 
 # check if RVR is ON
-def check_rvr():
+def wake_rvr():
     global RVRisOn
 
     if RVRisOn == False:
@@ -474,9 +474,9 @@ tim.sleep(2)
 print("...done")
 
 
-# --------------
+# -----------------------------------------------------------------------------------
 # the main lopp
-# --------------
+# -----------------------------------------------------------------------------------
 while (1):
     # ------------------
     # Network data
