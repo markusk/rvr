@@ -154,7 +154,7 @@ def wake_rvr():
         print("Waking up RVR...")
         rvr.wake()
         # Give RVR time to wake up
-        time.sleep(2)
+        tim.sleep(2)
         #print("done.")
 
         # ping RVR
@@ -164,7 +164,7 @@ def wake_rvr():
             target=SpheroRvrTargets.primary.value
         )
         # Give RVR time to respond
-        time.sleep(1)
+        tim.sleep(1)
         # the result will be stored globally in the handler "echo_handler"!
 
 
