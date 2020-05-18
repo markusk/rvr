@@ -691,9 +691,9 @@ while (1):
             draw.text((0, fontSize), joySymbol, font=fontSymbol, fill=255)
             # Open Gamepad
             openGamepad()
-            # Display image.
-            oled.image(image)
-            oled.show()
+        # Display image.
+        oled.image(image)
+        oled.show()
 
 
     # wait some seconds and/or beep
