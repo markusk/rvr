@@ -468,11 +468,7 @@ print('ready.')
 # Wake up, RVR!
 #-------------------------
 print("Waking up RVR...")
-rvr.wake()
-# Give RVR time to wake up
-tim.sleep(2)
-print("...done")
-
+wake_rvr()
 
 # -----------------------------------------------------------------------------------
 # the main lopp
