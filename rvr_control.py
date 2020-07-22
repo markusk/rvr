@@ -470,43 +470,45 @@ print('ready.')
 print("Waking up RVR...")
 wake_rvr()
 
+
+# ---------------------
+# Display network data
+# ---------------------
+# clear OLED
+# Draw a black filled box to clear the image.
+draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
+
+# get hostname
+hostname = socket.gethostname()
+# get IP
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+try:
+    # doesn't even have to be reachable
+    s.connect(('10.255.255.255', 1))
+    ip = s.getsockname()[0]
+except:
+    ip = '127.0.0.1'
+finally:
+    s.close()
+
+# Write lines of text to display
+# line 1, network symbol
+draw.text((0, 0), networkSymbol, font=fontSymbol, fill=255)
+
+# line 1, hostname, after symbol
+draw.text((symbolWidth, 0), hostname, font=fontText, fill=255)
+# line 2, IP
+draw.text((0, fontSize), ip, font=fontText, fill=255)
+
+# Display image.
+oled.image(image)
+oled.show()
+
+
 # -----------------------------------------------------------------------------------
 # the main lopp
 # -----------------------------------------------------------------------------------
 while (1):
-    """# ------------------
-    # Network data
-    # ------------------
-    # clear OLED
-    # Draw a black filled box to clear the image.
-    draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
-
-    # get hostname
-    hostname = socket.gethostname()
-    # get IP
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    try:
-        # doesn't even have to be reachable
-        s.connect(('10.255.255.255', 1))
-        ip = s.getsockname()[0]
-    except:
-        ip = '127.0.0.1'
-    finally:
-        s.close()
-
-    # Write lines of text to display
-    # line 1, network symbol
-    draw.text((0, 0), networkSymbol, font=fontSymbol, fill=255)
-
-    # line 1, hostname, after symbol
-    draw.text((symbolWidth, 0), hostname, font=fontText, fill=255)
-    # line 2, IP
-    draw.text((0, fontSize), ip, font=fontText, fill=255)
-
-    # Display image.
-    oled.image(image)
-    oled.show()"""
-
     # wait some seconds and/or beep
     #if batteryPercent < batteryEmptyLevel:
     #    # print('BATTERY is EMPTY.')
