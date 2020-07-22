@@ -474,7 +474,7 @@ wake_rvr()
 # the main lopp
 # -----------------------------------------------------------------------------------
 while (1):
-    # ------------------
+    """# ------------------
     # Network data
     # ------------------
     # clear OLED
@@ -505,7 +505,7 @@ while (1):
 
     # Display image.
     oled.image(image)
-    oled.show()
+    oled.show()"""
 
     # wait some seconds and/or beep
     #if batteryPercent < batteryEmptyLevel:
