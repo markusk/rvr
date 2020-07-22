@@ -696,7 +696,7 @@ while (1):
         oled.show()
 
 
-    # wait some seconds and/or beep
+    """ # wait some seconds and/or beep
     #if batteryPercent < batteryEmptyLevel:
     #    # print('BATTERY is EMPTY.')
     #    # beep n times
@@ -736,4 +736,4 @@ while (1):
     #    beep(5)
     #else:
     if armed == False:
-        tim.sleep(waitTimeOLED)
+        tim.sleep(waitTimeOLED) """
