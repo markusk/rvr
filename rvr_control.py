@@ -517,7 +517,7 @@ while (1):
     #       tim.sleep(waitTimeOLED)
 
 
-    # -----------------------------
+    """# -----------------------------
     # Battery and Gamepad display
     # -----------------------------
     # is the RVR on?
@@ -559,7 +559,7 @@ while (1):
     elif batteryState == LOW:
         draw.text((symbolWidth+5*fontSize, 0), batteryLowSymbol, font=fontSymbol, fill=255)
     elif batteryState == CRITICAL:
-        draw.text((symbolWidth+5*fontSize, 0), batteryCriticalSymbol, font=fontSymbol, fill=255)
+        draw.text((symbolWidth+5*fontSize, 0), batteryCriticalSymbol, font=fontSymbol, fill=255)"""
 
     # line 2, Gamepad symbol
     # Gamepad already opened?
