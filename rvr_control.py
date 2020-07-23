@@ -526,7 +526,7 @@ while (1):
     if RVRisOn == True:
         # get RVRs battery voltage and state
         rvr.get_battery_percentage(handler=battery_percentage_handler)
-        tim.sleep(1)
+        # tim.sleep(1) -> no sleep here, since we use the observer model. needed? s.a. https://sdk.sphero.com/docs/how_to/raspberry_pi/rp_python_how_to/#power-get-battery-state-1
         # rvr.get_battery_voltage_state(handler=battery_voltage_state_change_handler)
         # tim.sleep(1)
         #rvr.enable_battery_voltage_state_change_notify(is_enabled=True)
