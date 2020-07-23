@@ -124,16 +124,16 @@ rvr = SpheroRvrObserver()
 
 # RVR battery voltage handler
 def battery_percentage_handler(battery_percentage):
-    #print("The battery has {0:2d} % left.".format(battery_percentage["percentage"]))
+    print("The battery has {0:2d} % left.".format(battery_percentage["percentage"]))
     # store globally
     global batteryPercent
     batteryPercent = battery_percentage["percentage"]
 
 # RVR battery state handler
-def battery_voltage_state_change_handler(battery_voltage_state):
-    #print("The battery voltage state is {0:1d}.".format(battery_voltage_state["state"]))
-    global batteryState
-    batteryState = battery_voltage_state["state"]
+#def battery_voltage_state_change_handler(battery_voltage_state):
+#    #print("The battery voltage state is {0:1d}.".format(battery_voltage_state["state"]))
+#    global batteryState
+#    batteryState = battery_voltage_state["state"]
 
 
 # RVR echo handler (checks if the robot is ON (answers))
@@ -519,7 +519,7 @@ while (1):
     #       tim.sleep(waitTimeOLED)
 
 
-    """# -----------------------------
+    # -----------------------------
     # Battery and Gamepad display
     # -----------------------------
     # is the RVR on?
@@ -527,14 +527,14 @@ while (1):
         # get RVRs battery voltage and state
         rvr.get_battery_percentage(handler=battery_percentage_handler)
         tim.sleep(1)
-        rvr.get_battery_voltage_state(handler=battery_voltage_state_change_handler)
-        tim.sleep(1)
+        # rvr.get_battery_voltage_state(handler=battery_voltage_state_change_handler)
+        # tim.sleep(1)
         #rvr.enable_battery_voltage_state_change_notify(is_enabled=True)
     else:
         # try to wake up rvr
         wake_rvr()
 
-    # clear OLED
+    """# clear OLED
     draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
 
     # length of rectangle in battery symbol
