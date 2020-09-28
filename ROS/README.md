@@ -1,6 +1,6 @@
 # rvr
 
-A ROS Python package for the Sphero RVR.
+A ROS Python package for the Sphero RVR - used on a Raspberry Pi.
 
 _Please note: this code is still in the middle of the development process!_
 
@@ -8,10 +8,13 @@ _Please note: this code is still in the middle of the development process!_
 
 ---
 
-## Step 1: OS Setup
+## Step 1: Setup Raspberry Pi OS
 
-- Install Ubuntu Mate on your Raspberry Pi ([Instruction](https://ubuntu-mate.org/download/)).
-- Enable SSH (explanation see [here](https://askubuntu.com/questions/626372/could-not-load-host-key-etc-ssh-ssh-host-ed25519-key-in-var-log-auth-log/649782)):
+- ~~Install Ubuntu Mate on your Raspberry Pi ([Instruction](https://ubuntu-mate.org/download/)).
+- ~~Enable SSH (explanation see [here](https://askubuntu.com/questions/626372/could-not-load-host-key-etc-ssh-ssh-host-ed25519-key-in-var-log-auth-log/649782)):
+
+- Install Raspberry Pi OS (fka Rasbpian) on your Raspberry Pi ([Instruction](https://www.raspberrypi.org/downloads/raspberry-pi-os/)).
+
 
 ```bash
 sudo ssh-keygen -A
@@ -72,46 +75,17 @@ sudo apt-get install joystick
 jstest --normal /dev/input/js0
 ```
 
-## Step 3: ROS Setup
+## Step 3: ROS Setup (with Python 3 support)
 
-- Install ROS on your Ubuntu Mate ([Instruction](http://wiki.ros.org/melodic/Installation/Ubuntu/)):
+- Install ROS Noetic on your Raspberry Pi ([Instruction](https://varhowto.com/install-ros-noetic-raspberry-pi-4/)):
 
-```bash
-sudo apt-get install ros-melodic-ros-base
-```
 
-- Install ROS packages:
+- Install ROS packages (+++ TO BE CHECKED !!! +++):
 
 ```bash
 sudo apt-get install ros-melodic-urg-node ros-melodic-teleop-twist-keyboard joystick ros-melodic-joystick-drivers ros-melodic-teleop-twist-joy
 ```
 
-- Install ROS Python support
-
-```bash
-sudo apt install python-rosinstall python-rosinstall-generator python-wstool build-essential
-```
-
-## Step 4: Enable Python3 together with ROS
-
-- Install these packages ([Credits](https://medium.com/@beta_b0t/how-to-setup-ros-with-python-3-44a69ca36674)):
-
-```bash
-sudo apt-get install python3-pip python3-yaml python-catkin-tools
-sudo pip3 install rospkg catkin_pkg
-```
-
-- Enable catkin to work with Python3:
-
-```bash
-catkin config -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so
-```
-
-- Optional: If you see missing directories, you can create them. For example:
-
-```bash
-mkdir ~/catkin_ws/logs
-```
 
 ## Step 5: Create a central place for this repository
 
@@ -131,8 +105,8 @@ git clone https://github.com/markusk/rvr.git
 - Create a catkin workspace without 'src' folder:
 
 ```bash
-mkdir ~/catkin_ws
-cd ~/catkin_ws
+mkdir ~/ros_catkin_ws
+cd ~/ros_catkin_ws
 ```
 
 - Create symbolic link with the name 'src', pointing to the 'src' folder in the ROS directory from this repository:
@@ -171,7 +145,7 @@ ln -s ~/develop/sphero-sdk-raspberrypi-python/sphero_sdk/ ~/develop/rvr/ROS/catk
 - Start the test program:
 
 ```bash
-cd ~/catkin_ws/src/rvr/nodes
+cd ~/ros_catkin_ws/src/rvr/nodes
 ./test.py
 ```
 
@@ -195,7 +169,7 @@ _Note: The firmware check seems to pop up from time to time._
 - Run the main launch file on the robot (Raspberry Pi):
 
 ```bash
-cd ~/catkin_ws
+cd ~/ros_catkin_ws
 roslaunch rvr rvr.launch
 ```
 
