@@ -10,9 +10,6 @@ _Please note: this code is still in the middle of the development process!_
 
 ## Step 1: Setup Raspberry Pi OS
 
-- ~~Install Ubuntu Mate on your Raspberry Pi ([Instruction](https://ubuntu-mate.org/download/)).
-- ~~Enable SSH (explanation see [here](https://askubuntu.com/questions/626372/could-not-load-host-key-etc-ssh-ssh-host-ed25519-key-in-var-log-auth-log/649782)):
-
 - Install Raspberry Pi OS (fka Rasbpian) on your Raspberry Pi ([Instruction](https://www.raspberrypi.org/downloads/raspberry-pi-os/)).
 
 
