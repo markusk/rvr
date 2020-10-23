@@ -30,10 +30,13 @@ async def main():
     await asyncio.sleep(2)
 
     battery_percentage = await rvr.get_battery_percentage()
-    print('Battery percentage: ', battery_percentage)
+    #print('Battery percentage: ', battery_percentage)
+    # the result is a Python dictionary
+    print("The battery has {0:2d} % left.".format(battery_percentage["percentage"]))
 
     battery_voltage_state = await rvr.get_battery_voltage_state()
-    print('Voltage state: ', battery_voltage_state)
+    # print('Voltage state: ', battery_voltage_state)
+    print("The battery voltage state is {0:1d}.".format(battery_voltage_state["state"]))
 
     state_info = '[{}, {}, {}, {}]'.format(
         '{}: {}'.format(VoltageStates.unknown.name, VoltageStates.unknown.value),
