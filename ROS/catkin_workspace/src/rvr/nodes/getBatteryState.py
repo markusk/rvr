@@ -64,31 +64,24 @@ async def main():
     # await asyncio.sleep(1)
 
     # set LEDs depending on the battery state
-    if battery_voltage_state['state'] == 1:
+    if battery_percentage['percentage'] > 66:
     	# All LEDs to green [okay]
     	await rvr.set_all_leds(
         	led_group=RvrLedGroups.all_lights.value,
         	led_brightness_values=[color for x in range(10) for color in [0, 255, 0]]
     	)
-    elif battery_voltage_state['state'] == 2:
+    elif battery_percentage['percentage'] > 33:
     	# All LEDs to orange [low]
     	await rvr.set_all_leds(
         	led_group=RvrLedGroups.all_lights.value,
         	led_brightness_values=[color for x in range(10) for color in [255, 165, 0]]
     	)
-    elif battery_voltage_state['state'] == 3:
+    elif battery_percentage['percentage'] < 33:
     	# All LEDs to red [critical]
     	await rvr.set_all_leds(
         	led_group=RvrLedGroups.all_lights.value,
         	led_brightness_values=[color for x in range(10) for color in [255, 0, 0]]
     	)
-    elif battery_voltage_state['state'] == 0:
-    	# All LEDs to blue [unknown]
-    	await rvr.set_all_leds(
-        	led_group=RvrLedGroups.all_lights.value,
-        	led_brightness_values=[color for x in range(10) for color in [0, 0, 255]]
-    	)
-
 
     await rvr.close()
 
@@ -101,6 +94,12 @@ if __name__ == '__main__':
 
     except KeyboardInterrupt:
         print('\nProgram terminated with keyboard interrupt.')
+
+        # turn all LEDs OFF
+        await rvr.set_all_leds(
+            led_group=RvrLedGroups.all_lights.value,
+            led_brightness_values=[color for _ in range(10) for color in Colors.off.value]
+        )
 
         loop.run_until_complete(
             rvr.close()
