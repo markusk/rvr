@@ -12,7 +12,6 @@ _Please note: this code is still in the middle of the development process!_
 
 - Install Raspberry Pi OS (fka Rasbpian) on your Raspberry Pi ([Instruction](https://www.raspberrypi.org/downloads/raspberry-pi-os/)).
 
-
 ```bash
 sudo ssh-keygen -A
 ```
@@ -23,7 +22,7 @@ sudo ssh-keygen -A
 sudo systemctl restart ssh.service
 ```
 
-#### Setup the Raspbery Pi serial port
+### Setup the Raspbery Pi serial port
 
 ```bash
 sudo raspi-config
@@ -72,17 +71,15 @@ sudo apt-get install joystick
 jstest --normal /dev/input/js0
 ```
 
-## Step 3: ROS Setup (with Python 3 support)
+## Step 3: ROS Noetic Setup (with Python 3 support)
 
 - Install ROS Noetic on your Raspberry Pi ([Instruction](https://varhowto.com/install-ros-noetic-raspberry-pi-4/)):
-
 
 - Install ROS packages (+++ TO BE CHECKED !!! +++):
 
 ```bash
 sudo apt-get install ros-melodic-urg-node ros-melodic-teleop-twist-keyboard joystick ros-melodic-joystick-drivers ros-melodic-teleop-twist-joy
 ```
-
 
 ## Step 5: Create a central place for this repository
 
@@ -99,11 +96,11 @@ cd ~/develop
 git clone https://github.com/markusk/rvr.git
 ```
 
-- Create a catkin workspace without 'src' folder:
+- Create a catkin workspace _without_ 'src' subfolder:
 
 ```bash
-mkdir ~/ros_catkin_ws
-cd ~/ros_catkin_ws
+mkdir ~/catkin_ws
+cd ~/catkin_ws
 ```
 
 - Create symbolic link with the name 'src', pointing to the 'src' folder in the ROS directory from this repository:
@@ -129,7 +126,7 @@ cd ~/develop
 git clone https://github.com/sphero-inc/sphero-sdk-raspberrypi-python
 ```
 
-### Make the Sphero Public SDK accessible
+### Make the Sphero Public SDK accessible for the RVR ROS package
 
 - Create symbolic link, pointing to the 'sphero_sdk' folder:
 
@@ -139,10 +136,10 @@ ln -s ~/develop/sphero-sdk-raspberrypi-python/sphero_sdk/ ~/develop/rvr/ROS/catk
 
 #### Turn on the RVR and test the SDK
 
-- Start the test program:
+- Start the ROS test program:
 
 ```bash
-cd ~/ros_catkin_ws/src/rvr/nodes
+cd ~/catkin_ws/src/rvr/nodes
 ./test.py
 ```
 
@@ -161,12 +158,24 @@ _Note: The firmware check seems to pop up from time to time._
 
 ## Step 7: Run ROS
 
+### Test the RVR ROS package
+
+- Start the ROS launch file:
+
+```bash
+cd ~/catkin_ws
+roslaunch rvr test.launch
+```
+
+- The output should look like above.
+- Exit the program with CTRL-C.
+
 ### The main launch file
 
 - Run the main launch file on the robot (Raspberry Pi):
 
 ```bash
-cd ~/ros_catkin_ws
+cd ~/catkin_ws
 roslaunch rvr rvr.launch
 ```
 
