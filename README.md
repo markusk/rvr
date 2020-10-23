@@ -1,6 +1,6 @@
 # rvr
 
-A Python3 package for the Sphero RVR.
+A ROS Python package for the Sphero RVR - used on a Raspberry Pi.
 
 _Please note: this code is still in the middle of the development process!_
 
@@ -8,10 +8,9 @@ _Please note: this code is still in the middle of the development process!_
 
 ---
 
-## Step 1: OS Setup
+## Step 1: Setup Raspberry Pi OS
 
-- Install Ubuntu Mate on your Raspberry Pi ([Instruction](https://ubuntu-mate.org/download/)).
-- Enable SSH (explanation see [here](https://askubuntu.com/questions/626372/could-not-load-host-key-etc-ssh-ssh-host-ed25519-key-in-var-log-auth-log/649782)):
+- Install Raspberry Pi OS (fka Rasbpian) on your Raspberry Pi ([Instruction](https://www.raspberrypi.org/downloads/raspberry-pi-os/)).
 
 ```bash
 sudo ssh-keygen -A
@@ -23,7 +22,7 @@ sudo ssh-keygen -A
 sudo systemctl restart ssh.service
 ```
 
-#### Setup the Raspbery Pi serial port
+### Setup the Raspbery Pi serial port
 
 ```bash
 sudo raspi-config
@@ -72,7 +71,17 @@ sudo apt-get install joystick
 jstest --normal /dev/input/js0
 ```
 
-## Step 3: Create a central place for this repository
+## Step 3: ROS Noetic Setup (with Python 3 support)
+
+- Install ROS Noetic on your Raspberry Pi ([Instruction](https://varhowto.com/install-ros-noetic-raspberry-pi-4/)):
+
+- Install ROS packages (+++ TO BE CHECKED !!! +++):
+
+```bash
+sudo apt-get install ros-melodic-urg-node ros-melodic-teleop-twist-keyboard joystick ros-melodic-joystick-drivers ros-melodic-teleop-twist-joy
+```
+
+## Step 5: Create a central place for this repository
 
 - Create your own development directory "develop"
 
@@ -87,7 +96,21 @@ cd ~/develop
 git clone https://github.com/markusk/rvr.git
 ```
 
-## Step 4: Setup Sphero Public SDK
+- Create a catkin workspace _without_ 'src' subfolder:
+
+```bash
+mkdir ~/catkin_ws
+cd ~/catkin_ws
+```
+
+- Create symbolic link with the name 'src', pointing to the 'src' folder in the ROS directory from this repository:
+
+```bash
+ln -s ~/develop/rvr/ROS/catkin_workspace/src/ src
+catkin_make
+```
+
+## Step 6: Setup Sphero Public SDK
 
 ### Long version
 
@@ -103,20 +126,20 @@ cd ~/develop
 git clone https://github.com/sphero-inc/sphero-sdk-raspberrypi-python
 ```
 
-### Make the Sphero Public SDK accessible
+### Make the Sphero Public SDK accessible for the RVR ROS package
 
 - Create symbolic link, pointing to the 'sphero_sdk' folder:
 
 ```bash
-ln -s ~/develop/sphero-sdk-raspberrypi-python/sphero_sdk/ ~/develop/rvr/lib/
+ln -s ~/develop/sphero-sdk-raspberrypi-python/sphero_sdk/ ~/develop/rvr/ROS/catkin_workspace/src/rvr/lib/
 ```
 
 #### Turn on the RVR and test the SDK
 
-- Start the test program:
+- Start the ROS test program:
 
 ```bash
-cd ~/.../test
+cd ~/catkin_ws/src/rvr/nodes
 ./test.py
 ```
 
@@ -133,11 +156,38 @@ Voltage states:  [unknown: 0, ok: 1, low: 2, critical: 3]
 
 _Note: The firmware check seems to pop up from time to time._
 
-## Step 5: Run XXX
+## Step 7: Run ROS
 
+### Test the RVR ROS package
 
+- Start the ROS launch file:
 
-## _**to do:**_ Step 6: Setting up some code for autostart
+```bash
+cd ~/catkin_ws
+roslaunch rvr test.launch
+```
+
+- The output should look like above.
+- Exit the program with CTRL-C.
+
+### The main launch file
+
+- Run the main launch file on the robot (Raspberry Pi):
+
+```bash
+cd ~/catkin_ws
+roslaunch rvr rvr.launch
+```
+
+_**to do:**_ On another computer (the ground control center):
+
+```bash
+export ROS_MASTER_URI=http://<hostname>:11311
+rosparam set joy_node/dev "/dev/input/js1"
+roslaunch rvr ground_control_center.launch
+```
+
+## _**to do:**_ Step 8: Setting up ROS for autostart
 
 ### systemd under Ubuntu
 
@@ -147,3 +197,40 @@ sudo systemctl daemon-reload
 sudo systemctl start rvr-ros-start.service
 sudo systemctl enable rvr-ros-start.service
 ```
+
+---
+
+## The ROS launch files
+
+### K
+
+#### keyboard_control_test
+
+Listens to a teleop_twist_keyboard node and prints out the data/messages. Uses:
+
+- _teleop_twist_keyboard_
+- _nodes/keyboard_listener.py_
+
+### M
+
+#### motor_server
+
+Controls the motors on the robot. Uses:
+
+- _motor_server.py_
+
+### R
+
+#### rvr
+
+Controls the whole robot. To be started on the robot. Uses:
+
+- _motor_server.py_
+
+_**to do:**_
+- _tf_broadcaster.py_
+- _battery_publisher.py_
+- _imu_bno055.py_
+- _base_controller.py_
+- _minibot_camera_
+- _urg_node_
