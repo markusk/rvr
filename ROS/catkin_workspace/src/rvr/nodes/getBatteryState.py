@@ -96,10 +96,10 @@ if __name__ == '__main__':
         print('\nProgram terminated with keyboard interrupt.')
 
         # turn all LEDs OFF
-        await rvr.set_all_leds(
-            led_group=RvrLedGroups.all_lights.value,
-            led_brightness_values=[color for _ in range(10) for color in Colors.off.value]
-        )
+        #await rvr.set_all_leds(
+        #    led_group=RvrLedGroups.all_lights.value,
+        #    led_brightness_values=[color for _ in range(10) for color in Colors.off.value]
+        #)
 
         loop.run_until_complete(
             rvr.close()
