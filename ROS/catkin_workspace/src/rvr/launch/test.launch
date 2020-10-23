@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Controls the whole robot and has to run on the "RVR" (Raspberry Pi).
+-->
+<launch>
+  <!--
+  Setting the hostname of the robot. This is to optional skip hardware setup steps later.
+  -->
+  <param name="rvr/hostname" type="String" value="rvrmate" />
+
+  <!--
+  Setting the diffent speeds for the robot.
+  -->
+  <param name="rvr/drivingSpeed" type="int" value="75" />
+  <param name="rvr/turnSpeed"    type="int" value="90" />
+
+  <!-- Testign the Shero RVR -->
+  <node name="test" pkg="rvr" type="test.py" output="screen"/>
+</launch>
